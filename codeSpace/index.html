@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pet Shop Nepal</title>
+    <link rel="stylesheet" href="CSS/styles.css" />
+    <link rel="stylesheet" href="CSS/mediaqueries.css" />
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!--Top navigation bar-->
+    <header>
+      <div class="header-main">
+        <div class="logo-container"><a href="#main">Poppy</a></div>
+
+        <div class="search-bar">
+          <input
+            type="search"
+            name="search"
+            class="search-field"
+            placeholder="Enter your product name..."
+          />
+          <button class="search-btn">
+            <ion-icon name="search-outline"></ion-icon>
+          </button>
+        </div>
+
+        <div class="top-right-icons">
+          <a href="#main" class="action-btn"
+            ><ion-icon name="heart-outline"></ion-icon>
+            <span class="badge" id="wish-badge">0</span>
+          </a>
+          <a href="#main" class="action-btn"
+            ><ion-icon name="cart-outline"></ion-icon>
+            <span class="badge" id="cart-badge">0</span>
+          </a>
+          <a href="#main" class="be-a-seller">Become a Seller</a>
+          <button class="action-btn user-login">
+            <ion-icon name="person-outline"></ion-icon>
+          </button>
+        </div>
+      </div>
+
+      <!-- <hr id="line"> -->
+
+      <!--Bottom navigation bar-->
+      <div class="mobile-bottom-navigation">
+        <button class="action-btn">
+          <ion-icon name="menu-outline"></ion-icon>
+        </button>
+        <button class="action-btn">
+          <ion-icon name="cart-outline"></ion-icon>
+          <span class="badge" id="cart-badge">0</span>
+        </button>
+        <button class="action-btn" onclick="window.location.href='index.html'">
+          <ion-icon name="home-outline"></ion-icon>
+        </button>
+        <button class="action-btn">
+          <ion-icon name="heart-outline"></ion-icon>
+          <span class="badge" id="wish-badge">0</span>
+        </button>
+        <button class="action-btn user-login">
+          <ion-icon name="person-outline"></ion-icon>
+        </button>
+      </div>
+    </header>
+    <main>
+      <!--Hero Section-->
+
+      <!--Login modal-->
+      <div class="login-modal">
+        <button class="close-btn">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+        <div class="login-bar">
+          <form name="login-form">
+            <label for="login-email">Email</label>
+            <input
+              type="email"
+              id="login-email"
+              name="login-email"
+              placeholder="abs@example.com"
+              required
+            />
+            <label for="login-pass">Password</label>
+            <input
+              type="password"
+              id="login-pass"
+              name="login-pass"
+              placeholder="my password"
+              required
+            />
+            <div class="btn">
+              <button type="submit" class="login-btn" onsubmit="handleLogin()">
+                <b>Login</b>
+              </button>
+            </div>
+            <a href="#main" id="fp">Forgot password?</a>
+            <hr />
+            <div class="btn">
+              <button class="create-btn">
+                <b>Create new Account</b>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!--Signup Modal-->
+      <div class="register-modal">
+        <button class="close-btn">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+        <div class="register-bar">
+          <form name="register-form">
+            <label for="fname">First Name</label>
+            <input type="text" id="fname" name="fname" required />
+            <label for="lname">Last Name</label>
+            <input type="text" id="lname" name="lname" required />
+            <label for="reg-email"
+              >Email<b
+                ><span class="errormessage">*Invalid name</span></b
+              ></label
+            >
+            <input type="email" id="reg-email" name="reg-email" required />
+            <label for="new-pass"
+              >Password<b
+                ><span class="errormessage">*atleast 8letters </span></b
+              ></label
+            >
+            <input type="password" id="new-pass" name="new-pass" required />
+            <div class="btn">
+              <button type="submit" class="register-btn btn">
+                <b>Register</b>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- Hero section-->
+      <section class="hero-section">
+        <div class="hero-banner">
+          <picture>
+            <source
+              srcset="/assets/images/hero-mobile.png"
+              media="(max-width: 767px)"
+            />
+            <img src="/assets/images/hero-desktop.png" alt="Poppy" />
+          </picture>
+          <div class="banner-content">
+            <div class="banner-text">
+              <h1>Care, Comfort, and Joy</h1>
+              <p>Pet essentials you can trust.</p>
+            </div>
+            <div class="banner-links">
+              <a href="#main" class="login-btn">Buy now!</a>
+              <a href="#main" class="login-btn">Become a Seller</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Shop by category Section -->
+      <section class="category-section">
+        <h2>Shop by Category</h2>
+        <div class="category-items">
+          <div class="citem one">
+            <img src="/assets/images/cDog.png" alt="Dog" draggable="false" />
+            <a href="#main">Dog</a>
+          </div>
+          <div class="citem two">
+            <img src="/assets/images/cCat.png" alt="Cat" draggable="false" />
+            <a href="#main">Cat</a>
+          </div>
+          <div class="citem three">
+            <img src="/assets/images/cFish.png" alt="Fish" draggable="false" />
+            <a href="#main">Fish</a>
+          </div>
+          <div class="citem four">
+            <img src="/assets/images/cBird.png" alt="Bird" draggable="false" />
+            <a href="#main">Bird</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Featured Products Section -->
+      <section class="featured-section">
+        <h2 style="display: inline">Featured Products</h2>
+        <span class="view-more"><a href="#main">View all</a></span>
+
+        <div class="featured-items">
+          <div class="fitem">
+            <div class="wishlist-icon">
+                <button class="add-wish"><ion-icon name="heart-outline"></ion-icon></button>
+              </div>
+            <div class="fitem-img">
+              <img src="/assets/images/collar.jpg" alt="bowl" />
+            </div>
+            <div class="fitem-details">
+              <h4><a href="#main">Collar for Dog | New </a></h4>
+              <p>Rs 200</p>
+            </div>
+          </div>
+          <div class="fitem">
+             <div class="wishlist-icon">
+                <button class="add-wish"><ion-icon name="heart-outline"></ion-icon></button>
+              </div>
+            <div class="fitem-img">
+              <img src="/assets/images/biscuit.jpg" alt="bowl" />
+            </div>
+            <div class="fitem-details">
+              <h4><a href="#main">Sugar Free Biscuit | Diet</a></h4>
+              <p>Rs 400</p>
+            </div>
+          </div>
+          <div class="fitem">
+             <div class="wishlist-icon">
+                <button class="add-wish"><ion-icon name="heart-outline"></ion-icon></button>
+              </div>
+            <div class="fitem-img">
+              <img src="/assets/images/mattress.jpg" alt="bowl" />
+            </div>
+            <div class="fitem-details">
+              <h4><a href="#main">Premium Mattress | Fur</a></h4>
+              <p>Rs 1500</p>
+            </div>
+          </div>
+          <div class="fitem">
+             <div class="wishlist-icon">
+                <button class="add-wish"><ion-icon name="heart-outline"></ion-icon></button>
+              </div>
+            <div class="fitem-img">
+              <img src="/assets/images/bowl.jpg" alt="bowl" />
+            </div>
+            <div class="fitem-details">
+              <h4><a href="#main">Food bowl | Cat and Dog</a></h4>
+              <p>Rs 200</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="Script/script.js"></script>
+  </body>
+</html>

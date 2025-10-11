@@ -1,0 +1,63 @@
+@media (max-width: 580px){
+    .top-right-icons{
+        display: none;
+    }
+
+    #line{
+        display: none;
+    }
+
+    .mobile-bottom-navigation{
+        display: flex;
+    }
+
+    .logo-container{
+        font-size: 1.5rem;
+    }
+
+
+    .search-bar{
+        margin: 12px 0px;
+        width: 80%;
+        max-width: 500px;
+    }
+
+    .header-main{
+        height: 7rem;
+        font-size: 2.3rem;
+        flex-direction: column; 
+    }
+
+    .login-modal,
+    .register-modal{
+        height: fit-content;
+        max-width: 300px;
+        
+    }
+
+    .create-btn{
+        padding: 4px 2px;
+        margin: 10px 8vw;
+    }
+
+    .category-items{
+        overflow: scroll;
+        scrollbar-width: none;
+    }
+
+}
+
+@media (max-width: 808px){
+    .be-a-seller{
+        display: none;
+    }
+
+     .login-modal,
+     .register-modal{
+        max-width: 400px;
+    }
+
+    .hero-section{
+        height: auto;
+    }
+}
