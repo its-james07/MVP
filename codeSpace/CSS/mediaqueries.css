@@ -35,6 +35,27 @@
         
     }
 
+    .hero-banner{
+        height: 450px;
+    }
+
+    .hbanner-content{
+        height: 165px;
+        position: absolute;
+        left: 4%;
+        top: 60%;
+        width: 22em;
+    }
+
+    .hbanner-text h1{
+        font-size: 25px;
+        margin-bottom: 5px;
+    }
+
+    .hbanner-text p{
+        font-size: 15px;
+    }
+
     .create-btn{
         padding: 4px 2px;
         margin: 10px 8vw;
@@ -43,6 +64,17 @@
     .category-items{
         overflow: scroll;
         scrollbar-width: none;
+    }
+
+    .featured-items .fitem{
+        height: 250px;
+        width: 180px;
+    }
+
+    
+
+    .fitem-details a,p{
+        font-size: 14px;
     }
 
 }
@@ -59,5 +91,11 @@
 
     .hero-section{
         height: auto;
+    }
+
+    .featured-items{
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
     }
 }
