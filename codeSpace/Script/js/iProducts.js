@@ -37,7 +37,7 @@ function renderProducts(containerId, classOfDiv, productsArray){
             <h4><a href="#main">${product.name}</a></h4>
             <div class="price-wishlist">
               <p id="price">Rs ${product.price}</p>
-            <button class="wish-btn"><b>Wishlist +</b></ion-icon></button>
+            <button class="wish-btn" id="wish-btn"><b>Wishlist +</b></ion-icon></button>
             </div>
           </div>
           `;

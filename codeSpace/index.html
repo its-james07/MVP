@@ -11,7 +11,7 @@
 
   <!-- Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" /> <!--fas fa-->
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
@@ -34,11 +34,11 @@
 
       <!-- Top Right Icons -->
       <div class="top-right-icons">
-        <a href="#main" class="action-btn">
+        <a href="wishPage.html" class="action-btn">
           <ion-icon name="heart-outline"></ion-icon>
           <span class="badge" id="wish-badge">0</span>
         </a>
-        <a href="#main" class="action-btn">
+        <a href="cartPage.html" class="action-btn">
           <ion-icon name="cart-outline"></ion-icon>
           <span class="badge" id="cart-badge">0</span>
         </a>
@@ -252,23 +252,23 @@
 
   <!-- Login Modal -->
   <div class="login-modal">
-    <button class="close-btn"><ion-icon name="close-outline"></ion-icon></button>
+    <button type="button" class="close-btn" aria-label="Close login modal"><ion-icon name="close-outline"></ion-icon></button>
     <div class="login-bar">
       <form name="login-form" action="Script/login.php" method="POST">
-        <label for="login-email">Email</label>
+        <label for="log-email">Email</label>
         <input type="email" id="login-email" name="log-email" placeholder="abc@example.com" required />
 
-        <label for="login-pass">Password</label>
+        <label for="log-pass">Password</label>
         <input type="password" id="login-pass" name="log-pass" placeholder="my password" required />
         <!-- <span class="toggle-btn"><ion-icon id="togglePassword" name="eye-outline" class="toggle-icon"></ion-icon></span> -->
 
         <div class="btn">
-          <button type="submit" class="login-btn"><b>Login</b></button>
+          <button type="submit" class="login-btn"><strong>Login</strong></button>
         </div>
         <a href="#main" id="fp">Forgot password?</a>
         <hr />
         <div class="btn">
-          <button class="create-btn"><b>Create new Account</b></button>
+          <button type="button" class="create-btn"><strong>Create new account</strong></button>
         </div>
       </form>
     </div>
@@ -305,5 +305,6 @@
   <!-- Scripts -->
   <script src="Script/js/modal.js"></script>
   <script src="Script/js/iProducts.js"></script>
+  <script src="Script/js/wishPage.js"></script>
 </body>
 </html>
