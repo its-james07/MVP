@@ -23,6 +23,10 @@ a{
     color: var(--primary-green);
 }
 
+li{
+    list-style-type: none;
+}
+
 body{
     font-family: 'Poppins',sans-serif; 
     background-color: #fafafa;
@@ -34,16 +38,25 @@ main{
     width: 100%;
 }
 
+header{
+    position: sticky; 
+    top: 0;
+    z-index: 99;
+    box-shadow: 0 5px 0px rgba(7, 52, 32, 0.05);
+}
+
 /* Top navigation bar */
-.header-main{
+.header-main {
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 6rem;
+    width: inherit;
     padding: 5px 5px;
     gap: 1rem;
     background-color: var(--myWhite);
 }
+
 
 .logo-container{
     display: flex;
@@ -180,9 +193,10 @@ main{
     left: 0;
 }
 
-.errormessage{
+.mailError, .passwordError{
+    display: none;
     float: right;
-    color: red;
+    color: rgb(198, 11, 11);
 }
 
 .login-bar{
@@ -232,7 +246,7 @@ input[type=tel]{
     background-color: var(--myWhite); 
     border: 1px solid rgba(88, 85, 85,0.6);
     border-radius: 5px;
-    font-size: 14px;
+    font-size: 18px;
 }
 
 input[type=text]:focus,
@@ -243,6 +257,7 @@ input[type=password]:focus {
 }
 
 .login-btn,
+.buy-link,
 .register-btn
 {
     padding: 10px 20px;
@@ -260,6 +275,7 @@ input[type=password]:focus {
 }
 
 .login-btn,
+.buy-link,
 .create-btn,
 .register-btn{
     background-color: var(--secondary-green);
@@ -271,6 +287,7 @@ input[type=password]:focus {
 }
 
 .login-btn:hover,
+.buy-link:hover,
 .register-btn:hover,
 .create-btn:hover{
     background-color: var(--primary-green);
@@ -399,6 +416,7 @@ label ion-icons{
 .featured-section,
 .dfeatured-section,
 .cfeatured-secton,
+.faq-section,
 .footer-section{
     margin-top: 30px;
     padding: 10px;
@@ -614,6 +632,40 @@ label ion-icons{
     width: 100%;
     object-position: center;
     object-fit: cover;
+}
+
+
+.faqs{
+    margin-top: 30px;
+}
+
+.faqs .panel{
+    display: none;
+    padding: 20px;
+    font-weight: 200;
+}
+
+.faqs li{
+    font-weight: 600;
+    font-size: 20px;
+}   
+
+.show-arrow{
+    float: right;
+}
+
+.accordion{
+  /* background-color: #eee; */
+  color: #444;
+  cursor: pointer;
+  margin-top: 20px;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  transition: 0.4s;
 }
 
 .footer-section{

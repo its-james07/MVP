@@ -4,12 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pet Shop Nepal</title>
-
-  <!-- Stylesheets -->
   <link rel="stylesheet" href="CSS/styles.css" />
   <link rel="stylesheet" href="CSS/mediaqueries.css" />
 
-  <!-- Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" /> <!--fas fa-->
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
@@ -17,14 +14,12 @@
 </head>
 
 <body>
-  <!-- Header  -->
   <header>
     <div class="header-main">
       <div class="logo-container">
         <a href="#main"><b>PupKit</b></a>
       </div>
 
-      <!-- Search Bar -->
       <div class="search-bar">
         <input type="search" name="search" class="search-field" placeholder="Enter your product name..." />
         <button class="search-btn">
@@ -84,7 +79,7 @@
             <p>Pet essentials you can trust.</p>
           </div>
           <div class="hbanner-links">
-            <a href="products_page.html" class="login-btn">Buy now!</a>
+            <a href="productsPage.html" class="buy-link">Buy now!</a>
             <a href="register_seller.html" class="login-btn">Become a Seller</a>
           </div>
         </div>
@@ -206,13 +201,17 @@
     </section>
 
     <section class="faq-section">
-      <h2 style="display: inline">FAQs</h2>
-      <ol>
-        <li>
-          Lorem ipsum dolor sit amet consectetur ?
-          <span>Dolor velit voluptatum dicta iusto perferendis est nemo?</span>
-        </li>
-      </ol>
+      <h2>Frequently Asked Questions</h2>
+      <ul class="faqs">
+        <li class="accordion">What is your shipping time?<span class="show-arrow"><ion-icon name="chevron-down-outline"></ion-icon></span></li>
+        <p class="panel">Our shipping times depend on your location and the type of product you order. Standard shipping usually takes 3–7 business days, while express shipping options are available for faster delivery. You can track your order in real-time through your account dashboard</p>
+        <li class="accordion">Can I return or exchange a product?<span class="show-arrow"><ion-icon name="chevron-down-outline"></ion-icon></span></li>
+        <p class="panel">Yes! We offer a 30-day return or exchange policy on most products. To initiate a return, go to your order history on our platform, select the product, and follow the return instructions. Please note that some items like consumables (e.g., pet food) may have restrictions for hygiene reasons.</p>
+        <li class="accordion">How do I know which product is right for my pet?<span class="show-arrow"><ion-icon name="chevron-down-outline"></ion-icon></span></li>
+        <p class="panel">Our platform provides detailed product descriptions, including size, breed recommendations, and age suitability. You can also use our Pet Match Tool to get personalized suggestions based on your pet’s breed, size, and age. For additional guidance, our customer support team is available via chat or email.</p>
+        <li class="accordion">Is my payment information secure?<span class="show-arrow"><ion-icon name="chevron-down-outline"></ion-icon></span></li>
+        <p class="panel">Absolutely! Our platform uses industry-standard encryption and secure payment gateways to protect your information. We accept major credit/debit cards, PayPal, and other secure payment methods. Your data is never shared with third parties without your consent</p>
+      </ul>
     </section>
 
   </main>
@@ -245,7 +244,6 @@
       </div>
       </div>  
     <div class="bottom-foot">
-      
     </div>
     </section>
   </footer>
@@ -254,10 +252,9 @@
   <div class="login-modal">
     <button type="button" class="close-btn" aria-label="Close login modal"><ion-icon name="close-outline"></ion-icon></button>
     <div class="login-bar">
-      <form name="login-form" action="Script/login.php" method="POST">
+      <form name="login-form" action="Script/php/login.php" method="POST">
         <label for="log-email">Email</label>
         <input type="email" id="login-email" name="log-email" placeholder="abc@example.com" required />
-
         <label for="log-pass">Password</label>
         <input type="password" id="login-pass" name="log-pass" placeholder="my password" required />
         <!-- <span class="toggle-btn"><ion-icon id="togglePassword" name="eye-outline" class="toggle-icon"></ion-icon></span> -->
@@ -278,22 +275,22 @@
   <div class="register-modal">
     <button class="close-btn"><ion-icon name="close-outline"></ion-icon></button>
     <div class="register-bar">
-      <form name="register-form" action="./Script/userDetails.php" method="POST">
+      <form name="register-form" action="./Script/php/userDetails.php" method="POST" onsubmit="return validateForm()">
         <label for="fname">First Name</label>
-        <input type="text" id="fname" name="fname" />
+        <input type="text" id="fname" name="fname" required/>
 
         <label for="lname">Last Name</label>
-        <input type="text" id="lname" name="lname" />
+        <input type="text" id="lname" name="lname" required/>
 
         <label for="reg-email">Email
-          <b><span class="errormessage">*Invalid name</span></b>
+          <b><span id="email-err" class="mailError">Invalid Email</span></b>
         </label>
-        <input type="email" id="reg-email" name="reg-email"/>
+        <input type="email" id="reg-email" name="reg-email" required/>
 
         <label for="new-pass">Password
-          <b><span class="errormessage">*at least 8 letters</span></b>
+          <b><span id="pass-err" class="passwordError">At least 8 letters</span></b>
         </label>
-        <input type="password" id="new-pass" name="new-pass"/>
+        <input type="password" id="new-pass" name="new-pass" required/>
 
         <div class="btn">
           <button type="submit" class="register-btn btn"><b>Register</b></button>
@@ -306,5 +303,7 @@
   <script src="Script/js/modal.js"></script>
   <script src="Script/js/iProducts.js"></script>
   <script src="Script/js/wishPage.js"></script>
+  <script src="Script/js/validateForm.js"></script>
+  <script src="Script/js/accordionEffect.js"></script>
 </body>
 </html>

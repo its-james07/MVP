@@ -1,42 +1,37 @@
-body{
-            display: flex;
-            justify-content: space-evenly;
+body {
+    display: flex;
+    justify-content: space-evenly;
+    background-color: #dce1de;
 }
 
-.sr-modal{
-            margin-top: 170px;
-            height: 400px;
-            width: 600px;
-    }
-
-.sr-info{
-        /* background-color: red; */
-        width: 500px;
-        padding: 20px;
-    }
-
-.sr-modal{
-           /* background-color: blue; */
+.sr-modal {
+    margin-top: 170px;
+    height: 400px;
+    width: 600px;
 }
 
-.sr-form-container{
+.sr-info {
+    width: 500px;
+    padding: 20px;
+}
+
+.sr-form-container {
     display: flex;
     justify-content: space-evenly;
     gap: 50px;
 }
 
-.sr-modal{                      /*SR = Seller Registration*/
+.sr-modal {
     height: fit-content;
     width: 100%;
     z-index: 999;
 }
 
-.sr-modal{
-    /* height: 60vh; */
+.sr-modal {
     max-width: 650px;
 }
 
-.sr-modal .close-btn{
+.sr-modal .close-btn {
     position: relative;
     float: right;
     padding: 2px;
@@ -47,7 +42,7 @@ body{
     cursor: pointer;
 }
 
-.errormessage{
+.errormessage {
     float: right;
     color: red;
 }
@@ -57,11 +52,11 @@ body{
     width: 100%;
     border: 1px solid #ddd;
     border-radius: 10px;
-    background-color: #fafafa;
+    /* background-color: #fafafa; */
     box-shadow: 2px 7px 6px rgba(0, 0, 0, 0.1);
 }
 
-.sr-bar{
+.sr-bar {
     padding: 30px;
 }
 
@@ -74,44 +69,44 @@ hr {
 
 /*Forms styling*/
 
-input[type=email], 
+input[type=email],
 input[type=password],
 input[type=text],
 input[type=tel],
-select{
+select {
     width: 100%;
     padding: 12px;
-    margin:2px 0;
-    background-color: var(--myWhite); 
-    border: 1px solid rgba(88, 85, 85,0.6);
+    margin: 2px 0;
+    background-color: var(--myWhite);
+    border: 1px solid rgba(88, 85, 85, 0.6);
     border-radius: 5px;
     font-size: 14px;
 }
 
 input[type=text]:focus,
-input[type=email]:focus, 
+input[type=email]:focus,
 input[type=password]:focus {
-border-color: var(--primary-green);
-outline: none;
+    border-color: var(--primary-green);
+    outline: none;
 }
 
-.sr-btn{
+.sr-btn {
     padding: 10px 20px;
     font-size: 1.1rem;
     width: 100%;
     margin: 10px 0px 5px 0px;
-    background-color: #4c956c;
+    background-color: #55a477;
     border-radius: 8px;
     color: #fff;
-    border: none; 
+    border: none;
 }
 
 .sr-btn:hover {
     cursor: pointer;
-    background-color: #333;
+    background-color: #4c956c;
 }
 
-#fp{
+#fp {
     display: block;
     margin-top: 5px;
     text-align: center;
@@ -126,7 +121,7 @@ label {
     color: #333;
 }
 
-label ion-icons{
+label ion-icons {
     font-size: 1.rem;
     color: #04AA6D;
 }

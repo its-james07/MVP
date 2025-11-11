@@ -46,3 +46,4 @@ function renderProducts(containerId, classOfDiv, productsArray){
 }
 
 renderProducts("cfeatured-items", "cfitem", cfeaturedItems);
+renderProducts("product-items", "pitem",  cfeaturedItems );

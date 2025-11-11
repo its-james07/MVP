@@ -1,0 +1,23 @@
+header, .category-sort{
+    position: fixed;
+}
+
+.category-sort{
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    background-color: #fafafa;
+    z-index: 99;
+}
+
+.category, .sort{
+    display: flex;
+    margin: 10px;
+    gap: 5px;
+}
+
+.products-grid{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+

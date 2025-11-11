@@ -4,28 +4,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/codeSpace/CSS/productPage.css">
+    <link rel="stylesheet" href="/codeSpace/CSS/styles.css">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <style>
-        .sidebar{
-            background-color: #222;
-            height: 80vh;
-            width: 270px;
-        }
-
-    </style>
 </head>
 <body>
-    <aside class="sidebar">
-        <p>hi there</p>
-    </aside>
-    <div class="top-bar">
-        <div class="search-bar">
+    <header>
+    <div class="header-main">
+      <div class="logo-container">
+        <a href="index.html"><b>PupKit</b></a>
+      </div>
+
+      <!-- Search Bar --> 
+      <div class="search-bar">
         <input type="search" name="search" class="search-field" placeholder="Enter your product name..." />
         <button class="search-btn">
           <ion-icon name="search-outline"></ion-icon>
         </button>
       </div>
+
+      <!-- Top Right Icons -->
+      <div class="top-right-icons">
+        <a href="wishPage.html" class="action-btn">
+          <ion-icon name="heart-outline"></ion-icon>
+          <span class="badge" id="wish-badge">0</span>
+        </a>
+        <a href="cartPage.html" class="action-btn">
+          <ion-icon name="cart-outline"></ion-icon>
+          <span class="badge" id="cart-badge">0</span>
+        </a>
+        <button class="action-btn user-login">
+          <ion-icon name="person-outline"></ion-icon>
+        </button>
+      </div>
     </div>
+
+    <!-- Mobile Bottom Nav -->
+    <div class="mobile-bottom-navigation">
+      <button class="action-btn"><ion-icon name="menu-outline"></ion-icon></button>
+      <button class="action-btn">
+        <ion-icon name="cart-outline"></ion-icon>
+        <span class="badge" id="cart-badge">0</span>
+      </button>
+      <button class="action-btn" onclick="window.location.href='index.html'">
+        <ion-icon name="home-outline"></ion-icon>
+      </button>
+      <button class="action-btn">
+        <ion-icon name="heart-outline"></ion-icon>
+        <span class="badge" id="wish-badge">0</span>
+      </button>
+      <button class="action-btn user-login">
+        <ion-icon name="person-outline"></ion-icon>
+      </button>
+    </div>
+  </header>
+  <main>
+    <div class="category-sort">
+      <div class="category">
+        <h3>Category</h3>
+        <select name="pCategory" id="pCategoroy">
+          <option value="dog" disabled>Select Category</option>
+          <option value="dog" selected>Dog</option>
+          <option value="cat">Cat</option>
+          <option value="fish">Fish</option>
+          <option value="bird">Bird</option>
+        </select>
+      </div>
+      <div class="sort">
+        <h3>Sort By</h3>
+        <select name="pSort" id="pSort">
+          <option value="" disabled>Sort By</option>
+          <option value="" selected>Price High to Low</option>
+          <option value="">Price Low to High</option>
+          <option value="">Popular</option>
+        </select>
+      </div>
+    </div>
+
+    <section class="products-grid">
+      <div class="product-items" id="product-items">
+        <!-- For reference -->
+        <!-- <div class="fitem">
+          <div class="fitem-img">
+            <img src="../assets/images/collar.png" alt="Collar" />
+          </div>
+          <div class="fitem-details">
+            <h4><a href="#main">Collar for Dog | New</a></h4>
+            <div class="price-wishlist">
+              <p id="price">Rs 200</p>
+            <button class="wish-btn"><b>Wishlist +</b></ion-icon></button>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </section> 
+  </main>
+<script src="/codeSpace/Script/js/productsPage.js"></script>
 </body>
 </html>
