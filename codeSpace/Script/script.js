@@ -1,6 +1,7 @@
 //Form Modal Toggling
 const closeBtns = document.querySelectorAll('.close-btn');
-const loginModal = document.querySelector('.login-modal');
+const iconModal = document.querySelectorAll('.icon-modal');
+// const loginModal = document.querySelector('.login-modal');
 const registerModal = document.querySelector('.register-modal');
 const userLogin = document.querySelectorAll('.user-login');
 const createNew = document.querySelector('.create-btn');
@@ -14,7 +15,7 @@ closeBtns.forEach((btn) => {
 
 userLogin.forEach((btn) => {
   btn.onclick = () => {
-    loginModal.style.display = 'block';
+    iconModal.style.display = 'flex';
   };
 });
 
@@ -26,6 +27,5 @@ createNew.onclick = () => {
 //Form Validation
 function handleLogin(){
 const logForm = document.forms['login-form'];
-
 }
 

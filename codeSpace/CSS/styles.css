@@ -29,9 +29,11 @@ li{
 
 body{
     font-family: 'Poppins',sans-serif; 
-    background-color: #fafafa;
+    background-color: var(--myWhite);
     max-width: 1300px;
     margin: 0 auto;
+    overflow-x: clip;
+    overflow-y: scroll;
 }
 
 main{
@@ -42,7 +44,6 @@ header{
     position: sticky; 
     top: 0;
     z-index: 99;
-    box-shadow: 0 5px 0px rgba(7, 52, 32, 0.05);
 }
 
 /* Top navigation bar */
@@ -55,6 +56,7 @@ header{
     padding: 5px 5px;
     gap: 1rem;
     background-color: var(--myWhite);
+    /* background-color: #F2F2F2; */
 }
 
 
@@ -100,6 +102,7 @@ header{
 }
 
 .search-btn{
+    color: #1A7F4B;
     background: none;
     border: none;
     font-size: 24px;
@@ -133,24 +136,85 @@ header{
 }
 
 .header-main .user-login{
-    border: 1px solid rgb(55, 54, 54);
+    color: #fafafa;
+    background-color: #1A7F4B;
+    border: 2px solid var(--primary-green);
+    font-size: 18px;
+    margin-bottom: 5px;
     border-radius: 2rem;
-    padding: 1px 4px;
+    padding: 4px 8px;
     transition: 3ms ease-in-out;
 }
 
 .header-main .user-login:hover{
-    background-color: var(--primary-green);
-    color: var(--myWhite);
     cursor: pointer;
-    box-shadow: 20px 20px 35px solid rgba(1, 12, 7, 0.34);
+    box-shadow: 20px 20px 35px solid rgba(111, 147, 119, 0.34);
+}
+
+.header-main .active{
+    background-color: #1A7F4B;
+    color: #ffffff;
+}
+
+.icon-modal{
+  display: none;
+  align-items: center;
+  justify-content: space-around;
+  max-width: 300px;
+  background-color: #fafafa;
+  /* border-radius: 40px; */
+}
+
+.icon-content{
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #fafafa;
+  box-shadow: 2px 7px 6px rgba(0, 0, 0, 0.1);
+}
+
+.show-login, 
+.show-register,
+.show-seller{
+  text-align: center;
+  padding: 10px 20px;
+  font-size: 1.1rem; 
+  font-weight: bold;
+  margin-top: 10px;
+  background-color: green;
+  color: #fff;
+  border: none;
+  border-radius: 5px; 
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.icon-content a, 
+.show-login, 
+.show-register{
+  text-decoration: none;
+  background-color: var(--secondary-green);
+}
+
+.icon-content a:hover,
+.show-login:hover, 
+.show-register:hover{
+    background-color: var(--primary-green);
 }
 
 /* Login/Signup Modal */
-
-.login-modal, 
+.login-modal,
 .register-modal{
     display: none;
+}
+
+.icon-modal{
+    position: fixed;
+    top: 15%;
+    right: 8%;
 }
 
 .login-modal, 
@@ -170,27 +234,31 @@ header{
     max-width: 400px;
 }
 
-.sr-modal{
-    /* height: 60vh; */
-    max-width: 600px;
-}
+
 
 .login-modal .close-btn,
 .register-modal .close-btn,
-.sr-modal .close-btn{
+.wishlist-modal .close-btn
+{
     position: relative;
     float: right;
     padding: 2px;
     font-size: 1.4rem;
     background: var(--primary-green);
     border: none;
+    border-radius: 4px;
     color: var(--myWhite);
     cursor: pointer;
 }
 
 .login-modal .close-btn{
-    top: 32px;
+    top: 34px;
     left: 0;
+}
+
+.wishlist-modal .close-btn{
+    top: -5px;
+    left: 12px;
 }
 
 .mailError, .passwordError{
@@ -206,8 +274,7 @@ header{
 }
 
 .login-bar,
-.register-bar,
-.sr-bar {
+.register-bar{
     padding: 20px;
     height: 100%;
     width: 100%;
@@ -215,10 +282,6 @@ header{
     border-radius: 10px;
     background-color: #fafafa;
     box-shadow: 2px 7px 6px rgba(0, 0, 0, 0.1);
-}
-
-.sr-bar{
-    padding: 30px;
 }
 /* Title styling */
 .login-bar h1 {
@@ -241,12 +304,12 @@ input[type=password],
 input[type=text],
 input[type=tel]{
     width: 100%;
-    padding: 12px;
-    margin:2px 0;
+    padding: 15px;
+    margin:5px 0;
     background-color: var(--myWhite); 
     border: 1px solid rgba(88, 85, 85,0.6);
     border-radius: 5px;
-    font-size: 18px;
+    font-size: 15px;
 }
 
 input[type=text]:focus,
@@ -334,6 +397,8 @@ label ion-icons{
 .action-btn{
     position: relative;
     padding: 0.8rem;
+    border: none;
+    cursor: pointer;
 }
 
 .mobile-bottom-navigation ion-icon,
@@ -367,7 +432,7 @@ label ion-icons{
     width: 100%;
     height: 400px;
     border-radius: 20px;
-    overflow: clip;
+    /* overflow: clip; */
     /* box-shadow: 10px 10px 25px rgba(7, 9, 8, 0.05); */
 }
 
@@ -443,8 +508,8 @@ label ion-icons{
     margin-top: 20px;
     padding: 10px;
     gap: 10px;
-    overflow: scroll;
-    scrollbar-width: none;
+    /* overflow: scroll; */
+    /* scrollbar-width: none; */
     flex-wrap: wrap;
 }
 
@@ -722,4 +787,42 @@ label ion-icons{
     list-style-type: none;
 }
 
+/* HTML: <div class="loader"></div> */
 
+/* HTML: <div class="loader"></div> */
+
+.loader {
+     display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 60px;
+  aspect-ratio: 3 / 2;
+  /* display: flex; */
+  gap: 10px;
+  z-index: 999;
+}
+
+.loader::before,
+.loader::after,
+.loader div {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: #000;
+  border-radius: 50%;
+  animation: bounce 1s infinite ease-in-out;
+}
+
+.loader div {
+  animation-delay: 0.1s;
+}
+
+.loader::after {
+  animation-delay: 0.2s;
+}
+
+@keyframes bounce {
+  0%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-10px); }
+}

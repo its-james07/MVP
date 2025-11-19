@@ -30,4 +30,19 @@ const logForm = document.forms['login-form'];
 }
 
 
+// document.querySelector(".login-form")?.addEventListener("submit", function(e) {
+//     e.preventDefault(); // prevent default form submission
+
+//     // Show loader
+//     document.getElementById("loader").style.display = "flex";
+
+//     // Wait 3 seconds, then submit form
+//     setTimeout(() => {
+//         this.submit(); // submit the form after 3 seconds
+//     }, 1000);
+// });
+
+
+
+
 

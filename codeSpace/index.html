@@ -6,7 +6,8 @@
   <title>Pet Shop Nepal</title>
   <link rel="stylesheet" href="CSS/styles.css" />
   <link rel="stylesheet" href="CSS/mediaqueries.css" />
-
+  <link rel="stylesheet" href="/codeSpace/CSS/wishlist.css">
+  <link rel="icon" href="/assets/favicon/favicon.png">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" /> <!--fas fa-->
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
@@ -17,9 +18,8 @@
   <header>
     <div class="header-main">
       <div class="logo-container">
-        <a href="#main"><b>PupKit</b></a>
+        <a href="#main"><b>Pet Shop</b></a>
       </div>
-
       <div class="search-bar">
         <input type="search" name="search" class="search-field" placeholder="Enter your product name..." />
         <button class="search-btn">
@@ -29,18 +29,17 @@
 
       <!-- Top Right Icons -->
       <div class="top-right-icons">
-        <a href="wishPage.html" class="action-btn">
+        <button class="action-btn show-wishlist">
           <ion-icon name="heart-outline"></ion-icon>
           <span class="badge" id="wish-badge">0</span>
-        </a>
-        <a href="cartPage.html" class="action-btn">
+        </button>
+        <button href="cartPage.html" class="action-btn">
           <ion-icon name="cart-outline"></ion-icon>
           <span class="badge" id="cart-badge">0</span>
-        </a>
-        <a href="reg_seller.html" class="be-a-seller">Become a Seller</a>
-        <button class="action-btn user-login">
-          <ion-icon name="person-outline"></ion-icon>
         </button>
+        <!-- <a href="reg_seller.html" class="be-a-seller">Become a Seller</a> -->
+        <button class="action-btn user-login">Login</button>
+        <!-- <button class="action-btn user-login">Logout</button> -->
       </div>
     </div>
 
@@ -80,7 +79,7 @@
           </div>
           <div class="hbanner-links">
             <a href="productsPage.html" class="buy-link">Buy now!</a>
-            <a href="register_seller.html" class="login-btn">Become a Seller</a>
+            <a href="reg_seller.html" class="login-btn">Become a Seller</a>
           </div>
         </div>
       </div>
@@ -237,7 +236,7 @@
         <h3>Quick Links</h3>
         <ul class="footer-links">
           <li><a href="#main">Home</a></li>
-          <li><a href="#main">Home</a></li>
+          <li><a href="#main">Products</a></li>
           <li><a href="#main">Privacy Policy</a></li>
           <li><a href="#main">About us</a></li>
         </ul>
@@ -252,7 +251,7 @@
   <div class="login-modal">
     <button type="button" class="close-btn" aria-label="Close login modal"><ion-icon name="close-outline"></ion-icon></button>
     <div class="login-bar">
-      <form name="login-form" action="Script/php/login.php" method="POST">
+      <form name="login-form" class="login-form" action="Script/php/login.php" method="POST" function>
         <label for="log-email">Email</label>
         <input type="email" id="login-email" name="log-email" placeholder="abc@example.com" required />
         <label for="log-pass">Password</label>
@@ -268,20 +267,20 @@
           <button type="button" class="create-btn"><strong>Create new account</strong></button>
         </div>
       </form>
+      
     </div>
   </div>
+  <div class="loader"><div></div></div>
 
-  <!-- Register Modal  -->
+  <!-- Register Modal -->
   <div class="register-modal">
     <button class="close-btn"><ion-icon name="close-outline"></ion-icon></button>
     <div class="register-bar">
-      <form name="register-form" action="./Script/php/userDetails.php" method="POST" onsubmit="return validateForm()">
-        <label for="fname">First Name</label>
+      <form name="register-form" action="./Script/Backend/userDetails.php" method="POST" onsubmit="return validateForm()">
+        <label for="fname">Full Name
+        <!-- <span class="only-text">Only alphabets</span> -->
+        </label>
         <input type="text" id="fname" name="fname" required/>
-
-        <label for="lname">Last Name</label>
-        <input type="text" id="lname" name="lname" required/>
-
         <label for="reg-email">Email
           <b><span id="email-err" class="mailError">Invalid Email</span></b>
         </label>
@@ -293,11 +292,34 @@
         <input type="password" id="new-pass" name="new-pass" required/>
 
         <div class="btn">
-          <button type="submit" class="register-btn btn"><b>Register</b></button>
+          <button type="submit" class="register-btn"><b>Register</b></button>
         </div>
       </form>
     </div>
   </div>
+
+  <div class="wishlist-modal">
+        <button class="close-btn"><ion-icon name="close-outline"></ion-icon></button>
+        <div class="wishlist-header">
+            Wishlist
+        </div>
+        <!-- Example items -->
+        <div class="wishlists">
+            <div class="wish-info">Product 1</div>
+            <div class="wish-actions">
+                <button>Remove</button>
+                <button>Add to Cart</button>
+            </div>
+        </div>
+        <div class="wishlists">
+            <div class="wish-info">Product 1</div>
+            <div class="wish-actions">
+                <button>Remove</button>
+                <button>Add to Cart</button>
+            </div>
+        </div>
+        </div>
+    </div>
 
   <!-- Scripts -->
   <script src="Script/js/modal.js"></script>
