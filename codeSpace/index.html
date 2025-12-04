@@ -6,7 +6,9 @@
   <title>Pet Shop Nepal</title>
   <link rel="stylesheet" href="CSS/styles.css" />
   <link rel="stylesheet" href="CSS/mediaqueries.css" />
-  <link rel="stylesheet" href="/codeSpace/CSS/wishlist.css">
+  <link rel="stylesheet" href="/codeSpace/CSS/wishModal.css">
+  <link rel="stylesheet" href="/codeSpace/CSS/cartModal.css">
+  <link rel="stylesheet" href="/codeSpace/CSS/accountModal.css">
   <link rel="icon" href="/assets/favicon/favicon.png">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" /> <!--fas fa-->
@@ -38,7 +40,8 @@
           <span class="badge" id="cart-badge">0</span>
         </button>
         <!-- <a href="reg_seller.html" class="be-a-seller">Become a Seller</a> -->
-        <button class="action-btn user-login">Login</button>
+
+        <button class="action-btn user-login"><ion-icon name="person-outline"></ion-icon></button>
         <!-- <button class="action-btn user-login">Logout</button> -->
       </div>
     </div>
@@ -200,7 +203,8 @@
     </section>
 
     <section class="faq-section">
-      <h2>Frequently Asked Questions</h2>
+      <h2 style="text-align: center;">Frequently Asked Questions</h2>
+      <p style="text-align: center;">Find quick answers to common questions about our services and policies</p>
       <ul class="faqs">
         <li class="accordion">What is your shipping time?<span class="show-arrow"><ion-icon name="chevron-down-outline"></ion-icon></span></li>
         <p class="panel">Our shipping times depend on your location and the type of product you order. Standard shipping usually takes 3–7 business days, while express shipping options are available for faster delivery. You can track your order in real-time through your account dashboard</p>
@@ -221,7 +225,7 @@
       <div class="top-foot">
       <div class="about-us">
         <h2>About Us</h2>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consequuntur expedita asperiores id vero molestiae amet ab. Labore excepturi deserunt obcaecati adipisci quas, dolor ium amet molestiae voluptas, odio nemo culpa saepe.</p>
+        <p>PupKit is your trusted destination for premium pet essentials, offering quality, comfort, and care for every furry friend. We provide thoughtfully curated products designed to keep pets happy and healthy. Our mission is to make pet parenting easier with reliable, affordable, and stylish solutions you and your pet will love.</p>
       </div>
       <div class="newsletter">
           <h1>Get Latest Updates</h1>
@@ -249,7 +253,7 @@
 
   <!-- Login Modal -->
   <div class="login-modal">
-    <button type="button" class="close-btn" aria-label="Close login modal"><ion-icon name="close-outline"></ion-icon></button>
+    <button class="close-btn" style="font-size: 1.9rem">&times;</button>
     <div class="login-bar">
       <form name="login-form" class="login-form" action="Script/php/login.php" method="POST" function>
         <label for="log-email">Email</label>
@@ -264,8 +268,8 @@
         <a href="#main" id="fp">Forgot password?</a>
         <hr />
         <div class="btn">
-          <button type="button" class="create-btn"><strong>Create new account</strong></button>
-        </div>
+    <a href="userRegister.html" class="register-link">Create an account</a>
+</div>
       </form>
       
     </div>
@@ -273,12 +277,12 @@
   <div class="loader"><div></div></div>
 
   <!-- Register Modal -->
-  <div class="register-modal">
+  <!-- <div class="register-modal">
     <button class="close-btn"><ion-icon name="close-outline"></ion-icon></button>
     <div class="register-bar">
       <form name="register-form" action="./Script/Backend/userDetails.php" method="POST" onsubmit="return validateForm()">
         <label for="fname">Full Name
-        <!-- <span class="only-text">Only alphabets</span> -->
+        
         </label>
         <input type="text" id="fname" name="fname" required/>
         <label for="reg-email">Email
@@ -296,31 +300,129 @@
         </div>
       </form>
     </div>
-  </div>
+  </div> -->
 
   <div class="wishlist-modal">
-        <button class="close-btn"><ion-icon name="close-outline"></ion-icon></button>
-        <div class="wishlist-header">
-            Wishlist
+        <div class="wishlist-header">Wishlist
+        <button class="close-btn" style="font-size: 1.9rem; color: #2c6e49;">&times;</button>
         </div>
         <!-- Example items -->
         <div class="wishlists">
-            <div class="wish-info">Product 1</div>
+            <div class="wish-info"><a href="#main">Dog Biscuit</a></div>
             <div class="wish-actions">
                 <button>Remove</button>
                 <button>Add to Cart</button>
             </div>
         </div>
         <div class="wishlists">
-            <div class="wish-info">Product 1</div>
+            <div class="wish-info"><a href="#">NeckBand</a></div>
             <div class="wish-actions">
                 <button>Remove</button>
                 <button>Add to Cart</button>
             </div>
         </div>
-        </div>
     </div>
 
+  <!-- Cart Modal -->
+  <div class="cart-modal">
+  <div class="cart-header">
+    <h2>Shopping cart</h2>
+    <button class="close-btn">&times;</button>
+  </div>
+
+  <!-- Store 1 -->
+  <div class="store">
+    <div class="store-header">
+      <span class="store-name"><strong>IKEA Official Store</strong></span>
+    </div>
+
+    <div class="cart-item">
+      <div class="item-image">
+        <img src="victor-guevarra-L7zT6DLXOLc-unsplash.jpg" alt="Ikea Markus chair">
+      </div>
+      <div class="item-info">
+        <span class="item-category">CHAIR</span>
+        <h3 class="item-name">Ikea Markus swivel chair</h3>
+        <span class="item-details"></span>
+        <div class="item-price">$98</div>
+      </div>
+      <button class="remove-from-cart">Remove</button>
+    </div>
+  </div>
+
+  <!-- Store 2 -->
+  <div class="store">
+    <div class="store-header">
+      <span class="store-name"><strong>Burrow Official Store</strong></span>
+    </div>
+
+  <div class="cart-item">
+      <div class="item-image">
+        <img src="victor-guevarra-L7zT6DLXOLc-unsplash.jpg" alt="Ikea Markus chair">
+      </div>
+      <div class="item-info">
+        <span class="item-category">CHAIR</span>
+        <h3 class="item-name">Juss swivel chair</h3>
+        <span class="item-details"></span>
+        <div class="item-price">$18</div>
+      </div>
+      <button class="remove-from-cart">Remove</button>
+    </div>
+  </div>
+  <div class="proceed-btn">
+    <button>Proceed to Payment</button>
+  </div>
+</div>
+
+  <div class="account-modal">
+  <!-- Guest Section -->
+  <div class="guest-account">
+    <div class="guest-info">
+      <div class="guest-welcome"><strong>Welcome, Guest</strong></div>
+      <div class="guest-text">You’re not signed in</div><hr>
+    </div>
+
+    <div class="guest-menu">
+      <div class="guest-menu-item">
+        <ion-icon name="log-in-outline" class="icon-login"></ion-icon>
+        <span class="menu-text">Login</span>
+      </div>
+      <div class="guest-menu-item">
+        <ion-icon name="person-add-outline" class="icon-create"></ion-icon>
+        <span class="menu-text">Create Account</span>
+      </div>
+      <div class="guest-menu-item">
+        <ion-icon name="briefcase-outline" class="icon-seller"></ion-icon>
+        <span class="menu-text">Become a Seller</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- User Section -->
+  <div class="user-account">
+    <div class="user-info">
+      <div class="user-name-text">Olivia Winters</div>
+    </div>
+
+    <div class="user-menu">
+      <div class="user-menu-item">
+        <ion-icon name="person-outline" class="icon-profile"></ion-icon>
+        <span class="menu-text">Profile</span>
+      </div>
+      <div class="user-menu-item">
+        <ion-icon name="settings-outline" class="icon-settings"></ion-icon>
+        <span class="menu-text">Settings</span>
+      </div>
+      <div class="menu-divider"></div>
+      <div class="user-menu-item logout">
+        <ion-icon name="log-out-outline" class="icon-logout"></ion-icon>
+        <span class="menu-text">Logout</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
   <!-- Scripts -->
   <script src="Script/js/modal.js"></script>
   <script src="Script/js/iProducts.js"></script>

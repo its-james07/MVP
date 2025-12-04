@@ -29,3 +29,18 @@ function handleLogin(){
 const logForm = document.forms['login-form'];
 }
 
+function openUserModal() {
+    document.getElementById("userModal").style.display = "block";
+}
+
+function closeUserModal() {
+    document.getElementById("userModal").style.display = "none";
+}
+
+function openTab(tabName) {
+    document.querySelectorAll(".tab-content").forEach(el => el.classList.remove("active"));
+    document.querySelectorAll(".tab").forEach(el => el.classList.remove("active"));
+
+    document.getElementById(tabName).classList.add("active");
+    event.target.classList.add("active");
+}

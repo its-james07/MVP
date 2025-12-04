@@ -3,57 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Seller Registration</title>
     <link rel="stylesheet" href="/codeSpace/CSS/SRF.css">
 </head>
 <body>
+
 <div class="top-of-srf">
-    <img src="/assets/images/SRF_sideimg.png" alt="hero" style="height: 550px; width: 550px;">
+    <img src="/assets/images/SRF_sideimg.png" alt="hero image" height="550" width="550">
 </div>
+
 <div class="sr-modal">   
     <div class="sr-bar">
-    <form name="sr-form" action="/register-seller" method="POST" class="sr-form-container">
-        <div class="sr-left">
-            <label for="shop-name">Shop Name
-            <!-- <span class="only-text" style="float: right;">Only alphabets</span> -->
-            </label>
-            <input type="text" id="shop-name" name="shop-name" placeholder="PupKit Store" required>
-            <label for="shop-address">Shop Address</label>
-            <input type="text" id="shop-address" name="shop-address" placeholder="Street" required>
 
-            <label for="owner-name">Owner Full Name
-            </label>
-            <input type="text" id="owner-name" name="owner-name" placeholder="Ram Krishna" required>
+        <!-- enctype is REQUIRED for file upload -->
+        <form 
+            name="sr-form"
+            action="/register-seller"
+            method="POST"
+            enctype="multipart/form-data"
+            class="sr-form-container"
+        >
+
+        <!-- LEFT SECTION -->
+        <div class="sr-left">
+
+            <label for="shop-name">Shop Name</label>
+            <input 
+                type="text"
+                id="shop-name"
+                name="shop_name"
+                placeholder="PupKit Store"
+                required
+            >
+
+            <label for="shop-address">Shop Address (Street, City)</label>
+            <input 
+                type="text"
+                id="shop-address"
+                name="shop_address"
+                placeholder="Street, City"
+                required
+            >
+
+            <label for="owner-name">Owner Full Name</label>
+            <input 
+                type="text"
+                id="owner-name"
+                name="owner_name"
+                placeholder="Ram Krishna"
+                required
+            >
 
             <label for="shop-type">Shop Type</label>
-            <select id="shop-type" name="shop-type" required style="padding: 10px;">
-                <option value="">Select Type  </option>
+            <select id="shop-type" name="shop_type" required>
+                <option value="">Select Type</option>
                 <option value="dog">Dog Products</option>
                 <option value="cat">Cat Products</option>
                 <option value="bird">Bird Products</option>
                 <option value="fish">Fish Products</option>
                 <option value="all">All Pets</option>
             </select>
-            <label for="seller_img"></label>Upload Seller Photo
-            <input type="file" id="seller_img" name="seller_img" accept="image/*">
+
+            <!-- OPTIONAL FOR MVP -->
+            <label for="seller-img">Upload Seller Photo (optional)</label>
+            <input 
+                type="file"
+                id="seller-img"
+                name="seller_image"
+                accept="image/*"
+            >
+
         </div>
+
+        <!-- RIGHT SECTION -->
         <div class="sr-right">
+
             <label for="sr-email">Email</label>
-            <input type="email" id="sr-email" name="sr-email" placeholder="abc@example.com" required>
+            <input 
+                type="email"
+                id="sr-email"
+                name="email"
+                placeholder="abc@example.com"
+                required
+            >
 
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Create password" minlength="6" required>
+            <input 
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Create password"
+                minlength="6"
+                required
+            >
 
             <label for="confirm-password">Confirm Password</label>
-            <input type="password" id="confirm-password" name="confirm-password" placeholder="Re-enter password" required>
+            <input 
+                type="password"
+                id="confirm-password"
+                name="confirm_password"
+                placeholder="Re-enter password"
+                required
+            >
 
             <label for="sr-phone">Contact Number</label>
-            <input type="tel" id="sr-phone" name="sr-phone" placeholder="+977-9800000000" pattern="[0-9]{10,}" required>
-            <button type="submit" class="sr-btn"><b>Register</b></button>
+            <input 
+                type="tel"
+                id="sr-phone"
+                name="phone"
+                placeholder="9800000000"
+                pattern="[0-9]{10}"
+                required
+            >
+
+            <!-- ✅ LEGALLY REQUIRED EVEN FOR MVP -->
+            <div class="terms-box">
+                <input type="checkbox" id="terms" required> 
+                <label for="terms">
+                    I agree to the Terms & Conditions
+                </label>
+            </div>
+
+            <button type="submit" class="sr-btn">
+                <b>Register</b>
+            </button>
+
         </div>
-    </form>
+
+        </form>
     </div>
 </div>
+
 <script src="validateForm.js"></script>
 </body>
 </html>
