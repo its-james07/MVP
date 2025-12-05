@@ -1,48 +1,71 @@
-//Form Modal Toggling
-const closeBtns = document.querySelectorAll('.close-btn');
+const userLogin = document.querySelectorAll(".user-login");
+const closeBtns = document.querySelectorAll(".close-btn");
+const wishlistBtn = document.querySelector(".show-wishlist");
+const wishlistModal = document.querySelector(".wishlist-modal");
+const cartBtn = document.querySelector(".show-cart");
+const cartModal = document.querySelector(".cart-modal");
+const accountModal = document.querySelector(".account-modal");
+const guestAccount = document.querySelector(".guest-account");
+const userAccount = document.querySelector(".user-account");
+const loginBtn = document.querySelector('.log-modal');
 const loginModal = document.querySelector('.login-modal');
-const registerModal = document.querySelector('.register-modal');
-const userLogin = document.querySelectorAll('.user-login');
-const createNew = document.querySelector('.create-btn');
+const createNew = document.querySelector(".create-btn");
 
-closeBtns.forEach((btn) => {
-  btn.onclick = () => {
-    loginModal.style.display = 'none';
-    registerModal.style.display = 'none';
-  };
-});
+let hideTimeout;
 
-userLogin.forEach((btn) => {
-  btn.onclick = () => {
-    loginModal.style.display = 'block';
-  };
-});
-
-createNew.onclick = () => {
-  loginModal.style.display = 'none';
-  registerModal.style.display = 'block';
-};
-
-//Form Validation
-function handleLogin(){
-const logForm = document.forms['login-form'];
-
+function showAccountModal() {
+  accountModal.style.display = "block";
+  wishlistModal.style.display = "none";
+  cartModal.style.display = "none";
+}
+function hideAccountModal() {
+  hideTimeout = setTimeout(() => {
+    accountModal.style.display = "none";
+  }, 200);
 }
 
+loginBtn.addEventListener('click', () => {
+    loginModal.style.display = 'block';
+  });
 
-// document.querySelector(".login-form")?.addEventListener("submit", function(e) {
-//     e.preventDefault(); // prevent default form submission
+userLogin.forEach((btn) => {
+  btn.addEventListener("mouseenter", showAccountModal);
+  btn.addEventListener("mouseleave", () => {
+    if (!accountModal.matches(":hover")) {
+      hideAccountModal();
+    }
+  });
+});
+accountModal.addEventListener("mouseenter", () => {
+  clearTimeout(hideTimeout);
+  showAccountModal();
+});
+accountModal.addEventListener("mouseleave", hideAccountModal);
+closeBtns.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    loginModal.style.display = "none";
+  });
+});
 
-//     // Show loader
-//     document.getElementById("loader").style.display = "flex";
+wishlistBtn.addEventListener('mouseenter', ()=>{
+  wishlistModal.style.display = "block";
+  cartModal.style.display = "none";
+});
 
-//     // Wait 3 seconds, then submit form
-//     setTimeout(() => {
-//         this.submit(); // submit the form after 3 seconds
-//     }, 1000);
-// });
+cartBtn.addEventListener('mouseenter', ()=>{
+  cartModal.style.display = "block";
+  wishlistModal.style.display = "none";
 
+});
 
+closeBtns.forEach(btn => {
+  btn.addEventListener("click", () => {
+    loginModal.style.display = "none";
+    accountModal.style.display = "none";
+    wishlistModal.style.display = "none";
+    cartModal.style.display = "none";
+  });
+});
 
 
 

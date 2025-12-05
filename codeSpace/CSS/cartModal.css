@@ -1,6 +1,6 @@
 .cart-modal {
-    display: none;
-  position: absolute;
+  display: none;
+  position: fixed;
   top: 10%;
   right: 12%;  
   width: 400px;
@@ -9,6 +9,7 @@
   box-shadow: 0 5px 20px rgba(0,0,0,0.2);
   padding: 20px;
   font-family: Arial, sans-serif;
+  z-index: 999;
 }
 
 .cart-header {

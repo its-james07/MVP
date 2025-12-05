@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="/codeSpace/CSS/accountModal.css">
   <link rel="icon" href="/assets/favicon/favicon.png">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" /> <!--fas fa-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0z-beta3/css/all.min.css" /> 
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
@@ -20,7 +20,7 @@
   <header>
     <div class="header-main">
       <div class="logo-container">
-        <a href="#main"><b>Pet Shop</b></a>
+        <a href="#main"><img src="/assets/images/cooltext.png" alt="logo" style="height: 50px"></a>
       </div>
       <div class="search-bar">
         <input type="search" name="search" class="search-field" placeholder="Enter your product name..." />
@@ -31,12 +31,12 @@
 
       <!-- Top Right Icons -->
       <div class="top-right-icons">
-        <button class="action-btn show-wishlist">
-          <ion-icon name="heart-outline"></ion-icon>
+        <button class="action-btn">
+          <ion-icon name="heart-outline" class="show-wishlist"></ion-icon>
           <span class="badge" id="wish-badge">0</span>
         </button>
-        <button href="cartPage.html" class="action-btn">
-          <ion-icon name="cart-outline"></ion-icon>
+        <button  class="action-btn">
+          <ion-icon name="cart-outline" class="show-cart"></ion-icon>
           <span class="badge" id="cart-badge">0</span>
         </button>
         <!-- <a href="reg_seller.html" class="be-a-seller">Become a Seller</a> -->
@@ -82,7 +82,7 @@
           </div>
           <div class="hbanner-links">
             <a href="productsPage.html" class="buy-link">Buy now!</a>
-            <a href="reg_seller.html" class="login-btn">Become a Seller</a>
+            <a href="sellerRegister.html" class="login-btn">Become a Seller</a>
           </div>
         </div>
       </div>
@@ -385,15 +385,15 @@
     <div class="guest-menu">
       <div class="guest-menu-item">
         <ion-icon name="log-in-outline" class="icon-login"></ion-icon>
-        <span class="menu-text">Login</span>
+        <button class="log-modal">Login</button>
       </div>
       <div class="guest-menu-item">
         <ion-icon name="person-add-outline" class="icon-create"></ion-icon>
-        <span class="menu-text">Create Account</span>
+        <span class="menu-text"><a href="userRegister.html">Create an account</a></span>
       </div>
       <div class="guest-menu-item">
         <ion-icon name="briefcase-outline" class="icon-seller"></ion-icon>
-        <span class="menu-text">Become a Seller</span>
+        <span class="menu-text"><a href="sellerRegister.html">Become a Seller</a></span>
       </div>
     </div>
   </div>

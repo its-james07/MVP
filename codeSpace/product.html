@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Page</title>
+<link rel="stylesheet" href="/codeSpace/CSS/styles.css">
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f9f9f9;
+    color: #111;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    display: flex;
+    gap: 2rem;
+    padding: 0 1rem;
+  }
+
+  /* Left column: Product images */
+  .product-images {
+    flex: 1;
+  }
+
+  .main-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+
+  .thumbnail-images {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .thumbnail-images img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border 0.3s;
+  }
+
+  .thumbnail-images img.active {
+    border: 2px solid #111;
+  }
+
+  /* Right column: Product details */
+  .product-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .product-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+
+  .price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .colors {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .color-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 1px solid #ccc;
+  }
+
+  .dropdowns {
+    display: flex;
+    gap: 1rem;
+  }
+
+  select {
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+
+  .quantity {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .quantity button {
+    padding: 0.2rem 0.6rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+
+  .add-cart-btn {
+    padding: 0.7rem 1.5rem;
+    background: #111;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 1rem;
+    width: max-content;
+  }
+</style>
+</head>
+<body>
+    <header>
+    <div class="header-main">
+      <div class="logo-container">
+        <a href="#main"><img src="/assets/images/cooltext.png" alt="logo" style="height: 50px"></a>
+      </div>
+      <div class="search-bar">
+        <input type="search" name="search" class="search-field" placeholder="Enter your product name..." />
+        <button class="search-btn">
+          <ion-icon name="search-outline"></ion-icon>
+        </button>
+      </div>
+
+      <!-- Top Right Icons -->
+      <div class="top-right-icons">
+        <button class="action-btn">
+          <ion-icon name="heart-outline" class="show-wishlist"></ion-icon>
+          <span class="badge" id="wish-badge">0</span>
+        </button>
+        <button  class="action-btn">
+          <ion-icon name="cart-outline" class="show-cart"></ion-icon>
+          <span class="badge" id="cart-badge">0</span>
+        </button>
+        <!-- <a href="reg_seller.html" class="be-a-seller">Become a Seller</a> -->
+
+        <button class="action-btn user-login"><ion-icon name="person-outline"></ion-icon></button>
+        <!-- <button class="action-btn user-login">Logout</button> -->
+      </div>
+    </div>
+  </header>
+
+<div class="container">
+  <!-- Product Images -->
+  <div class="product-images">
+    <img src="/mnt/data/adad7f1e-54f9-440c-9868-ba1e10ce09ac.png" class="main-image" id="mainImage" alt="Product">
+    <div class="thumbnail-images">
+      <img src="/mnt/data/adad7f1e-54f9-440c-9868-ba1e10ce09ac.png" class="active">
+      <img src="/mnt/data/adad7f1e-54f9-440c-9868-ba1e10ce09ac.png">
+      <img src="/mnt/data/adad7f1e-54f9-440c-9868-ba1e10ce09ac.png">
+      <img src="/mnt/data/adad7f1e-54f9-440c-9868-ba1e10ce09ac.png">
+    </div>
+  </div>
+
+  <!-- Product Details -->
+  <div class="product-details">
+    <div class="product-title">Bang & Olufsen BeoPlay A1 2nd Gen Portable Speaker</div>
+    <div class="price">$210.00 – $250.00</div>
+
+    <div class="colors">
+      <div class="color-circle" style="background-color: #555;"></div>
+      <div class="color-circle" style="background-color: #008060;"></div>
+      <div class="color-circle" style="background-color: #ccc;"></div>
+      <div class="color-circle" style="background-color: #eee;"></div>
+      <div class="color-circle" style="background-color: #d4c79f;"></div>
+    </div>
+
+    <div class="dropdowns">
+      <select>
+        <option value="">Size</option>
+        <option value="small">Small</option>
+        <option value="medium">Medium</option>
+      </select>
+      <select>
+        <option value="">Color</option>
+        <option value="black">Black</option>
+        <option value="green">Green</option>
+      </select>
+    </div>
+
+    <div class="quantity">
+      <button id="minus">−</button>
+      <input type="text" id="quantityInput" value="1" size="2" readonly>
+      <button id="plus">+</button>
+    </div>
+
+    <button class="add-cart-btn">Add to cart</button>
+  </div>
+</div>
+
+<script>
+  // Thumbnail click
+  const thumbnails = document.querySelectorAll('.thumbnail-images img');
+  const mainImage = document.getElementById('mainImage');
+  thumbnails.forEach(thumbnail => {
+    thumbnail.addEventListener('click', () => {
+      mainImage.src = thumbnail.src;
+      thumbnails.forEach(t => t.classList.remove('active'));
+      thumbnail.classList.add('active');
+    });
+  });
+
+  // Quantity increment/decrement
+  const minusBtn = document.getElementById('minus');
+  const plusBtn = document.getElementById('plus');
+  const quantityInput = document.getElementById('quantityInput');
+
+  minusBtn.addEventListener('click', () => {
+    let value = parseInt(quantityInput.value);
+    if (value > 1) quantityInput.value = value - 1;
+  });
+
+  plusBtn.addEventListener('click', () => {
+    let value = parseInt(quantityInput.value);
+    quantityInput.value = value + 1;
+  });
+</script>
+
+</body>
+</html>
