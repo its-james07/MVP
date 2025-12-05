@@ -22,7 +22,6 @@ const cfeaturedItems = [
     {name: "Pedigree Biscrok", price: 2010, image: "../assets/images/dogProducts/play-balls.png", wishlist: false}
 ];
 
-
 function renderProducts(containerId, classOfDiv, productsArray){
     const container = document.getElementById(containerId);
     container.innerHTML = "";

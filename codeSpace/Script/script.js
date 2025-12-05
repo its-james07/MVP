@@ -4,6 +4,10 @@ const registerModal = document.querySelector('.register-modal');
 const userLogin = document.querySelectorAll('.user-login');
 const createNew = document.querySelector('.create-btn');
 
+// document.addEventListener('DOMContentLoaded', ()=>{
+
+// })
+
 closeBtns.forEach((btn) => {
   btn.onclick = () => {
     loginModal.style.display = 'none';
