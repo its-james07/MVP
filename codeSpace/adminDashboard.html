@@ -4,35 +4,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard</title>
-  <link rel="stylesheet" href="admin.css">
-
+  <link rel="stylesheet" href="/codeSpace/CSS/admin.css">
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 <body>
 
-  <!-- HEADER -->
   <header>
-    <h2 style="color:#1a7f4b;">Admin Dashboard</h2>
-    <div>
-      <span class="admin-info">James Karki</span>
-      <button style="background:none;border:none;font-size:22px;cursor:pointer;">
-        <ion-icon name="person-circle-outline"></ion-icon>
-      </button>
+    <h2>Admin Dashboard</h2>
+    <div class="admin-box">
+      <span class="admin-name">James Karki</span>
+      <ion-icon name="person-circle-outline" class="profile-icon"></ion-icon>
     </div>
   </header>
-
-  <!-- HORIZONTAL TAB BAR -->
   <div class="tab-bar">
     <button class="tab-btn active" data-target="seller-panel">Seller Control</button>
     <button class="tab-btn" data-target="user-panel">User Control</button>
     <button class="tab-btn" data-target="product-panel">Product Control</button>
   </div>
-
-  <!-- MAIN CONTENT -->
   <div class="panel-area">
 
-    <!-- Seller Panel -->
     <div class="panel active" id="seller-panel">
       <h2>Seller Registrations</h2>
       <table class="table">
@@ -46,7 +37,6 @@
       </table>
     </div>
 
-    <!-- User Panel -->
     <div class="panel" id="user-panel">
       <h2>User Control Panel</h2>
       <table class="table">
@@ -58,7 +48,6 @@
       </table>
     </div>
 
-    <!-- Product Panel -->
     <div class="panel" id="product-panel">
       <h2>Product Control Panel</h2>
       <table class="table">
@@ -73,27 +62,21 @@
 
   </div>
 
-<script>
-  const tabBtns = document.querySelectorAll(".tab-btn");
-  const panels = document.querySelectorAll(".panel");
+  <script>
+    const tabBtns = document.querySelectorAll(".tab-btn");
+    const panels = document.querySelectorAll(".panel");
 
-  tabBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
+    tabBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        tabBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
 
-      // update active button
-      tabBtns.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-
-      // swap panels
-      const target = btn.getAttribute("data-target");
-      panels.forEach(panel => {
-        panel.classList.remove("active");
-        if (panel.id === target) panel.classList.add("active");
+        const target = btn.dataset.target;
+        panels.forEach(panel => panel.classList.remove("active"));
+        document.getElementById(target).classList.add("active");
       });
-
     });
-  });
-</script>
+  </script>
 
 </body>
 </html>

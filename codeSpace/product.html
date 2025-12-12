@@ -13,7 +13,7 @@
 </style>
 </head>
 <body>
-    <header>
+   <header>
     <div class="header-main">
       <div class="logo-container">
         <a href="#main"><img src="/assets/images/cooltext.png" alt="logo" style="height: 50px"></a>
@@ -21,19 +21,29 @@
 
       <!-- Top Right Icons -->
       <div class="top-right-icons">
-        <button class="action-btn">
-          <ion-icon name="heart-outline" class="show-wishlist"></ion-icon>
-          <span class="badge" id="wish-badge">0</span>
+        <button class="action-btn user-login">
+          <img src="/assets/images/usericon.svg" alt="userIcon" class="ion-icon">
         </button>
-        <button  class="action-btn">
-          <ion-icon name="cart-outline" class="show-cart"></ion-icon>
-          <span class="badge" id="cart-badge">0</span>
-        </button>
-        <!-- <a href="reg_seller.html" class="be-a-seller">Become a Seller</a> -->
-
-        <button class="action-btn user-login"><ion-icon name="person-outline"></ion-icon></button>
-        <!-- <button class="action-btn user-login">Logout</button> -->
       </div>
+    </div>
+
+    <!-- Mobile Bottom Nav -->
+    <div class="mobile-bottom-navigation">
+      <button class="action-btn"><ion-icon name="menu-outline"></ion-icon></button>
+      <button class="action-btn">
+        <ion-icon name="cart-outline"></ion-icon>
+        <span class="badge" id="cart-badge">0</span>
+      </button>
+      <button class="action-btn" onclick="window.location.href='index.html'">
+        <ion-icon name="home-outline"></ion-icon>
+      </button>
+      <button class="action-btn">
+        <ion-icon name="heart-outline"></ion-icon>
+        <span class="badge" id="wish-badge">0</span>
+      </button>
+      <button class="action-btn user-login">
+        <ion-icon name="person-outline"></ion-icon>
+      </button>
     </div>
   </header>
 
@@ -43,33 +53,18 @@
   <div class="product-images">
     <img src="victor-guevarra-L7zT6DLXOLc-unsplash.jpg" class="main-image" id="mainImage" alt="Product">
     <div class="thumbnail-images">
-      <img src="victor-guevarra-L7zT6DLXOLc-unsplash.jpg" class="active">
-      <img src="victor-guevarra-L7zT6DLXOLc-unsplash.jpg">
+      <img src="/assets/images/biscuit.jpg" class="active">
+      <img src="/assets/images/bowl.jpg">
       <img src="victor-guevarra-L7zT6DLXOLc-unsplash.jpg">
       <img src="victor-guevarra-L7zT6DLXOLc-unsplash.jpg">
     </div>
   </div>
-
   <!-- Product Details -->
   <div class="product-details">
     <div class="product-title">Bang & Olufsen BeoPlay A1 2nd Gen Portable Speaker</div>
     <div class="product-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum ipsam quia eveniet ratione, nobis id et molestiae ut!</div>
     <div class="price">Price: <span style="color: rgb(84, 122, 84)">Rs 1400</span></div>
     <div class="price">Status: <span style="color: rgb(84, 122, 84)">In Stock</span></div>
-
-    <!-- <div class="dropdowns">
-      <select>
-        <option value="">Size</option>
-        <option value="small">Small</option>
-        <option value="medium">Medium</option>
-      </select>
-      <select>
-        <option value="">Color</option>
-        <option value="black">Black</option>
-        <option value="green">Green</option>
-      </select>
-    </div> -->
-
 <div class="quantity">
     <span class="subtitle">Quantity</span>
     <div class="countquantity">
@@ -114,6 +109,6 @@
     quantityInput.value = value + 1;
   });
 </script>
-
+<script src="/codeSpace/Script/js/modal.js"></script>
 </body>
 </html>

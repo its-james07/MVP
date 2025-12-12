@@ -6,42 +6,45 @@
   <title>Pet Shop Nepal</title>
   <link rel="stylesheet" href="CSS/styles.css" />
   <link rel="stylesheet" href="CSS/mediaqueries.css" />
-  <link rel="stylesheet" href="/codeSpace/CSS/wishModal.css">
-  <link rel="stylesheet" href="/codeSpace/CSS/cartModal.css">
-  <link rel="stylesheet" href="/codeSpace/CSS/accountModal.css">
+  <link rel="stylesheet" href="CSS/wishModal.css">
+  <link rel="stylesheet" href="CSS/cartModal.css">
+  <link rel="stylesheet" href="CSS/accountModal.css">
+
   <link rel="icon" href="/assets/favicon/favicon.png">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0z-beta3/css/all.min.css" /> 
-  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 </head>
 
 <body>
   <header>
     <div class="header-main">
       <div class="logo-container">
-        <a href="#main"><img src="/assets/images/cooltext.png" alt="logo" style="height: 50px"></a>
+        <a href="#main"><img src="../assets/images/cooltext.png" alt="logo" style="height: 50px"></a>
       </div>
       <div class="search-bar">
         <input type="search" name="search" class="search-field" placeholder="Enter your product name..." />
         <button class="search-btn">
-          <ion-icon name="search-outline"></ion-icon>
+          <img src="../assets/images/search.svg" alt="search-btn" style="height: 20px; width: 30px;">
         </button>
       </div>
 
-      <!-- Top Right Icons -->
       <div class="top-right-icons">
         <button class="action-btn">
-          <ion-icon name="heart-outline" class="show-wishlist"></ion-icon>
+          
+          <img src="../assets/images/heart (1).svg" alt="wishlist" class="show-wishlist ion-icon">
           <span class="badge" id="wish-badge">0</span>
         </button>
         <button  class="action-btn">
-          <ion-icon name="cart-outline" class="show-cart"></ion-icon>
+          <!-- <ion-icon name="cart-outline" class="show-cart"></ion-icon> -->
+           <img src="../assets/images/cart.svg" alt="cart" class="show-cart ion-icon">
           <span class="badge" id="cart-badge">0</span>
         </button>
         <!-- <a href="reg_seller.html" class="be-a-seller">Become a Seller</a> -->
 
-        <button class="action-btn user-login"><ion-icon name="person-outline"></ion-icon></button>
+        <button class="action-btn user-login">
+          <img src="../assets/images/usericon.svg" alt="userIcon" class="ion-icon">
+        </button>
         <!-- <button class="action-btn user-login">Logout</button> -->
       </div>
     </div>
@@ -252,13 +255,13 @@
   </footer>
 
   <!-- Login Modal -->
-  <div class="login-modal">
+  <div id="login-modal" class="modal-dialog modal-dialog-centered">
     <button class="close-btn" style="font-size: 1.9rem">&times;</button>
     <div class="login-bar">
-      <form name="login-form" class="login-form" action="Script/php/login.php" method="POST" function>
+      <form name="login-form" class="login-form" action="Backend/login.php" method="POST">
         <label for="log-email">Email</label>
         <input type="email" id="login-email" name="log-email" placeholder="abc@example.com" required />
-        <label for="log-pass">Password</label>
+        <label for="log-pass">Password<span class="pass-error">Invalid Password</span></label>
         <input type="password" id="login-pass" name="log-pass" placeholder="my password" required />
         <!-- <span class="toggle-btn"><ion-icon id="togglePassword" name="eye-outline" class="toggle-icon"></ion-icon></span> -->
 
@@ -424,10 +427,12 @@
 
     
   <!-- Scripts -->
-  <script src="Script/js/modal.js"></script>
-  <script src="Script/js/iProducts.js"></script>
-  <script src="Script/js/wishPage.js"></script>
-  <script src="Script/js/validateForm.js"></script>
-  <script src="Script/js/accordionEffect.js"></script>
+   <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="Script/modal.js"></script>
+  <script src="signin.js"></script>
+  <script src="Script/iProducts.js"></script>
+  <script src="Script/wishPage.js"></script>
+  <script src="Script/validateForm.js"></script>
+  <script src="Script/accordionEffect.js"></script>
 </body>
 </html>

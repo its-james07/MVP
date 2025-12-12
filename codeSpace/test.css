@@ -1,0 +1,64 @@
+/* Position trigger icon/button */
+.icon-modal{
+    position: fixed;
+    top: 15%;
+    right: 8%;
+    z-index: 1050; /* Above other content */
+}
+
+/* Modal adjustments */
+.login-modal {
+    max-width: 400px; /* Your max-width */
+    width: 80%;
+    background-color: #fafafa;
+    border-radius: 10px;
+    box-shadow: 2px 7px 6px rgba(0, 0, 0, 0.1);
+}
+
+.login-modal .modal-header {
+    border-bottom: none; /* Remove default bootstrap border */
+    justify-content: center; /* Center the title */
+}
+
+.login-modal .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: var(--primary-green, #4c956c);
+    color: #fff;
+    border-radius: 4px;
+    border: none;
+    font-size: 1.3rem;
+    padding: 0.2rem 0.6rem;
+    cursor: pointer;
+}
+
+/* Input styles */
+.login-modal input.form-control {
+    border: 1px solid #ddd;
+}
+
+.login-modal input.form-control:focus {
+    outline: none;
+    border-color: #4c956c;
+}
+
+/* Center the form elements inside modal-body */
+.login-bar {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    width: 100%;
+}
+
+/* Error styling */
+.pass-error {
+    color: rgb(218, 70, 70);
+    float: right;
+    font-size: 0.85rem;
+}
+
+/* Links */
+.register-link, #fp {
+    text-decoration: none;
+}
