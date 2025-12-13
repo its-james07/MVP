@@ -13,7 +13,9 @@
   <link rel="icon" href="/assets/favicon/favicon.png">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0z-beta3/css/all.min.css" /> 
-  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  <!-- <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"> -->
+   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 
 <body>
@@ -255,14 +257,15 @@
   </footer>
 
   <!-- Login Modal -->
-  <div id="login-modal" class="modal-dialog modal-dialog-centered">
+  <div id="login-modal" class="login-modal">
     <button class="close-btn" style="font-size: 1.9rem">&times;</button>
     <div class="login-bar">
-      <form name="login-form" class="login-form" action="Backend/login.php" method="POST">
+      <form name="login-form" class="login-form" id="login-form" action="Backend/login.php" method="POST">
         <label for="log-email">Email</label>
         <input type="email" id="login-email" name="log-email" placeholder="abc@example.com" required />
         <label for="log-pass">Password<span class="pass-error">Invalid Password</span></label>
         <input type="password" id="login-pass" name="log-pass" placeholder="my password" required />
+        
         <!-- <span class="toggle-btn"><ion-icon id="togglePassword" name="eye-outline" class="toggle-icon"></ion-icon></span> -->
 
         <div class="btn">
@@ -419,20 +422,20 @@
       <div class="menu-divider"></div>
       <div class="user-menu-item logout">
         <ion-icon name="log-out-outline" class="icon-logout"></ion-icon>
-        <span class="menu-text">Logout</span>
+        <span class="menu-text" id="log-out-btn">Logout</span>
       </div>
     </div>
   </div>
 </div>
-
+<div class="toast" id="toast"></div>
     
   <!-- Scripts -->
-   <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+   <!-- <script src="bootstrap/js/bootstrap.bundle.min.js"></script> -->
   <script src="Script/modal.js"></script>
-  <script src="signin.js"></script>
+  <script src="Script/signin.js"></script>
   <script src="Script/iProducts.js"></script>
   <script src="Script/wishPage.js"></script>
-  <script src="Script/validateForm.js"></script>
+  <!-- <script src="Script/validateForm.js"></script> -->
   <script src="Script/accordionEffect.js"></script>
 </body>
 </html>

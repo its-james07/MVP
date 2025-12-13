@@ -32,11 +32,15 @@
               <label for="new-pass">Password
                 <b><span id="invalid-pass" class="errorInfo">Use strong password</span></b>
                 <b><span id="pass-length" class="errorInfo">At least 8 letters</span></b></label>
-              <input type="password" name="new-pass" id="new-pass" placeholder="••••••••" required/>
+              <input type="password" name="new-pass" id="new-pass" placeholder="••••••••" class="showHide" required/>
             </div>
             <div class="field">
               <label>Confirm Password<span id="not-confirm" class="errorInfo"><b>Password didnot match</b></span></label>
-              <input type="password" id="confirm-password" placeholder="••••••••" required/>
+              <input type="password" id="confirm-password" placeholder="••••••••" class="showHide" required/>
+              <div class="show-pass">
+              <input type="checkbox" id="toggle-password" onclick="togglePassword();">
+              <label for="toggle-password" style="font-size: 16px;"><strong>Show</strong></label>
+              </div>
             </div>
             <button type="submit">Create Account <div class="loader"><div></div></div></button>
           </form>
@@ -48,7 +52,7 @@
     </div>
     <div class="toast" id="toast"></div>
 <script src="Script/signup.js"></script>
-<script src="Script/toast.js"></script>
+<!-- <script src="Script/toast.js"></script> -->
 
   </body>
 </html>

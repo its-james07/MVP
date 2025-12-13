@@ -6,8 +6,6 @@ form.addEventListener('submit', function(e){
     }   
     const formData = new FormData(form);
     console.log('It is working');
-
-
     fetch('Backend/userDetails.php',{
         method: 'POST', 
         body: formData
@@ -25,7 +23,7 @@ form.addEventListener('submit', function(e){
         }
     })
     .catch(err =>{
-        showToast("Oops! Something went wrong");
+        showToast("Oops! omething went wrong");
         console.error(err);
     })
 })
@@ -66,4 +64,36 @@ if (password.length < 8) {
 }
   return true;
 }
+
+function showToast(message, type = 'success', duration = 3000) {
+    const toast = document.getElementById('toast');  
+    toast.textContent = message;                     
+    toast.classList.remove('success', 'error');      
+    toast.classList.add(type, 'show');               
+
+    setTimeout(() => {
+        toast.classList.remove('show');  
+    }, duration);
+}
+
+function clearForm() {
+    const userForm = document.getElementById('signupForm');
+    if (userForm) {
+        userForm.reset(); 
+    }
+}
+
+function togglePassword() {
+    const showHide = document.querySelectorAll('.showHide');
+
+    showHide.forEach(field => {
+        if (field.type === "password") {
+            field.type = "text";
+        } else {
+            field.type = "password";
+        }
+    });
+}
+
+
 

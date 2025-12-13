@@ -841,15 +841,32 @@ label ion-icons{
     width: 35px;
 }
 
-/* .modal{
+.toast {
+    position: fixed;
+    top: 13%;
+    left: 45%;
+    padding: 15px 20px;
+    color: white;
+    border-radius: 5px;
     opacity: 0;
-    visibility: hidden;
-    transition: opacity 1s ease, visibility 0.3s ease;
+    z-index: 9999;
+    transform: translateY(-60%);
+    transition: opacity 0.5s, transform 0.5s;
 }
 
-.modal.show{
+.toast.show {
     opacity: 1;
-    visibility: visible;
-} */
+    transform: translateX(0);
+}
 
-/* HTML: <div class="loader"></div> */
+.toast.success { background-color: #4CAF50; }
+.toast.error { background-color: #f44336; }
+
+.show-pass{
+    float: right;
+    display:flex;
+    /* justify-content: space-evenly; */
+    gap: 5px;
+    align-items: center;
+    margin-top: 6px;
+}

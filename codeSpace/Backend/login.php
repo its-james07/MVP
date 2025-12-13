@@ -4,10 +4,7 @@ require 'db.php';
 header('Content-Type: application/json');
 
 function test_input($data){
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
+    return htmlspecialchars(stripslashes(trim($data)));
 }
 
 
@@ -15,11 +12,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $lemail = test_input($_POST["log-email"]);
     $lpass = test_input($_POST["log-pass"]);
 
-    $stmt = $conn->prepare("SELECT id, fname, email,role, password FROM signup_db WHERE email = ?");
+    $stmt = $conn->prepare("SELECT id, fname, email,role, password FROM userdetails WHERE email = ?");
     if ($stmt === false) {
         error_log("Database prepare failed". $conn->error);
         echo json_encode(["status" => "error"]);
-
+        exit;
     }
     $stmt->bind_param("s", $lemail);
     $stmt->execute();
@@ -34,7 +31,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_SESSION['logged-in'] = true;
         if($role === 'admin') {
             echo json_encode(["status" => "redirect_admin"]);
-            
         }
         else if($role === 'seller'){
             echo json_encode(["status" => "redirect_seller"]);
@@ -42,12 +38,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         else{
             echo json_encode(["status" => "redirect_user"]);
         }
-    } else {
-        echo "Invalid Credentials"; 
+        $stmt->close();
+        $conn->close();
+    }else {
+        echo json_encode(["status" => "incorrect_password"]); 
+        $stmt->close();
+        $conn->close();
     }
-
+}else{
+    echo json_encode(["status" => "error", "message" => "User not found"]);
     $stmt->close();
     $conn->close();
-}else{
-    echo json_encode(["status" => "invalid_password"]);
 }}
