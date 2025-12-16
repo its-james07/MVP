@@ -29,6 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_SESSION['usermail'] = $userMail;
         $_SESSION['role'] = $role;
         $_SESSION['logged-in'] = true;
+        console.log("Problem arise");
         if($role === 'admin') {
             echo json_encode(["status" => "redirect_admin"]);
         }

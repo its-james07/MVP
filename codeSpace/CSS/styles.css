@@ -41,134 +41,9 @@ main{
     width: 100%;
 }
 
-header{
-    position: sticky; 
-    top: 0;
-    z-index: 99;
-}
-
-/* Top navigation bar */
-.header-main {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 6rem;
-    width: inherit;
-    padding: 5px 5px;
-    gap: 1rem;
-    background-color: var(--myWhite);
-    /* background-color: #F2F2F2; */
-}
-
-
-.logo-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 2.5rem;
-    font-size: 3.4rem;
-    padding: 5px;
-    margin: 2px 5px;
-}
-
-.logo-container a{
-    font-size: 2rem;
-    text-decoration: none;
-    color: rgb(13, 12, 12);
-}
-
-.search-bar{
-    display: flex; 
-    align-items: center;
-    background-color: var(--myWhite);
-    max-width: 500px;
-    flex: 1;
-    padding: 5px 10px;
-    border-radius: 15px; 
-    box-shadow: 0 5px 9px rgba(7, 52, 32, 0.05);
-    /* overflow: scroll; */
-}
-
-.search-field{
-    border: none;
-    outline: none;
-    background: transparent;
-    font-size: 1rem;
-    flex: 1;
-    padding: 10px;
-}
-
-.search-field:focus{
-    border-bottom: 1px solid var(--secondary-green);
-}
-
-.search-btn{
-    background: none;
-    border: none;
-    border-radius: 10px;
-    background-color: #e4e9e7;
-    padding: 2px 4px;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-.search-btn:hover{
-    border-bottom: 1px solid black;
-}
-
-.top-right-icons{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-}
-
-.top-right-icons a{
-    text-decoration: none;
-    color: var(--primary-green);
-    font-size: 1.1rem;
-}
-
-.top-right-icons a:hover{
-    text-decoration: underline;
-}
-
-.top-right-icons button{
-    border: none;
-    background: none;
-}
-
-.top-right-icons .ion-icon:hover{
-    margin-top: 4px;
-}
-
-.header-main .user-login {
-    border-bottom: 1px solid rgb(18, 140, 77);
-    padding: 3px 6px;
-    font-size: 14px;
-    border-radius: 2rem;
-    transition: 0.2s ease;
-    align-items: center;
-    transform: scale(0.9);
-}
-
-.header-main .user-login:hover {
-    cursor: pointer;
-    color: #fff;
-}
-
-.header-main .active{
-    background-color: #1A7F4B;
-    color: #ffffff;
-}
-
-/* Login/Signup Modal */
-.login-modal{
-    display: none;
-}
-
 .login-modal
 {       
+    display: none;
     background-color: #fafafa;               /*SR = Seller Registration*/
     position: fixed;
     height: fit-content;
@@ -259,7 +134,7 @@ header{
 }
 
 hr {
-    margin: px 0;
+    margin: 10px 0;
     border: none;
     border-top: 1px solid #ddd;
 }
@@ -350,10 +225,6 @@ input[type=password]:focus {
 .back-link:hover {
     background-color: var(--primary-green);
 }
-
-
-
-
 #fp{
     display: block;
     margin-top: 5px;
@@ -361,70 +232,7 @@ input[type=password]:focus {
     color: var(--secondary-green);
 }
 
-/* Label and icon styling */
-label {
-    display: block;
-    margin: 10px 0 5px;
-    font-weight: bold;
-    color: #333;
-}
-
-label ion-icons{
-    font-size: 1.rem;
-    color: #04AA6D;
-}
-
-/* Bottom navigation menu for mobile-devices */
-.mobile-bottom-navigation{
-    border-top: 1px solid #ddd;
-    background-color: #fff;
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    max-height: 40px;
-    margin: auto;
-    padding: 15px 10px;
-    display: none;
-    justify-content: space-around;
-    align-items: center;
-    z-index: 999;
-    box-shadow:8px 2px 5px black; ;
-}
-
-.action-btn{
-    position: relative;
-    padding: 0.8rem;
-    border: none;
-    cursor: pointer;
-}
-
-.mobile-bottom-navigation ion-icon,
-.top-right-icons ion-icon {
-   font-size: 1.7rem;  
-}
-
-.mobile-bottom-navigation button{
-    border: none;
-    background: none;
-}
-
-.action-btn .badge{
-    position: absolute;
-    top: 10px;
-    right: 5px;
-    line-height: 1;
-    font-size: 12px;
-    color: var(--myWhite);
-    padding: 2px 4px;
-    border-radius: 50%;
-    background-color: var(--primary-green);
-}
-
-
-
 /*Hero section stylings*/
-
 .hero-section {
     margin: 30px 0;
     width: 100%;
@@ -565,11 +373,15 @@ label ion-icons{
     /* background-color: #cfcfcf; */
 }
 
-.fitem-details a,p, 
-.dfitem-details a,p, 
-.cfitem-details a,p{
+.fitem-details a,
+.fitem-details p,
+.dfitem-details a,
+.dfitem-details p,
+.cfitem-details a,
+.cfitem-details p{
     font-size: 18px;
 }
+
 
 .price-wishlist{
     display: flex;
@@ -580,15 +392,20 @@ label ion-icons{
     align-items: center;
 }
 
-.wish-btn{
-    display: inline;
-    color: var(--myWhite);
-    background-color: #a4a4a4;
+.fitem-details .wish-btn,
+.dfitem-details .wish-btn,
+.cfitem-details .wish-btn {
+    display: inline-block; 
     padding: 8px 10px;
     font-size: 0.9rem;
+    color: var(--myWhite);
+    background-color: #a4a4a4;
     border: none;
     border-radius: 5px;
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
 }
+
 
 .wish-btn:hover,
 .newsletter button:hover{
@@ -711,9 +528,11 @@ label ion-icons{
     background-color: var(--myWhite);
 }
 
-.faq-section h2, p{
+.faq-section h2,
+.faq-section p{
     text-align: justify;
 }
+
 
 
 
@@ -751,12 +570,6 @@ label ion-icons{
   outline: none;
   font-size: 15px;
   transition: 0.4s;
-}
-
-.footer-section{
-    width: 100vw;
-    /* color: #ddd; */
-    /* background-color: #ddd; */
 }
 
 .top-foot{
@@ -836,10 +649,7 @@ label ion-icons{
 .loader::after {
   animation-delay: 0.2s;
 }
-.ion-icon{
-    height: 35px;
-    width: 35px;
-}
+
 
 .toast {
     position: fixed;

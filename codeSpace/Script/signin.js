@@ -25,7 +25,7 @@ loginForm.addEventListener('submit', function(e){
             invalidPass.style.display = "inline"; 
         }
     }).catch(err =>{
-        showToast("Oops nomething went wrong", 'error');
+        showToast("Everything went wrong", 'error');
     })
 })
 
