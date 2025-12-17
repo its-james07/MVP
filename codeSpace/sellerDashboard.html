@@ -1,53 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
-  </head>
-  <body>
-    <header class="p-3 text-bg-dark">
-      <div class="container">
-        <div
-          class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-          <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-            <svg
-              class="bi me-2"
-              width="40"
-              height="32"
-              role="img"
-              aria-label="Bootstrap"
-            >
-              <use xlink:href="#bootstrap"></use>
-            </svg>
-          </a>
-          <ul
-            class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"
-          >
-            <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
-            <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
-            <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
-            <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
-            <li><a href="#" class="nav-link px-2 text-white">About</a></li>
-          </ul>
-          <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-            <input
-              type="search"
-              class="form-control form-control-dark text-bg-dark"
-              placeholder="Search..."
-              aria-label="Search"
-            />
-          </form>
-          <div class="text-end">
-            <button type="button" class="btn btn-outline-light me-2">
-              Login
-            </button>
-            <a href="userRegister.html" class="a-outline-light">Sign-up</button>
-          </div>
-        </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="CSS/styles.css">
+  <link rel="stylesheet" href="CSS/navbar.css">
+  <link rel="stylesheet" href="CSS/mediaqueries.css">
+  <link rel="stylesheet" href="CSS/adminPanel.css">
+</head>
+<body>
+  <header>
+    <div class="header-main">
+      <div class="logo-container">
+        <a href="index.html" ><strong>Vendor Panel</strong></a>
       </div>
-    </header>
-    <script src="bootstrap/js/bootstrap.bundle.js"></script>
-  </body>
+      <div class="top-right-icons">
+        <button class="action-btn user-login">
+          <img src="../assets/images/usericon.svg" alt="userIcon" class="ion-icon">
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Bottom Nav -->
+    <div class="mobile-bottom-navigation">
+      <button class="action-btn"><ion-icon name="menu-outline"></ion-icon></button>
+      <button class="action-btn">
+        <ion-icon name="cart-outline"></ion-icon>
+        <span class="badge" id="cart-badge">0</span>
+      </button>
+      <button class="action-btn" onclick="window.location.href='index.html'">
+        <ion-icon name="home-outline"></ion-icon>
+      </button>
+      <button class="action-btn">
+        <ion-icon name="heart-outline"></ion-icon>
+        <span class="badge" id="wish-badge">0</span>
+      </button>
+      <button class="action-btn user-login">
+        <ion-icon name="person-outline"></ion-icon>
+      </button>
+    </div>
+  </header>
+
+  <!-- Action Buttons -->
+<div class="action-bar">
+<button class="action-btn">Analytics</button>
+
+<button class="action-btn">Manage Products</button>
+<ul class="show-actions" id="action-product">
+    <li><button>Add new</button></li>
+    <li><button>Update Details</button></li>
+    <li><button>Remove Product</button></li>
+</ul>
+<button class="action-btn">Orders</button>
+<ul class="show-actions" id="action-user">
+    <li><button>View Users</button></li>
+    <li><button>Remove</button></li>
+</ul>
+</div>
+
+<div class="content-box">
+  <h3>Data Unavailable</h3>
+</div>
+
+<ul class="show-actions" id="account-modal">
+    <li><button>Update Info</button></li>
+    <li><button>Logout</button></li>
+    </ul>
+</body>
 </html>
