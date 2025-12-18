@@ -1,20 +1,42 @@
-const menuBtn = document.getElementById('admin-menu');
-const adminMenu = document.getElementById('account-modal');
+const menuMap = {
+    'seller-btn':'seller-menu', 
+    'product-btn':'product-menu',
+    'user-btn':'user-menu', 
+    'admin-menu-btn':'admin-menu'
+};
 
-let hideTimeout;
-function showMenu(){
-    adminMenu.style.display = "block"; 
+const allMenus = Object.values(menuMap).map(id => document.getElementById(id));
+
+function hideAllMenus(){
+    allMenus.forEach(menu=>{
+        menu.style.display = 'none';
+    });
 }
 
-function hideMenu(){
-    hideTimeout = setTimeout(()=>{
-        adminMenu.style.display = "none";
-    }, 200);
+function toggleMenu(menu){
+    hideAllMenus();
+    menu.style.display = 'block';
 }
 
-menuBtn.addEventListener('click', ()=>{
-    clearTimeout();
-    showMenu();
-})
+Object.entries(menuMap).forEach(([btnId, menuId]) => {
+    const btn = document.getElementById(btnId);
+    const menu = document.getElementById(menuId);
 
-menuBtn
+    btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleMenu(menu);
+    });
+});
+
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('#seller-btn') &&
+        !e.target.closest('#product-btn') &&
+        !e.target.closest('#user-btn') &&
+        !e.target.closest('#admin-menu-btn') &&
+        !e.target.closest('#seller-menu') &&
+        !e.target.closest('#product-menu') &&
+        !e.target.closest('#user-menu') &&
+        !e.target.closest('#admin-menu')) {
+        hideAllMenus();
+    }
+});

@@ -66,8 +66,6 @@ closeBtns.forEach(btn => {
 function showMenu() {
     const guestAccount = document.querySelector('.guest-account');
     const userAccount = document.querySelector('.user-account');
-
-    // Hide guest menu, show user menu
     guestAccount.style.display = "none";
     userAccount.style.display = "block";
 }

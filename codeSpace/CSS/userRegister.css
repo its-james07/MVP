@@ -32,8 +32,8 @@ body {
 
 /* Layout */
 .auth-container {
-    width: 100%;
-    max-width: 400px;
+    /* width: 100%;
+    max-width: 400px; */
     padding: 20px;
 }
 
@@ -159,4 +159,92 @@ button:hover {
 
 #toggle-password:hover{
     cursor: pointer;
+}
+
+#show-text{
+    font-size: 16px;
+}
+
+@media(max-width: 580px){
+     h2{
+        font-size: 40px;
+        margin: 5px;
+    }
+
+    .subtitle{
+        font-size: 15px;
+    }
+    .main-page{
+        flex-direction: column-reverse;
+        margin-top: 10rem;
+    }
+
+    .card{
+        padding: 2rem;
+        width: 400px;
+    }
+
+    input {
+    width: 100%;
+    padding: 20px 20px;
+    font-size: 25px;
+}
+
+    label{
+        font-size: 25px;
+    }
+
+    #toggle-password{
+        height: 20px;
+        width: 20px;
+    }
+
+    #show-text{
+        font-size: 25px;
+    }
+
+}
+
+@media (max-width: 720px){
+
+    h2{
+        font-size: 40px;
+        margin: 5px;
+    }
+
+    .subtitle{
+        font-size: 20px;
+    }
+    .main-page{
+        flex-direction: column-reverse;
+        margin-top: 12rem;
+    }
+
+    .card{
+        padding: 6rem;
+        width: 750px;
+    }
+
+    input {
+    width: 100%;
+    padding: 20px 20px;
+    font-size: 25px;
+}
+
+    label{
+        font-size: 25px;
+    }
+
+    #toggle-password{
+        height: 20px;
+        width: 20px;
+    }
+
+    #show-text{
+        font-size: 25px;
+    }
+
+    .auth-container{
+        
+    }
 }

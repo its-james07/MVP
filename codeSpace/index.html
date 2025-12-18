@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="CSS/cartModal.css">
   <link rel="stylesheet" href="CSS/accountModal.css">
 
-  <link rel="icon" href="/assets/favicon/favicon.png">
+  <link rel="icon" href="assets/favicon/favicon.png">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0z-beta3/css/all.min.css" /> 
   <!-- <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"> -->
@@ -275,7 +275,7 @@
         </div>
         <a href="#main" id="fp">Forgot password?</a>
         <hr />
-        <div class="btn">
+        <div class="reg-btn">
     <a href="userRegister.html" class="register-link">Create an account</a>
 </div>
       </form>
@@ -283,32 +283,6 @@
     </div>
   </div>
   <div class="loader"><div></div></div>
-
-  <!-- Register Modal -->
-  <!-- <div class="register-modal">
-    <button class="close-btn"><ion-icon name="close-outline"></ion-icon></button>
-    <div class="register-bar">
-      <form name="register-form" action="./Script/Backend/userDetails.php" method="POST" onsubmit="return validateForm()">
-        <label for="fname">Full Name
-        
-        </label>
-        <input type="text" id="fname" name="fname" required/>
-        <label for="reg-email">Email
-          <b><span id="email-err" class="mailError">Invalid Email</span></b>
-        </label>
-        <input type="email" id="reg-email" name="reg-email" required/>
-
-        <label for="new-pass">Password
-          <b><span id="pass-err" class="passwordError">At least 8 letters</span></b>
-        </label>
-        <input type="password" id="new-pass" name="new-pass" required/>
-
-        <div class="btn">
-          <button type="submit" class="register-btn"><b>Register</b></button>
-        </div>
-      </form>
-    </div>
-  </div> -->
 
   <div class="wishlist-modal">
         <div class="wishlist-header">Wishlist
@@ -424,17 +398,36 @@
       <div class="menu-divider"></div>
       <div class="user-menu-item logout">
         <ion-icon name="log-out-outline" class="icon-logout"></ion-icon>
-        <span class="menu-text" id="log-out-btn">Logout</span>
+        <button class="menu-btn" id="log-out-btn">Logout</button>
       </div>
     </div>
   </div>
 </div>
 <div class="toast" id="toast"></div>
-    
-  <!-- Scripts -->
-   <!-- <script src="bootstrap/js/bootstrap.bundle.min.js"></script> -->
+  <script>
+   document.addEventListener("DOMContentLoaded", () => {
+    const guestAccount = document.querySelector('.guest-account');
+    const userAccount = document.querySelector('.user-account');
+
+    fetch("Backend/checkSession.php")
+        .then(res => res.json())
+        .then(data => {
+            if (data.loggedIn) {
+                if (guestAccount) guestAccount.style.display = "none";
+                if (userAccount) userAccount.style.display = "block";
+            } else {
+                if (guestAccount) guestAccount.style.display = "block";
+                if (userAccount) userAccount.style.display = "none";
+            }
+        })
+        .catch(err => console.error("Failed to check session:", err));
+});
+
+
+  </script>
   <script src="Script/modal.js"></script>
   <script src="Script/signin.js"></script>
+  <script src="Script/signout.js"></script>
   <script src="Script/iProducts.js"></script>
   <script src="Script/wishPage.js"></script>
   <!-- <script src="Script/validateForm.js"></script> -->

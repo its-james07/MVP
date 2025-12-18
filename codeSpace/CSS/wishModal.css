@@ -2,7 +2,7 @@
     display: none;
     position: fixed;
     top: 12%;
-    left: 65%;
+    left: 67%;
     transform: translateX(-50%);
     width: 450px;
     max-height: 300px;
@@ -71,3 +71,4 @@
 .wish-actions button:last-child:hover{
     background: #c8e6c9;
 }
+

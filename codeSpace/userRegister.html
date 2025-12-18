@@ -3,7 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <title>Create an Account</title>
-    <link rel="stylesheet" href="CSS/userRegister.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/userRegister.css">
+    <link rel="stylesheet" href="CSS/mediaqueries.css">
   </head>
   <body>
     <div class="main-page">
@@ -39,7 +41,7 @@
               <input type="password" id="confirm-password" placeholder="••••••••" class="showHide" required/>
               <div class="show-pass">
               <input type="checkbox" id="toggle-password" onclick="togglePassword();">
-              <label for="toggle-password" style="font-size: 16px;"><strong>Show</strong></label>
+              <label for="toggle-password" id="show-text"><strong>Show</strong></label>
               </div>
             </div>
             <button type="submit">Create Account <div class="loader"><div></div></div></button>

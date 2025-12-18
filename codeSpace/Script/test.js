@@ -1,4 +1,8 @@
-console.log("Hello world");
-setTimeout(()=>{
-	console.log("hello second text");
-}, 2000);
+const object = {
+    a:'some string', 
+    b: 42,
+}
+
+for(const [key, value] of Object.entries(object)){
+    console.log(`${key}:${value}`);
+}

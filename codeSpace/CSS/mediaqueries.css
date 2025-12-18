@@ -1,4 +1,4 @@
-@media (max-width: 580px){
+@media (max-width: 590px){
     .top-right-icons{
         display: none;
     }
@@ -71,15 +71,22 @@
         width: 180px;
     }
 
-    
-
     .fitem-details a,p{
         font-size: 14px;
     }
 
+    .register-link{
+        font-size: 0.7rem;
+        margin: 0;
+    }
+
+    .reg-btn{
+        display: flex;
+        justify-content: center;
+    }
 }
 
-@media (max-width: 808px){
+@media (min-width: 581px)and(max-width: 808px){
     .be-a-seller{
         display: none;
     }

@@ -198,24 +198,21 @@ input[type=password]:focus {
     background-color: var(--primary-green);
 }
 
-.register-link,
-.back-link{
-    display: inline-block; 
-    font-size: 1rem;
-    padding: 10px;
-    background-color: var(--secondary-green);
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s ease;
-    text-align: center;    
+.register-link {     
+    display: inline-block;     
+    font-size: 1rem;     
+    padding: 10px;     
+    background-color: var(--secondary-green);     
+    color: #fff;     
+    border: none;     
+    border-radius: 5px;     
+    cursor: pointer;     
+    transition: 0.3s ease;     
+    text-align: center;     
+    margin: 20px 80px 0px 80px;     
+    font-size: 18px; 
 }
 
-.register-link{
-    margin: 20px 80px 0px 80px;
-    font-size: 18px;
-}
 
 .back-link{
     margin-right: 60px;
