@@ -152,12 +152,12 @@ button:hover {
     margin-top: 6px;
 }
 
-#toggle-password{
+.toggle-password{
     height: 15px;
     width: 15px;
 }
 
-#toggle-password:hover{
+.toggle-password:hover{
     cursor: pointer;
 }
 

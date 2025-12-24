@@ -6,16 +6,34 @@
     <title>Document</title>
     <link rel="stylesheet" href="CSS/styles.css">
     <link rel="stylesheet" href="CSS/SRF.css">
+    <link rel="stylesheet" href="CSS/navbar.css">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
 </head>
 <body>
-    <header>
-    <div class="header-main">
+  <header class="navbar-container">
+    <div class="header-main" style="background-color: #fafafa; height: 8rem;">
       <div class="logo-container">
-        <!-- <a href="#main"><img src="/assets/images/logo.png" alt=""></a> -->
+        <a href="index.html" ><strong>Pupkit</strong></a>
       </div>
+      <div class="top-right-icons">
+        <button class="action-btn">
+          
+          <img src="../assets/images/heart (1).svg" alt="wishlist" class="show-wishlist ion-icon">
+          <span class="badge" id="wish-badge">0</span>
+        </button>
+        <button  class="action-btn">  
+           <img src="../assets/images/cart.svg" alt="cart" class="show-cart ion-icon">
+          <span class="badge" id="cart-badge">0</span>
+        </button>
+        <button class="action-btn user-login">
+          <img src="../assets/images/usericon.svg" alt="userIcon" class="ion-icon">
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Bottom Nav -->
   </header>
   <main>
   <div class="top-of-srf">
@@ -51,9 +69,9 @@
           <label for="sr-email">Email</label>
           <input type="email" id="sr-email" name="email" placeholder="abc@example.com" required />
           <label for="password">Password</label>
-          <input type="password" id="password" name="password" placeholder="Create password" minlength="6" required />
+          <input type="password" id="password" class="showHide" name="password" placeholder="Create password" minlength="6" required />
           <label for="confirm-password">Confirm Password</label>
-          <input type="password" id="confirm-password" name="confirm_password" placeholder="Re-enter password" required />
+          <input type="password" id="confirm-password" class="showHide" name="confirm_password" placeholder="Re-enter password" required />
           <label for="sr-phone">Contact Number</label>
           <input type="tel" id="sr-phone" name="phone" placeholder="9800000000" pattern="[0-9]{10}" required />
           <div class="terms-box">
@@ -66,5 +84,6 @@
     </div>
   </div>
   </main>
+  <script src="Script/signup.js"></script>
 </body>
 </html>

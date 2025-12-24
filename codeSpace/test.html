@@ -1,218 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>Shop Homepage</title>
+<head>
+  <meta charset="UTF-8" />
+  <title>User Modal</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    /* Modal background */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
 
-    <!-- Bootstrap icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="CSS/navbar.css" />
-    <link rel="stylesheet" href="CSS/styles.css" />
-    <link rel="stylesheet" href="CSS/footer.css">
-    <link rel="stylesheet" href="CSS/mediaqueries.css">
-    <link rel="stylesheet" href="CSS/shopPage.css">
-  </head>
+    /* Modal box */
+    .modal-content {
+      background: #fff;
+      width: 60%;
+      margin: 10% auto;
+      padding: 20px;
+      border-radius: 8px;
+    }
 
-  <body>
-    <header class="spacing navbar-container"></header>
+    .close {
+      float: right;
+      font-size: 20px;
+      cursor: pointer;
+    }
 
-    <!-- Header -->
-    <!-- <section class="bg-dark py-5">
-      <div class="container px-4 px-lg-5 my-5">
-        <div class="text-center text-white">
-          <h1 class="display-4 fw-bolder">Shop in style</h1>
-          <p class="lead fw-normal text-white-50 mb-0">With this shop homepage template</p>
-        </div>
-      </div>
-    </section> -->
-  <section class="filter-section" >
-  <div class="filter-container">
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
 
-    <h2>Browse Products</h2>
+    th, td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
 
-    <div class="filters">
-      <div class="categories">
-        <button class="active">All</button>
-        <button>Dog</button>
-        <button>Cat</button>
-        <button>Fish</button>
-        <button>Bird</button>
-      </div>
+    th {
+      background-color: #f4f4f4;
+    }
 
-      <div class="sort">
-        <label for="sort-price">Sort by:</label>
-        <select id="sort-price">
-          <option value="">Default</option>
-          <option value="low-high">Price: Low to High</option>
-          <option value="high-low">Price: High to Low</option>
-        </select>
-      </div>
-    </div>
+    button {
+      padding: 6px 10px;
+      cursor: pointer;
+    }
 
+    .remove-btn {
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+<button onclick="openModal()">Open Users</button>
+
+<div id="userModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h3>User List</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="userTableBody">
+        <!-- Rows inserted here -->
+      </tbody>
+    </table>
   </div>
-</section>
-    <!-- Section -->
-    <section class="py-2" id="show-products">
-      <div class="container px-4 px-lg-5 mt-5">
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+</div>
 
-          <!-- Product Card Template -->
-          <div class="col mb-5">
-            <div class="card h-100">
-              <!-- Product image -->
-              <img class="card-img-top" src="/assets/images/collar.jpg" alt="..." style="height: 250px; object-fit: cover;"/>
+<script>
+  const modal = document.getElementById("userModal");
+  const tableBody = document.getElementById("userTableBody");
 
-              <!-- Product details -->
-              <div class="card-body p-4">
-                <div class="text-center">
-                  <h5 class="fw-bolder">Dog Collar</h5>
-                <span class="price">$40</span>
-                </div>
-              </div>
+  function openModal() {
+    modal.style.display = "block";
+    fetchUsers();
+  }
 
-              <!-- Product actions -->
-              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                <div class="text-center">
-                  <a class="btn btn-outline-dark mt-auto" href="#">View Product
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col mb-5">
-            <div class="card h-100">
-              <!-- Product image -->
-              <img class="card-img-top" src="/assets/images/collar.jpg" alt="..." style="height: 250px; object-fit: cover;"/>
+  function closeModal() {
+    modal.style.display = "none";
+  }
 
-              <!-- Product details -->
-              <div class="card-body p-4">
-                <div class="text-center">
-                  <h5 class="fw-bolder">Dog Collar</h5>
-                <span class="price">$40</span>
-                </div>
-              </div>
+  async function fetchUsers() {
+    tableBody.innerHTML = "";
 
-              <!-- Product actions -->
-              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                <div class="text-center">
-                  <a class="btn btn-outline-dark mt-auto" href="#">View Product
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col mb-5">
-            <div class="card h-100">
-              <!-- Product image -->
-              <img class="card-img-top" src="/assets/images/collar.jpg" alt="..." style="height: 250px; object-fit: cover;"/>
+    try {
+      const response = await fetch("https://example.com/api/users");
+      const users = await response.json();
 
-              <!-- Product details -->
-              <div class="card-body p-4">
-                <div class="text-center">
-                  <h5 class="fw-bolder">Dog Collar</h5>
-                <span class="price">$40</span>
-                </div>
-              </div>
+      users.forEach(user => {
+        const row = document.createElement("tr");
 
-              <!-- Product actions -->
-              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                <div class="text-center">
-                  <a class="btn btn-outline-dark mt-auto" href="#">View Product
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
+        row.innerHTML = `
+          <td>${user.username}</td>
+          <td>${user.email}</td>
+          <td>
+            <button class="remove-btn" onclick="removeUser('${user.id}', this)">
+              Remove
+            </button>
+          </td>
+        `;
 
-          <div class="col mb-5">
-            <div class="card h-100">
-              <!-- Product image -->
-              <img class="card-img-top" src="/assets/images/collar.jpg" alt="..." style="height: 250px; object-fit: cover;"/>
+        tableBody.appendChild(row);
+      });
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  }
 
-              <!-- Product details -->
-              <div class="card-body p-4">
-                <div class="text-center">
-                  <h5 class="fw-bolder">Dog Collar</h5>
-                <span class="price">$40</span>
-                </div>
-              </div>
+  async function removeUser(userId, btn) {
+    try {
+      await fetch(`https://example.com/api/users/${userId}`, {
+        method: "DELETE"
+      });
 
-              <!-- Product actions -->
-              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                <div class="text-center">
-                  <a class="btn btn-outline-dark mt-auto" href="#">View Product
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
+      // Remove row from table
+      btn.closest("tr").remove();
+    } catch (error) {
+      console.error("Error removing user:", error);
+    }
+  }
+</script>
 
-          <div class="col mb-5">
-            <div class="card h-100">
-              <!-- Product image -->
-              <img class="card-img-top" src="/assets/images/collar.jpg" alt="..." style="height: 250px; object-fit: cover;"/>
-
-              <!-- Product details -->
-              <div class="card-body p-4">
-                <div class="text-center">
-                  <h5 class="fw-bolder">Dog Collar</h5>
-                <span class="price">$40</span>
-                </div>
-              </div>
-
-              <!-- Product actions -->
-              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                <div class="text-center">
-                  <a class="btn btn-outline-dark mt-auto" href="#">View Product
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col mb-5">
-            <div class="card h-100">
-              <!-- Product image -->
-              <img class="card-img-top" src="/assets/images/collar.jpg" alt="..." style="height: 250px; object-fit: cover;"/>
-
-              <!-- Product details -->
-              <div class="card-body p-4">
-                <div class="text-center">
-                  <h5 class="fw-bolder">Dog Collar</h5>
-                <span class="price">$40</span>
-                </div>
-              </div>
-
-              <!-- Product actions -->
-              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                <div class="text-center">
-                  <a class="btn btn-outline-dark mt-auto" href="#">View Product
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Repeat product cards as needed, same structure -->
-
-        </div>
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <!-- <footer class="py-2 bg-dark">
-      <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p>
-      </div>
-    </footer> -->
-    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="Script/main.js"></script>
-  </body>
+</body>
 </html>

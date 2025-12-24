@@ -4,7 +4,6 @@ header{
     z-index: 99;
     max-width: 1300px;
     margin: 0 auto;
-    /* background-color: #7D8D86; */
 }
 
 .header-main {
@@ -15,7 +14,6 @@ header{
     width: inherit;
     padding: 5px 5px;
     gap: 1rem;
-    background-color: #7D8D86;
 }
 
 .logo-container{

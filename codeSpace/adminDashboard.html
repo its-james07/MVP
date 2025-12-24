@@ -9,6 +9,9 @@
   <link rel="stylesheet" href="CSS/mediaqueries.css">
   <link rel="stylesheet" href="CSS/panel.css">
   <link rel="icon" href="/assets/favicon/favicon.png">
+  <style>
+    
+  </style>
 </head>
 <body>
   <header>
@@ -43,7 +46,7 @@
     </nav>
   </header>
 
-<main>
+<main class="spacing">
 <div class="action-bar">
 <button class="action-btn" id="seller-btn">Seller Control</button>
 <ul class="show-actions" id="seller-menu">
@@ -57,15 +60,22 @@
     <li><button>View Product Details</button></li>
     <li><button>Remove Product</button></li>
 </ul>
-  <button class="action-btn" id="user-btn">User Control</button>
-    <ul class="show-actions" id="user-menu">
-        <li><button>View Users</button></li>
-        <li><button>Remove</button></li>
-    </ul>
+  <button class="action-btn" id="ftch-users">User Control</button>
+    <!-- <ul class="show-actions" id="user-menu">
+        <li><button id="ftch-user">View Users</button></li>
+        <li><button id="rmv-user">Remove</button></li>
+    </ul> -->
 </div>
 
 <div class="content-box">
-  <h3>Data Unavailable</h3>
+  <!-- <div class="welcome-msg">
+    <h3>Welcome Admin</h3>
+  </div> -->
+  <div class="userData">
+    <table id="userInfo-table">
+    </table>
+  </div>
+  
 </div>
 
 <ul class="show-actions" id="admin-menu">
@@ -74,5 +84,6 @@
 </ul>
 </main>
 <script src="Script/adminScript.js"></script>
+<script src="Script/viewUsers.js"></script>
 </body>
 </html>

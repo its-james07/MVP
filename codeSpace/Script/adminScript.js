@@ -1,7 +1,6 @@
 const menuMap = {
     'seller-btn':'seller-menu', 
     'product-btn':'product-menu',
-    'user-btn':'user-menu', 
     'admin-menu-btn':'admin-menu'
 };
 

@@ -29,7 +29,8 @@ li{
 }
 
 .spacing{
-    padding: 0 8rem;
+    max-width: 1300px;
+    margin: 0 auto;
 }
 
 body{
@@ -674,7 +675,7 @@ input[type=password]:focus {
 .toast.error { background-color: #f44336; }
 
 .show-pass{
-    float: right;
+    /* float: right; */
     display:flex;
     /* justify-content: space-evenly; */
     gap: 5px;
