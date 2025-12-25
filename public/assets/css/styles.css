@@ -286,6 +286,7 @@ input[type=password]:focus {
 }
 
 .category-section,
+.products-section,
 .featured-section,
 .dfeatured-section,
 .cfeatured-secton,
@@ -311,7 +312,8 @@ input[type=password]:focus {
 
 .featured-items,
 .dfeatured-items,
-.cfeatured-items{
+.cfeatured-items,
+.product-items{
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -325,7 +327,8 @@ input[type=password]:focus {
 
 .featured-items .fitem,
 .dfeatured-items .dfitem,
-.cfeatured-items .cfitem{
+.cfeatured-items .cfitem,
+.product-items .pitem{
     position: relative;
     display: flex;
     flex-direction: column;
@@ -338,15 +341,16 @@ input[type=password]:focus {
 
 .featured-items .fitem:hover, 
 .dfeatured-items .dfitem:hover,
-.cfeatured-items .cfitem:hover{
-    /* background-color: #ddd; */
+.cfeatured-items .cfitem:hover,
+.product-items .pitem:hover{
     box-shadow: 10px 10px 25px rgba(7, 9, 8, 0.05);
     
 }
 
 .fitem-img,
 .dfitem-img,
-.cfitem-img{
+.cfitem-img,
+.pitem-img{
     height: 70%;
     width: 100%;
     overflow: hidden;
@@ -354,11 +358,12 @@ input[type=password]:focus {
 
 .fitem-img img,
 .dfitem-img img,
-.cfitem-img img{
+.cfitem-img img,
+.pitem-img img{
     width: 100%;
     height: 100%;
     display: block;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center;
     border-radius: 20px;
 }
@@ -366,13 +371,12 @@ input[type=password]:focus {
 
 .fitem-details,
 .dfitem-details,
-.cfitem-details{
+.cfitem-details,
+.pitem-details{
     height: 30%;
     width: 100%;
-    /* background-color: var(--myWhite); */
     padding: 5px;
     text-align: center;
-    /* background-color: #cfcfcf; */
 }
 
 .fitem-details a,
@@ -380,12 +384,14 @@ input[type=password]:focus {
 .dfitem-details a,
 .dfitem-details p,
 .cfitem-details a,
-.cfitem-details p{
+.cfitem-details p,
+.pitem-details a,
+.pitem-details p{
     font-size: 18px;
 }
 
 
-.price-wishlist{
+.price-action{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -394,9 +400,10 @@ input[type=password]:focus {
     align-items: center;
 }
 
-.fitem-details .wish-btn,
-.dfitem-details .wish-btn,
-.cfitem-details .wish-btn {
+.fitem-details .view-btn,
+.dfitem-details .view-btn,
+.cfitem-details .view-btn,
+.pitem-details .view-btn{
     display: inline-block; 
     padding: 8px 10px;
     font-size: 0.9rem;
@@ -409,7 +416,7 @@ input[type=password]:focus {
 }
 
 
-.wish-btn:hover,
+.view-btn:hover,
 .newsletter button:hover{
     cursor: pointer;
     background-color: var(--secondary-green);

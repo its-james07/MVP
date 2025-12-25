@@ -4,11 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard</title>
-  <link rel="stylesheet" href="CSS/styles.css">
-  <link rel="stylesheet" href="CSS/navbar.css">
-  <link rel="stylesheet" href="CSS/mediaqueries.css">
-  <link rel="stylesheet" href="CSS/panel.css">
-  <link rel="icon" href="/assets/favicon/favicon.png">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <link rel="stylesheet" href="../assets/css/navbar.css">
+  <link rel="stylesheet" href="../assets/css/mediaqueries.css">
+  <link rel="stylesheet" href="../assets/css/panel.css">
+
+  <link rel="icon" href="../assets/favicon/favicon.png">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
   <style>
     
   </style>
@@ -19,11 +21,24 @@
       <div class="logo-container">
         <a href="index.html" ><strong>Admin Panel</strong></a>
       </div>
-      <div class="top-right-icons">
+      <!-- <div class="top-right-icons">
         <button class="action-btn" id="admin-menu-btn">
           <img src="../assets/images/usericon.svg" alt="userIcon" class="ion-icon">
         </button>
-      </div>
+      </div> -->
+      <div class="dropdown">
+      <button
+        class="btn btn-secondary dropdown-toggle"
+        type="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false">
+        Account
+      </button>
+      <ul class="dropdown-menu">
+        <li><button class="dropdown-item"> Update Profile</button></li>
+        <li><button class="dropdown-item log-out-btn">Logout</button></li>
+      </ul>
+    </div>
     </div>
 
     <!-- Mobile Bottom Nav -->
@@ -61,29 +76,18 @@
     <li><button>Remove Product</button></li>
 </ul>
   <button class="action-btn" id="ftch-users">User Control</button>
-    <!-- <ul class="show-actions" id="user-menu">
-        <li><button id="ftch-user">View Users</button></li>
-        <li><button id="rmv-user">Remove</button></li>
-    </ul> -->
 </div>
 
 <div class="content-box">
-  <!-- <div class="welcome-msg">
-    <h3>Welcome Admin</h3>
-  </div> -->
   <div class="userData">
     <table id="userInfo-table">
     </table>
   </div>
   
 </div>
-
-<ul class="show-actions" id="admin-menu">
-  <li><button>Update Info</button></li>
-  <li><button>Logout</button></li>
-</ul>
 </main>
-<script src="Script/adminScript.js"></script>
-<script src="Script/viewUsers.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/js/adminScript.js"></script>
+<script src="../assets/js/viewUsers.js"></script>
 </body>
 </html>

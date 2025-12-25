@@ -6,7 +6,7 @@ form.addEventListener('submit', function(e){
     }   
     const formData = new FormData(form);
     console.log('It is working');
-    fetch('Backend/userDetails.php',{
+    fetch('../../backend/users/userDetails.php',{
         method: 'POST', 
         body: formData
     }).then(response => response.json())

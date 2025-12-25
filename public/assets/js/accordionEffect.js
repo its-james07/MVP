@@ -1,5 +1,4 @@
 const accordions = document.querySelectorAll(".accordion");
-// const showArrow = document.querySelectorAll(".show-arrow");
 accordions.forEach(accordion => {
     accordion.addEventListener('click', ()=>{
         accordion.classList.toggle('active');

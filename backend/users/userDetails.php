@@ -1,10 +1,7 @@
 <?php
-require_once 'db.php';
+require_once '../config/db.php';
+require '../config/sanitizedata.php';
 header('Content-Type: application/json');
-
-function test_input($data){
-    return htmlspecialchars(stripslashes(trim($data)));
-}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fname = test_input($_POST["fname"]);

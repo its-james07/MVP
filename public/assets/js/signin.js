@@ -7,7 +7,7 @@ loginForm.addEventListener('submit', function (e) {
 
     const formData = new FormData(loginForm);
     console.log("It works before fetching");
-    fetch('Backend/login.php', {
+    fetch('../../backend/auth/login.php', {
     method: 'POST',
     body: formData
 })
