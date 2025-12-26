@@ -54,6 +54,11 @@ min-height: 400px;
 
 }
 
+.error{
+  color: rgb(182, 54, 54);
+  float: right;
+}
+
 .show-actions li {
   padding: 5px 12px;
 }

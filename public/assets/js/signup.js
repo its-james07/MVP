@@ -4,13 +4,19 @@ form.addEventListener('submit', function(e){
     if(!validateForm()){
         return;
     }   
+
+    submitBtn = form.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Creating account...";
+    setTimeout(()=>{
     const formData = new FormData(form);
-    console.log('It is working');
     fetch('../../backend/users/userDetails.php',{
         method: 'POST', 
         body: formData
     }).then(response => response.json())
     .then(data =>{
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Create Account";
         if(data.status ===  'success'){
             showToast('Signup Successful', 'success');
             clearForm();
@@ -23,10 +29,13 @@ form.addEventListener('submit', function(e){
         }
     })
     .catch(err =>{
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Create Account";
         showToast("Oops! omething went wrong");
         console.error(err);
     })
-})
+    },2000);
+});
 
 function validateForm(){
 

@@ -19,7 +19,7 @@
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
-<body onload="checkSession()">
+<body>
   <header class="navbar-container">
     <div class="header-main" style="background-color: #fafafa; height: 8rem;">
       <div class="logo-container">
@@ -316,7 +316,7 @@
 
     <div class="cart-item">
       <div class="item-image">
-        <img src="/assets/images/hemp-factory-outlet-6CQx8JnO-jg-unsplash.jpg" alt="Ikea Markus chair">
+        <img src="assets/images/hemp-factory-outlet-6CQx8JnO-jg-unsplash.jpg" alt="Ikea Markus chair">
       </div>
       <div class="item-info">
         <span class="item-category">CHAIR</span>
@@ -336,7 +336,7 @@
 
   <div class="cart-item">
       <div class="item-image">
-        <img src="/assets/images/dad-grass-_XdRuZ09C3o-unsplash.jpg" alt="Ikea Markus chair">
+        <img src="assets/images/dad-grass-_XdRuZ09C3o-unsplash.jpg" alt="Ikea Markus chair">
       </div>
       <div class="item-info">
         <span class="item-category">CHAIR</span>
@@ -401,11 +401,30 @@
   </div>
 </div>
 <div class="toast" id="toast"></div>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const guestAccount = document.querySelector('.guest-account');
+    const userAccount = document.querySelector('.user-account');
+
+    fetch("../backend/auth/checkSession.php")
+        .then(res => res.json())
+        .then(data => {
+            if (data.loggedIn) {
+                if (guestAccount) guestAccount.style.display = "none";
+                if (userAccount) userAccount.style.display = "block";
+            } else {
+                if (guestAccount) guestAccount.style.display = "block";
+                if (userAccount) userAccount.style.display = "none";
+            }
+        })
+        .catch(err => console.error("Failed to check session:", err));
+});
+  </script>
   <!-- <script src="Script/main.js"></script> -->
   <script src="assets/js/modal.js"></script>
   <script src="assets/js/signin.js"></script>
   <script src="assets/js/signout.js"></script>
-  <script src="assets/js/iProducts.js"></script>
+  <script src="assets/js/renderProduct.js"></script>
   <script src="assets/js/wishPage.js"></script>
   <!-- <script src="Script/validateForm.js"></script> -->
   <script src="assets/js/accordionEffect.js"></script>

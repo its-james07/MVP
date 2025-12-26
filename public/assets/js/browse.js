@@ -11,26 +11,14 @@ const productItems = [
     {name: "Pedigree Biscrok", price: 2010, image: "../assets/images/dogProducts/cleaner.png", wishlist: false}
 ];
 
-function renderProducts(containerId, classOfDiv, productsArray){
-    const container = document.getElementById(containerId);
-    container.innerHTML = "";
-    productsArray.forEach((product) =>{
-        const div = document.createElement("div");
-        div.className = classOfDiv;
-        div.innerHTML = `
-        <div class="${classOfDiv}-img">
-            <img src="${product.image}" alt="${product.name}" />
-          </div>
-          <div class="${classOfDiv}-details">
-            <h4><a href="#main">${product.name}</a></h4>
-            <div class="price-action">
-              <p id="price">Rs ${product.price}</p>
-            <button class="view-btn"><b>View Product</b></ion-icon></button>
-            </div>
-          </div>
-          `;
-          container.appendChild(div);
-    });
-}
-
 renderProducts("product-items", "pitem", productItems);
+
+const productCategory = document.querySelectorAll('.catg-btn');
+productCategory.forEach(element => {
+    element.addEventListener('click', ()=>{
+      productCategory.forEach(btn =>{
+        btn.classList.remove('active');
+      })
+      element.classList.add('active');
+    })
+});
