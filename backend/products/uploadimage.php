@@ -1,5 +1,5 @@
 <?php
-function uploadImage(array $file): string
+function uploadImage(array $file, $category): string
 {
     if ($file['error'] !== UPLOAD_ERR_OK) {
         throw new Exception('Image upload error');
@@ -18,8 +18,16 @@ function uploadImage(array $file): string
         throw new Exception('Invalid image type');
     }
 
-    // Upload directory
-    $uploadDir = dirname(__DIR__) . '/images/';
+    if($category === 'dog'){
+       $uploadDir = __DIR__ . '/../../public/assets/images/dog-products/';
+    }else if($category === 'cat'){
+       $uploadDir = __DIR__ . '/../../public/assets/images/cat-products/';
+    }else if($category === 'fish'){
+       $uploadDir = __DIR__ . '/../../public/assets/images/fish-products/';
+    }else{
+       $uploadDir = __DIR__ . '/../../public/assets/images/bird-products/';
+    }
+
     if (!is_dir($uploadDir)) {
         mkdir($uploadDir, 0755, true);
     }

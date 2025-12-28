@@ -1,6 +1,7 @@
 <?php
 session_start();
 require '../config/db.php';
+require '../config/sanitizedata.php';
 header('Content-Type: application/json');
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {

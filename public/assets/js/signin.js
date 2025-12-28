@@ -4,15 +4,19 @@ invalidPass.style.display = "none";
 
 loginForm.addEventListener('submit', function (e) {
     e.preventDefault();
-
+    submitBtn = loginForm.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Logging in..";
+    setTimeout(()=>{
     const formData = new FormData(loginForm);
-    console.log("It works before fetching");
-    fetch('../../backend/auth/login.php', {
+    fetch('../backend/auth/login.php', {
     method: 'POST',
     body: formData
 })
     .then(response => response.json())
     .then(data => {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Login";
         console.log(data);
             try {
             if (data.status === 'redirect_admin') {
@@ -24,7 +28,7 @@ loginForm.addEventListener('submit', function (e) {
             else if (data.status === 'redirect_user') {
                 showToast("Login Successful!", "success");
                 showMenu();
-                window.location.href = "index.html";
+                window.location.href = "index.php";
             } 
             else if (data.status === 'incorrect_password') {
                 invalidPass. style.display = "inline";
@@ -35,13 +39,18 @@ loginForm.addEventListener('submit', function (e) {
                 invalidPass.textContent = data.message || "Login failed";
             }
         } catch (parseError) {
+            submitBtn.disabled = false;
+        submitBtn.textContent = "Login";
             console.error("Failed to parse JSON:", parseError);
         }
     })
     .catch(err => {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Login";
         console.error("Fetch error:", err);
         showToast("Something went wrong", "error");
     });
+    }, 1000);
 });
 
 function showToast(message, type = 'success', duration = 2000) {
@@ -67,4 +76,7 @@ function clearForm() {
         userForm.reset();
     }
 }
+
+
+
 

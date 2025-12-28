@@ -8,16 +8,21 @@
         try {
     $name = trim($_POST['name'] ?? '');
     $description = trim($_POST['description'] ?? '');
-    $price = $_POST['price'] ?? null;
-    $stock = $_POST['stock_quantity'] ?? null;
+    $category = $_POST['category'] ?? '';
+    $price = $_POST['price'] ?? '';
+    $stock = $_POST['stock_quantity'] ?? '';
     $isActive = isset($_POST['is_active']) ? 1 : 0;
 
-    if ($name === '' || strlen($name) < 2) {
+    if (empty($name) || strlen($name) < 2) {
         throw new Exception('Invalid product name');
     }
 
     if (strlen($description) > 100) {
         throw new Exception('Description too long');
+    }
+
+    if($category === ''){
+        throw new Exception('Please Select a Category');
     }
 
     if (!is_numeric($price) || $price <= 0) {
@@ -32,17 +37,18 @@
         throw new Exception('Product image is required');
     }
 
-    $imageName = uploadImage($_FILES['product-image']);
+    $imageName = uploadImage($_FILES['product-image'], $category);
 
-    $stmt = $conn->prepare("
+    $stmt = $pdo->prepare("
         INSERT INTO products 
-        (name, description, price, stock_quantity, is_active, image_url, created_at)
-        VALUES (?, ?, ?, ?, ?, ?, NOW())
+        (name, description,category, price, stock_quantity, is_active, image_url, created_at)
+        VALUES (?, ?,?, ?, ?, ?, ?, NOW())
     ");
 
     $stmt->execute([
         $name,
         $description,
+        $category,
         $price,
         $stock,
         $isActive,

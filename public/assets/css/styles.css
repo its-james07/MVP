@@ -268,7 +268,9 @@ input[type=password]:focus {
     padding: 30px 20px;
     border-radius: 20px;
     background-color: var(--myWhite);
-    box-shadow: 2px 10px 15px rgba(7, 52, 32, 0.05);
+    box-shadow: 2px 10px 20px rgba(7, 52, 32, 0.05);
+/* box-shadow: 2px 2px 1px #7D8D86; */
+
 }
 
 .hbanner-text h1{

@@ -16,8 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
+    $stmt->execute([$email]);
     $stmt->store_result();
     if ($stmt->num_rows > 0){
         echo json_encode(["status" => "email_exists"]);

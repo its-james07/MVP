@@ -1,5 +1,4 @@
-<?php 
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,27 +22,27 @@
   <header class="navbar-container">
     <div class="header-main" style="background-color: #fafafa; height: 8rem;">
       <div class="logo-container">
-        <a href="index.html" ><strong>Pupkit</strong></a>
+        <a href="index.php" ><strong>Pupkit</strong></a>
       </div>
       <div class="search-bar">
         <input type="search" name="search" class="search-field" placeholder="Enter your product name..." />
         <button class="search-btn">
-          <img src="assets/images/search.svg" alt="search-btn" style="height: 20px; width: 30px;">
+          <img src="assets/images/index/search.svg" alt="search-btn" style="height: 20px; width: 30px;">
         </button>
       </div>
 
       <div class="top-right-icons">
         <button class="action-btn">
           
-          <img src="assets/images/heart (1).svg" alt="wishlist" class="show-wishlist ion-icon">
+          <img src="assets/images/index/heart (1).svg" alt="wishlist" class="show-wishlist ion-icon">
           <span class="badge" id="wish-badge">0</span>
         </button>
         <button  class="action-btn">  
-           <img src="assets/images/cart.svg" alt="cart" class="show-cart ion-icon">
+           <img src="assets/images/index/cart.svg" alt="cart" class="show-cart ion-icon">
           <span class="badge" id="cart-badge">0</span>
         </button>
         <button class="action-btn user-login">
-          <img src="assets/images/usericon.svg" alt="userIcon" class="ion-icon">
+          <img src="assets/images/index/usericon.svg" alt="userIcon" class="ion-icon">
         </button>
         
       </div>
@@ -75,8 +74,8 @@
     <section class="hero-section">
       <div class="hero-banner">
         <picture>
-          <source srcset="assets/images/hero-mobile.png" media="(max-width: 767px)" />
-          <img src="assets/images/hero-desktop.png" alt="Poppy" />
+          <source srcset="assets/images/index.hero-mobile.png" media="(max-width: 767px)" />
+          <img src="assets/images/index/hero-desktop.png" alt="Poppy" />
         </picture>
         <div class="hbanner-content">
           <div class="hbanner-text">
@@ -84,7 +83,7 @@
             <p>Pet essentials you can trust.</p>
           </div>
           <div class="hbanner-links">
-            <a href="pages/browseProduct.html" class="buy-link">Buy now!</a>
+            <a href="pages/browseProduct.php" class="buy-link">Buy now!</a>
             <a href="pages/sellerRegister.html" class="login-btn">Become a Seller</a>
           </div>
         </div>
@@ -92,13 +91,13 @@
     </section>
 
     <!-- Featured Products-->
-    <section class="featured-section">
+     <section class="featured-section">
       <h2 style="display: inline">Featured Products</h2>
       <span class="view-more"><a href="products_page.html">View all</a></span>
 
-      <div class="featured-items" id="featured-items">
+      <div class="featured-items" id="featured-items"> 
         <!-- For reference -->
-        <!-- <div class="fitem">
+         <!-- <div class="fitem">
           <div class="fitem-img">
             <img src="../assets/images/collar.png" alt="Collar" />
           </div>
@@ -111,27 +110,27 @@
           </div>
         </div> -->
       </div>
-    </section>
+    </section> 
 
     <!-- Shop by Category -->
     <section class="category-section">
       <h2>Shop by Category</h2>
       <div class="category-items">
         <div class="citem one">
-          <img src="assets/images/cDog.png" alt="Dog" draggable="false" />
-          <a href="pages/browseProduct.html">Dog</a>
+          <img src="assets/images/index/cDog.png" alt="Dog" draggable="false" />
+          <a href="pages/browseProduct.php">Dog</a>
         </div>
         <div class="citem two">
-          <img src="assets/images/cCat.png" alt="Cat" draggable="false" />
-          <a href="pages/browseProduct.html">Cat</a>
+          <img src="assets/images/index/cCat.png" alt="Cat" draggable="false" />
+          <a href="pages/browseProduct.php">Cat</a>
         </div>
         <div class="citem three">
-          <img src="assets/images/cFish.png" alt="Fish" draggable="false" />
-          <a href="pages/browseProduct.html">Fish</a>
+          <img src="assets/images/index/cFish.png" alt="Fish" draggable="false" />
+          <a href="pages/browseProduct.php">Fish</a>
         </div>
         <div class="citem four">
-          <img src="assets/images/cBird.png" alt="Bird" draggable="false" />
-          <a href="pages/browseProduct.html">Bird</a>
+          <img src="assets/images/index/cBird.png" alt="Bird" draggable="false" />
+          <a href="pages/browseProduct.php">Bird</a>
         </div>
       </div>
     </section>
@@ -146,8 +145,8 @@
     <section class="banner-container">
       <div class="dog-banner">
         <picture>
-          <source srcset="assets/images/dogBanner.png" media="(max-width: 767px)" />
-          <img src="assets/images/dogBanner.png" alt="Dog Banner" />
+          <source srcset="assets/images/index/dogBanner.png" media="(max-width: 767px)" />
+          <img src="assets/images/index/dogBanner.png" alt="Dog Banner" />
         </picture>
       </div>
     </section>
@@ -155,7 +154,7 @@
     <!-- Dog Featured Products-->
     <section class="dfeatured-section">
       <h2 style="display: inline">Our Recommendation</h2>
-      <span class="view-more"><a href="pages/browseProduct.html">View all</a></span>
+      <span class="view-more"><a href="pages/browseProduct.php">View all</a></span>
       <div class="dfeatured-items" id="dfeatured-items">
         <!-- Product Card Example -->
         <!-- <div class="dfitem">
@@ -177,8 +176,8 @@
     <section class="banner-container">
       <div class="cat-banner">
         <picture>
-          <source srcset="assets/images/" media="(max-width: 767px)" />
-          <img src="assets/images/cBanner.png" alt="Cat Banner" />
+          <source srcset="assets/images/index" media="(max-width: 767px)" />
+          <img src="assets/images/index/cBanner.png" alt="Cat Banner" />
         </picture>
       </div>
     </section>
@@ -186,7 +185,7 @@
         <!-- Featured Products-->
     <section class="cfeatured-section">
       <h2 style="display: inline">Our Recommendation</h2>
-      <span class="view-more"><a href="pages/browseProduct.html">View all</a></span>
+      <span class="view-more"><a href="pages/browseProduct.php">View all</a></span>
 
       <div class="cfeatured-items" id="cfeatured-items">
         <!-- Product Card Example -->
@@ -273,11 +272,11 @@
         <hr />
         <div class="reg-btn">
     <a href="userRegister.html" class="register-link">Create an account</a>
-</div>
-      </form>
-      
     </div>
+    </form>
+      
   </div>
+</div>
   <div class="loader"><div></div></div>
 
   <div class="wishlist-modal">
@@ -424,7 +423,8 @@
   <script src="assets/js/modal.js"></script>
   <script src="assets/js/signin.js"></script>
   <script src="assets/js/signout.js"></script>
-  <script src="assets/js/renderProduct.js"></script>
+  <script src="assets/js/viewProduct.js"></script>
+  <script src="assets/js/renderProducts.js"></script>
   <script src="assets/js/wishPage.js"></script>
   <!-- <script src="Script/validateForm.js"></script> -->
   <script src="assets/js/accordionEffect.js"></script>
