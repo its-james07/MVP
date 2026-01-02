@@ -18,14 +18,14 @@ form.addEventListener('submit', function(e){
         submitBtn.disabled = false;
         submitBtn.textContent = "Create Account";
         if(data.status ===  'success'){
-            showToast('Signup Successful', 'success');
+            showToast(data.message , 'success');
             clearForm();
         }
         else if(data.status === 'email_exists'){
-            showToast("Email Already Exist", 'error');
+            showToast(data.message, 'error');
         }
         else{
-            showToast('Failed to signup', 'error');
+            showToast( data.message, 'error');
         }
     })
     .catch(err =>{

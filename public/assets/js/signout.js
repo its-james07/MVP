@@ -2,7 +2,7 @@ const logOutBtns = document.querySelectorAll('.log-out-btn');
 
 logOutBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-        fetch('../backend/auth/logout.php', {
+        fetch('../backend/authe/logout.php', {
             method: 'POST'
         })
         .then(response => response.json())

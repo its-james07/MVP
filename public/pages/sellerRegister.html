@@ -15,20 +15,20 @@
   <header class="navbar-container">
     <div class="header-main" style="background-color: #fafafa; height: 8rem;">
       <div class="logo-container">
-        <a href="index.php" ><strong>Pupkit</strong></a>
+        <a href="index.html" ><strong>Pupkit</strong></a>
       </div>
       <div class="top-right-icons">
         <button class="action-btn">
           
-          <img src="../assets/images/heart (1).svg" alt="wishlist" class="show-wishlist ion-icon">
+          <img src="../assets/images/index/heart (1).svg" alt="wishlist" class="show-wishlist ion-icon">
           <span class="badge" id="wish-badge">0</span>
         </button>
         <button  class="action-btn">  
-           <img src="../assets/images/cart.svg" alt="cart" class="show-cart ion-icon">
+           <img src="../assets/images/index/cart.svg" alt="cart" class="show-cart ion-icon">
           <span class="badge" id="cart-badge">0</span>
         </button>
         <button class="action-btn user-login">
-          <img src="../assets/images/usericon.svg" alt="userIcon" class="ion-icon">
+          <img src="../assets/images/index/usericon.svg" alt="userIcon" class="ion-icon">
         </button>
       </div>
     </div>
@@ -38,13 +38,13 @@
   <main>
   <div class="top-of-srf">
     <!-- <h2 style="text-align: center; font-size: 1.9rem; color: #3a9461;>Start Selling Today!</h2> -->
-  <img src="../assets/images/SRF_sideimg.png" alt="hero image" height="550" width="550" />
+  <img src="../assets/images/index/SRF_sideimg.png" alt="hero image" height="550" width="550" />
   
   </div>
 
   <div class="sr-modal">
     <div class="sr-bar">
-      <form name="sr-form" action="/register-seller" method="POST" class="sr-form-container">
+      <form name="sr-form"  class="sr-form-container" id="sr-form" method="POST">
         <!-- LEFT SECTION -->
         <div class="sr-left">
           <label for="shop-name">Shop Name</label>
@@ -66,24 +66,26 @@
 
         <!-- RIGHT SECTION -->
         <div class="sr-right">
-          <label for="sr-email">Email</label>
+          <label for="sr-email">Email <span class="sr-error" id="emailError" style="float: right;">Invalid Format</span></label>
           <input type="email" id="sr-email" name="email" placeholder="abc@example.com" required />
-          <label for="password">Password</label>
-          <input type="password" id="password" class="showHide" name="password" placeholder="Create password" minlength="6" required />
-          <label for="confirm-password">Confirm Password</label>
-          <input type="password" id="confirm-password" class="showHide" name="confirm_password" placeholder="Re-enter password" required />
+          <label for="password">Password<span class="error" id="invalid-pass" style="float: right">Use Strong Password</span></label>
+          <input type="password" id="pwd" class="showHide" name="password" placeholder="Create password" minlength="8" required />
+          <label for="confirm-password">Confirm Password<span class="error" id="not-confirm" style="float :right">Not matched</span></label>
+          <input type="password" id="cpwd" class="showHide" name="confirm_password" placeholder="Re-enter password" required />
           <label for="sr-phone">Contact Number</label>
-          <input type="tel" id="sr-phone" name="phone" placeholder="9800000000" pattern="[0-9]{10}" required />
+          <input type="tel" id="sr-phone" name="phone" placeholder="9800000000" pattern="[0-9]{10}" min="10" max="10" required />
           <div class="terms-box">
             <input type="checkbox" id="terms" required style="margin-top: 10px" />
             <label for="terms"><a href="policy.html">I agree to the Terms & Conditions</a></label>
           </div>
-          <button type="submit" class="sr-btn"><b>Register</b></button>
+          <button type="submit" class="sr-btn" id="sr-btn"><b>Register</b></button>
         </div>
       </form>
     </div>
   </div>
+    <div class="toast" id="toast"></div>
   </main>
-  <script src="../assets/js/signup.js"></script>
+  <!-- <script src="../assets/js/signup.js"></script> -->
+  <script src="../assets/js/sellerReg.js"></script>
 </body>
 </html>

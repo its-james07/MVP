@@ -85,6 +85,15 @@ select:focus {
     background-color: var(--primary-green);
 }
 
+.error{
+    float: right;
+    color: rgb(197, 62, 62);
+}
+
+#invalid-pass, #not-confirm, #emailError{
+    display: none;
+}
+
 
 
 @media (max-width: 900px) {
