@@ -112,7 +112,7 @@
                   <div class="text-xs fw-bold text-primary text-uppercase mb-1">
                     Total Users
                   </div>
-                  <div class="h5 mb-0 fw-bold text-dark"><h5 id="usersCount"><strong>500</strong></h5></div>
+                  <div class="h5 mb-0 fw-bold text-dark"><h5 id="usersCount"><strong></strong></h5></div>
                 </div>
                 <div class="col-auto">
                   <!-- <i class="fas fa-calendar fa-2x text-muted"></i> -->
@@ -131,7 +131,7 @@
                   <div class="text-xs fw-bold text-success text-uppercase mb-1">
                     Total Sellers
                   </div>
-                  <div class="h5 mb-0 fw-bold text-dark"><h5 id="sellersCount"><strong>500</strong></h5></div>
+                  <div class="h5 mb-0 fw-bold text-dark"><h5 id="sellersCount"><strong></strong></h5></div>
                 </div>
                 <div class="col-auto">
                   <!-- <i class="fas fa-dollar-sign fa-2x text-muted"></i> -->
@@ -150,7 +150,7 @@
                   <div class="text-xs fw-bold text-success text-uppercase mb-1">
                     Total Products
                   </div>
-                  <div class="h5 mb-0 fw-bold text-dark"><h5 id="productsCount"><strong>500</strong></h5></div>
+                  <div class="h5 mb-0 fw-bold text-dark"><h5 id="productsCount"><strong></strong></h5></div>
                 </div>
                 <div class="col-auto">
                   <ion-icon class="fa-2x text-muted" name="albums-outline"></ion-icon>
@@ -168,7 +168,7 @@
                   <div class="text-xs fw-bold text-warning text-uppercase mb-1">
                     Pending Requests
                   </div>
-                  <div class="h5 mb-0 fw-bold text-dark"><h5 id="requestsCount"><strong>500</strong></h5></div>
+                  <div class="h5 mb-0 fw-bold text-dark"><h5 id="pendingRequests"><strong></strong></h5></div>
                 </div>
                 <div class="col-auto">
                 <ion-icon class="fa-2x text-muted" name="hourglass-outline"></ion-icon>
