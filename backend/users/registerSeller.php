@@ -16,9 +16,9 @@ try {
     $contact = $_POST['phone'];
     $role = "pending";
 
-    $query1 = "INSERT INTO userdetails(fname, email, password, role) VALUES(?, ?, ?, ?)";
-    $query2 = "INSERT INTO owner_details(oname, ocontact) VALUES(?,?)";
-    $query3 = "INSERT INTO shop_details(sname, saddress, stype, oid) VALUES(?, ?, ?, ?)";
+    $query1 = "INSERT INTO users(fname, email, password, role) VALUES(?, ?, ?, ?)";
+    $query2 = "INSERT INTO sellers(oname, ocontact) VALUES(?,?)";
+    $query3 = "INSERT INTO shops(sname, saddress, stype, oid) VALUES(?, ?, ?, ?)";
 
     $conn->begin_transaction();
     $stmt1 =  $conn->prepare($query1);

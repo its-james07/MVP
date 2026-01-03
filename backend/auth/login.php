@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $lpass  = $_POST["log-pass"] ?? '';
 
     $stmt = $conn->prepare(
-        "SELECT id, fname, email, role, password FROM userdetails WHERE email = ?"
+        "SELECT id, fname, email, role, password FROM users WHERE email = ?"
     );
 
     if (!$stmt) {

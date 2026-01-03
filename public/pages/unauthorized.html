@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>Access Denied</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.10.2/lottie.min.js"></script>    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            /* background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+
+        .error-container {
+            text-align: center;
+            padding: 30px;
+            max-width: 420px;
+        }
+
+        /* Lottie container styling */
+        #lottieAnimation {
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 20px;
+        }
+
+        .error-container h1 {
+            color: black;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .error-container p {
+            color: #333;
+            font-size: 16px;
+            opacity: 0.85;
+            margin-bottom: 25px;
+        }
+
+        .error-container a {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #ff4b2b;
+            color: #333;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        .error-container a:hover {
+            background-color: #ff2e00;
+        }
+    </style>
+</head>
+<body>
+
+<div class="error-container">
+    <!-- Lottie Animation Container -->
+    <div id="lottieAnimation"></div>
+
+    <h1>403 | Access Denied</h1>
+    <p>You don’t have permission to access this page.<br>
+        Please log in with the correct account.
+    </p>
+    <a href="../index.php">Go to Login</a>
+</div>
+
+<script>
+    lottie.loadAnimation({
+        container: document.getElementById('lottieAnimation'),
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: '../assets/animation/error404.json' // example Lottie animation
+    });
+</script>
+</body>
+</html>

@@ -15,7 +15,7 @@ try {
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     // Check if email exists
-    $stmt = $conn->prepare("SELECT email FROM userdetails WHERE email = ?");
+    $stmt = $conn->prepare("SELECT email FROM users WHERE email = ?");
     if ($stmt === false) {
         throw new Exception("Prepare failed: " . $conn->error);
     }
@@ -35,7 +35,7 @@ try {
     $stmt->close();
 
     // Insert new user
-    $stmt = $conn->prepare("INSERT INTO userdetails(fname, email, password) VALUES (?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO users(fname, email, password) VALUES (?, ?, ?)");
     if ($stmt === false) {
         throw new Exception("Prepare failed: " . $conn->error);
     }
