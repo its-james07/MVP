@@ -31,8 +31,10 @@ body{
     width: 800px;
 }
 
-#pageInfo h2{
-    padding-left:200px;
+#pageInfo h3{
+    color: #4c956c;
+    font-size: 28px;
+    padding-left:220px;
 }
  
 
@@ -190,6 +192,26 @@ input:focus,select:focus,textarea:focus{
 .btn:hover{
     background:#26774a;
 }
+
+.show-pass{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    float: right;
+    margin-bottom: 10px;
+}
+
+#toggle-password{
+    width: 15px;
+    height: 15px;
+}
+
+#show-text{
+    padding-bottom: 12px;
+    
+}
+
+
 
 /* ===== TERMS ===== */
 .terms{

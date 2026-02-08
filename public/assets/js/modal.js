@@ -16,7 +16,7 @@ let hideTimeout;
 function showAccountModal() {
   accountModal.style.display = "block";
   wishlistModal.style.display = "none";
-  cartModal.style.display = "none";
+  cartModal.classList.remove('show');
 }
 function hideAccountModal() {
   hideTimeout = setTimeout(() => {
@@ -44,13 +44,14 @@ accountModal.addEventListener("mouseleave", hideAccountModal);
 
 wishlistBtn.addEventListener('click', ()=>{
   wishlistModal.style.display = "block";
-  cartModal.style.display = "none";
+  cartModal.classList.remove('show');
 });
 
 cartBtn.addEventListener('click', ()=>{
-  cartModal.style.display = "block";
+  cartModal.classList.add('show');
+  overlay.classList.add('show');
+  document.body.classList.add('modal-open');
   wishlistModal.style.display = "none";
-
 });
 
 closeBtns.forEach(btn => {
@@ -58,7 +59,7 @@ closeBtns.forEach(btn => {
     loginModal.style.display = "none";
     accountModal.style.display = "none";
     wishlistModal.style.display = "none";
-    cartModal.style.display = "none";
+    cartModal.classList.remove('show');
   });
 });
 
@@ -69,3 +70,11 @@ function showMenu() {
     guestAccount.style.display = "none";
     userAccount.style.display = "block";
 }
+
+// function openModal(modal){
+
+// }
+
+// function closeModal(){
+
+// }

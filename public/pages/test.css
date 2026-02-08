@@ -106,3 +106,19 @@ button {
     text-align: center;
   }
 }
+
+.empty-cart{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    padding:40px 0;
+    text-align:center;
+    color:#666;
+}
+
+.empty-cart h3{
+    margin-top:10px;
+    font-weight:500;
+}
+

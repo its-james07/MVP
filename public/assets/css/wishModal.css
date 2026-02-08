@@ -1,7 +1,7 @@
 .wishlist-modal {
     display: none;
     position: fixed;
-    top: 12%;
+    top: 15%;
     left: 67%;
     transform: translateX(-50%);
     width: 450px;

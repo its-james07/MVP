@@ -16,16 +16,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Dashboard</title>
 
-  <!-- Custom CSS -->
   <link rel="stylesheet" href="../assets/css/styles.css" />
   <link rel="stylesheet" href="../assets/css/navbar.css" />
   <link rel="stylesheet" href="../assets/css/mediaqueries.css" />
   <link rel="stylesheet" href="../assets/css/panel.css" />
-
-  <!-- Bootstrap -->
   <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css" />
 
-  <!-- Font Awesome (REQUIRED for icons) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

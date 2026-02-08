@@ -1,133 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seller Registration</title>
-      <link rel="stylesheet" href="../assets/css/SRF.css">
-  <!-- <link rel="stylesheet" href="../assets/css/styles.css"> -->
+    <link rel="stylesheet" href="../assets/css/SRF.css">
+    <!-- <link rel="stylesheet" href="../assets/css/styles.css"> -->
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 </head>
+
 <body>
 
-<main class="container">
-    <section id="pageInfo">
-        <img src="../assets/images/sellerRegistration.png" alt="seller registration illustration">
-        <h2>Grow Your Business With Us</h2>
-    </section>
-    <section class="seller-section">
-        <div class="card">
-            <div class="progress-container">
-                <div class="progress" id="progress"></div>
-                <div class="circle active">1</div>
-                <div class="circle">2</div>
-            </div>
+    <main class="container">
+        <section id="pageInfo">
+            <img src="../assets/images/sellerRegistration.png" alt="seller registration illustration">
+            <h3>Grow Your Business With Us</h3>
+        </section>
+        <section class="seller-section">
+            <div class="card">
+                <div class="progress-container">
+                    <div class="progress" id="progress"></div>
+                    <div class="circle active">1</div>
+                    <div class="circle">2</div>
+                </div>
 
-            <form id="regForm" method="POST" action="seller_register.php">
-                
-                <div class="form-step active" id="step1">
-                    <h2>Shop Information</h2>
-                    
-                    <label>Shop Name</label>
-                    <input type="text" name="shop_name" >
+                <form id="regForm" method="POST" action="seller_register.php">
 
-                    <label>Owner Full Name</label>
-                    <input type="text" name="owner_name">
+                    <div class="form-step active" id="step1">
+                        <h2>Shop Information</h2>
 
-                    <label>Shop Type</label>
-                    <select name="shop_type">
-                        <option value="">Select shop type</option>
-                        <option value="dog">Dog Products</option>
-                        <option value="cat">Cat Products</option>
-                        <option value="bird">Bird Products</option>
-                        <option value="fish">Fish Products</option>
-                        <option value="all">All Pets</option>
-                    </select>
+                        <label>Shop Name</label>
+                        <input type="text" name="shop_name">
 
-                    <label>Business Address</label>
-                    <input type="text" name="shop_address" >
+                        <label>Owner Full Name</label>
+                        <input type="text" name="owner_name">
 
-                    <label>City</label>
-                    <input type="text" name="city" >
+                        <label>Shop Type</label>
+                        <select name="shop_type">
+                            <option value="">Select shop type</option>
+                            <option value="dog">Dog Products</option>
+                            <option value="cat">Cat Products</option>
+                            <option value="bird">Bird Products</option>
+                            <option value="fish">Fish Products</option>
+                            <option value="all">All Pets</option>
+                        </select>
 
-                    <!-- <label>Country</label>
+                        <label>Business Address</label>
+                        <input type="text" name="shop_address">
+
+                        <label>City</label>
+                        <input type="text" name="city">
+
+                        <!-- <label>Country</label>
                     <input type="text" name="country" value="Nepal" disabled> -->
 
-                    <div class="btn-group">
-                        <button type="button" class="nav-btn" onclick="nextStep()">Next</button>
-                    </div>
-                </div>
-
-                <div class="form-step" id="step2">
-                    <h2>Account Details</h2>
-
-                    <label>Email</label>
-                    <input type="email" name="email">
-
-                    <label>Password</label>
-                    <input type="password" name="password" minlength="8">
-
-                    <label>Confirm Password</label>
-                    <input type="password" name="confirm_password">
-
-                    <label>Phone Number</label>
-                    <input type="tel" name="phone" pattern="[0-9]{10}" >
-
-                    <!-- <label>Additional Info (optional)</label>
-                    <textarea name="description" rows="3"></textarea> -->
-
-                    <div class="terms">
-                        <input type="checkbox" required>
-                        <a href="#main">I agree to Terms & Conditions</a>
+                        <div class="btn-group">
+                            <button type="button" class="nav-btn" onclick="nextStep()">Next</button>
+                        </div>
                     </div>
 
-                    <div class="btn-group">
-                        <button type="button" class="nav-btn" onclick="prevStep()">Previous</button>
-                        <button type="submit" class="btn">Register Seller</button>
+                    <div class="form-step" id="step2">
+                        <h2>Account Details</h2>
+
+                        <label>Email</label>
+                        <input type="email" name="email">
+
+                        <label>Password</label>
+                        <input type="password" name="password" minlength="8">
+
+                        <label>Confirm Password</label>
+                        <input type="password" name="confirm_password">
+                        <div class="show-pass">
+                            <input type="checkbox" id="toggle-password" onclick="togglePassword();"
+                            >
+                            <label for="toggle-password" id="show-text"><strong>Show</strong></label>
+                        </div>
+
+                        <label>Phone Number</label>
+                        <input type="tel" name="phone" pattern="[0-9]{10}">
+
+                        <div class="terms">
+                            <input type="checkbox" required>
+                            <a href="#main">I agree to Terms & Conditions</a>
+                        </div>
+
+                        <div class="btn-group">
+                            <button type="button" class="nav-btn" onclick="prevStep()">Previous</button>
+                            <button type="submit" class="btn">Register Seller</button>
+                        </div>
                     </div>
-                </div>
-            </form>
-        </div>
-    </section>
-</main>
+                </form>
+            </div>
+        </section>
+    </main>
 
-<script>
-    const formSteps = document.querySelectorAll(".form-step");
-    const circles = document.querySelectorAll(".circle");
-    const progress = document.getElementById("progress");
+    <script>
+        const formSteps = document.querySelectorAll(".form-step");
+        const circles = document.querySelectorAll(".circle");
+        const progress = document.getElementById("progress");
 
-    function nextStep() {
-        // Validation check for Step 1
-        const inputs = formSteps[0].querySelectorAll("input, select");
-        let valid = true;
-        inputs.forEach(input => {
-            if(!input.checkValidity()) {
-                input.reportValidity();
-                valid = false;
+        function nextStep() {
+            // Validation check for Step 1
+            const inputs = formSteps[0].querySelectorAll("input, select");
+            let valid = true;
+            inputs.forEach(input => {
+                if (!input.checkValidity()) {
+                    input.reportValidity();
+                    valid = false;
+                }
+            });
+
+            if (valid) {
+                formSteps[0].classList.remove("active");
+                formSteps[1].classList.add("active");
+                updateProgress(1);
             }
-        });
-
-        if (valid) {
-            formSteps[0].classList.remove("active");
-            formSteps[1].classList.add("active");
-            updateProgress(1);
         }
-    }
 
-    function prevStep() {
-        formSteps[1].classList.remove("active");
-        formSteps[0].classList.add("active");
-        updateProgress(0);
-    }
+        function prevStep() {
+            formSteps[1].classList.remove("active");
+            formSteps[0].classList.add("active");
+            updateProgress(0);
+        }
 
-    function updateProgress(stepIndex) {
-        circles.forEach((circle, idx) => {
-            if(idx <= stepIndex) circle.classList.add("active");
-            else circle.classList.remove("active");
-        });
-        progress.style.width = stepIndex === 1 ? "100%" : "0%";
-    }
-</script>
+        function updateProgress(stepIndex) {
+            circles.forEach((circle, idx) => {
+                if (idx <= stepIndex) circle.classList.add("active");
+                else circle.classList.remove("active");
+            });
+            progress.style.width = stepIndex === 1 ? "100%" : "0%";
+        }
+    </script>
 </body>
+
 </html>
