@@ -9,7 +9,9 @@ form.addEventListener('submit', (e) => {
     // --- Get field-specific error spans ---
     const nameErr = document.getElementById('name-err');
     const imgErr = document.getElementById('img-err');
-    imgErr.textContent = '';
+
+    // --- Clear previous errors ---
+    // imgErr.textContent = '';
     errorEl.textContent = '';
     errorEl.style.color = 'red';
 

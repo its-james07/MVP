@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="../assets/css/mediaqueries.css">
     <link rel="stylesheet" href="../assets/css/shopPage.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-    <!-- <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" /> -->
+    <!-- <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css" /> -->
   </head>
 
   <body>
@@ -31,22 +31,22 @@
       <div class="search-bar">
         <input type="search" name="search" class="search-field" placeholder="Enter your product name..." />
         <button class="search-btn">
-          <img src="../assets/images/search.svg" alt="search-btn" style="height: 20px; width: 30px;">
+          <img src="../assets/images/index/search.svg" alt="search-btn" style="height: 20px; width: 30px;">
         </button>
       </div>
 
       <div class="top-right-icons">
         <button class="action-btn">
           
-          <img src="../assets/images/heart (1).svg" alt="wishlist" class="show-wishlist ion-icon">
+          <img src="../assets/images/index/heart (1).svg" alt="wishlist" class="show-wishlist ion-icon">
           <span class="badge" id="wish-badge">0</span>
         </button>
         <button  class="action-btn">  
-           <img src="../assets/images/cart.svg" alt="cart" class="show-cart ion-icon">
+           <img src="../assets/images/index/cart.svg" alt="cart" class="show-cart ion-icon">
           <span class="badge" id="cart-badge">0</span>
         </button>
         <button class="action-btn user-login">
-          <img src="../assets/images/usericon.svg" alt="userIcon" class="ion-icon">
+          <img src="../assets/images/index/usericon.svg" alt="userIcon" class="ion-icon">
         </button>
         
       </div>
@@ -110,7 +110,9 @@
         </div> -->
       </div>
     </section>
-
+  <div class="load-more" style="display: flex; align-items: center; color: red">
+  <button class="load-data">Centered Button</button>
+  </div>
     <!-- Footer -->
     <!-- <footer class="py-2 bg-dark">
       <div class="container">

@@ -3,89 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="../assets/css/styles.css">
-    <link rel="stylesheet" href="../assets/css/SRF.css">
-    <link rel="stylesheet" href="../assets/css/navbar.css">
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <title>Seller Registration</title>
+      <link rel="stylesheet" href="../assets/css/SRF.css">
+  <!-- <link rel="stylesheet" href="../assets/css/styles.css"> -->
 
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 </head>
 <body>
-  <header class="navbar-container">
-    <div class="header-main" style="background-color: #fafafa; height: 8rem;">
-      <div class="logo-container">
-        <a href="index.html" ><strong>Pupkit</strong></a>
-      </div>
-      <div class="top-right-icons">
-        <button class="action-btn">
-          
-          <img src="../assets/images/index/heart (1).svg" alt="wishlist" class="show-wishlist ion-icon">
-          <span class="badge" id="wish-badge">0</span>
-        </button>
-        <button  class="action-btn">  
-           <img src="../assets/images/index/cart.svg" alt="cart" class="show-cart ion-icon">
-          <span class="badge" id="cart-badge">0</span>
-        </button>
-        <button class="action-btn user-login">
-          <img src="../assets/images/index/usericon.svg" alt="userIcon" class="ion-icon">
-        </button>
-      </div>
-    </div>
 
-    <!-- Mobile Bottom Nav -->
-  </header>
-  <main>
-  <div class="top-of-srf">
-    <!-- <h2 style="text-align: center; font-size: 1.9rem; color: #3a9461;>Start Selling Today!</h2> -->
-  <img src="../assets/images/index/SRF_sideimg.png" alt="hero image" height="550" width="550" />
-  
-  </div>
+<main class="container">
+    <section id="pageInfo">
+        <img src="../assets/images/sellerRegistration.png" alt="seller registration illustration">
+        <h2>Grow Your Business With Us</h2>
+    </section>
+    <section class="seller-section">
+        <div class="card">
+            <div class="progress-container">
+                <div class="progress" id="progress"></div>
+                <div class="circle active">1</div>
+                <div class="circle">2</div>
+            </div>
 
-  <div class="sr-modal">
-    <div class="sr-bar">
-      <form name="sr-form"  class="sr-form-container" id="sr-form" method="POST">
-        <!-- LEFT SECTION -->
-        <div class="sr-left">
-          <label for="shop-name">Shop Name</label>
-          <input type="text" id="shop-name" name="shop_name" placeholder="PupKit Store" required />
-          <label for="shop-address">Shop Address (Street, City)</label>
-          <input type="text" id="shop-address" name="shop_address" placeholder="Street, City" required />
-          <label for="owner-name">Owner Full Name</label>
-          <input type="text" id="owner-name" name="owner_name" placeholder="Ram Krishna" required />
-          <label for="shop-type">Shop Type</label>
-          <select id="shop-type" name="shop_type" required>
-            <option value="">Select Type</option>
-            <option value="dog">Dog Products</option>
-            <option value="cat">Cat Products</option>
-            <option value="bird">Bird Products</option>
-            <option value="fish">Fish Products</option>
-            <option value="all">All Pets</option>
-          </select>
+            <form id="regForm" method="POST" action="seller_register.php">
+                
+                <div class="form-step active" id="step1">
+                    <h2>Shop Information</h2>
+                    
+                    <label>Shop Name</label>
+                    <input type="text" name="shop_name" >
+
+                    <label>Owner Full Name</label>
+                    <input type="text" name="owner_name">
+
+                    <label>Shop Type</label>
+                    <select name="shop_type">
+                        <option value="">Select shop type</option>
+                        <option value="dog">Dog Products</option>
+                        <option value="cat">Cat Products</option>
+                        <option value="bird">Bird Products</option>
+                        <option value="fish">Fish Products</option>
+                        <option value="all">All Pets</option>
+                    </select>
+
+                    <label>Business Address</label>
+                    <input type="text" name="shop_address" >
+
+                    <label>City</label>
+                    <input type="text" name="city" >
+
+                    <!-- <label>Country</label>
+                    <input type="text" name="country" value="Nepal" disabled> -->
+
+                    <div class="btn-group">
+                        <button type="button" class="nav-btn" onclick="nextStep()">Next</button>
+                    </div>
+                </div>
+
+                <div class="form-step" id="step2">
+                    <h2>Account Details</h2>
+
+                    <label>Email</label>
+                    <input type="email" name="email">
+
+                    <label>Password</label>
+                    <input type="password" name="password" minlength="8">
+
+                    <label>Confirm Password</label>
+                    <input type="password" name="confirm_password">
+
+                    <label>Phone Number</label>
+                    <input type="tel" name="phone" pattern="[0-9]{10}" >
+
+                    <!-- <label>Additional Info (optional)</label>
+                    <textarea name="description" rows="3"></textarea> -->
+
+                    <div class="terms">
+                        <input type="checkbox" required>
+                        <a href="#main">I agree to Terms & Conditions</a>
+                    </div>
+
+                    <div class="btn-group">
+                        <button type="button" class="nav-btn" onclick="prevStep()">Previous</button>
+                        <button type="submit" class="btn">Register Seller</button>
+                    </div>
+                </div>
+            </form>
         </div>
+    </section>
+</main>
 
-        <!-- RIGHT SECTION -->
-        <div class="sr-right">
-          <label for="sr-email">Email <span class="sr-error" id="emailError" style="float: right;">Invalid Format</span></label>
-          <input type="email" id="sr-email" name="email" placeholder="abc@example.com" required />
-          <label for="password">Password<span class="error" id="invalid-pass" style="float: right">Use Strong Password</span></label>
-          <input type="password" id="pwd" class="showHide" name="password" placeholder="Create password" minlength="8" required />
-          <label for="confirm-password">Confirm Password<span class="error" id="not-confirm" style="float :right">Not matched</span></label>
-          <input type="password" id="cpwd" class="showHide" name="confirm_password" placeholder="Re-enter password" required />
-          <label for="sr-phone">Contact Number</label>
-          <input type="tel" id="sr-phone" name="phone" placeholder="9800000000" pattern="[0-9]{10}" min="10" max="10" required />
-          <div class="terms-box">
-            <input type="checkbox" id="terms" required style="margin-top: 10px" />
-            <label for="terms"><a href="policy.html">I agree to the Terms & Conditions</a></label>
-          </div>
-          <button type="submit" class="sr-btn" id="sr-btn"><b>Register</b></button>
-        </div>
-      </form>
-    </div>
-  </div>
-    <div class="toast" id="toast"></div>
-  </main>
-  <!-- <script src="../assets/js/signup.js"></script> -->
-  <script src="../assets/js/sellerReg.js"></script>
+<script>
+    const formSteps = document.querySelectorAll(".form-step");
+    const circles = document.querySelectorAll(".circle");
+    const progress = document.getElementById("progress");
+
+    function nextStep() {
+        // Validation check for Step 1
+        const inputs = formSteps[0].querySelectorAll("input, select");
+        let valid = true;
+        inputs.forEach(input => {
+            if(!input.checkValidity()) {
+                input.reportValidity();
+                valid = false;
+            }
+        });
+
+        if (valid) {
+            formSteps[0].classList.remove("active");
+            formSteps[1].classList.add("active");
+            updateProgress(1);
+        }
+    }
+
+    function prevStep() {
+        formSteps[1].classList.remove("active");
+        formSteps[0].classList.add("active");
+        updateProgress(0);
+    }
+
+    function updateProgress(stepIndex) {
+        circles.forEach((circle, idx) => {
+            if(idx <= stepIndex) circle.classList.add("active");
+            else circle.classList.remove("active");
+        });
+        progress.style.width = stepIndex === 1 ? "100%" : "0%";
+    }
+</script>
 </body>
 </html>

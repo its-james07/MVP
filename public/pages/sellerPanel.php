@@ -23,10 +23,7 @@
   <link rel="stylesheet" href="../assets/css/panel.css">
   <link rel="icon" href="../assets/favicon/favicon.png">
 
-  <!-- Bootstrap -->
   <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
-
-  <!-- Font Awesome (required for cards icons) -->
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -34,13 +31,11 @@
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
-
 <body>
-
 <header>
   <nav class="header-main">
     <div class="logo-container">
-      <a href="index.html"><strong>Vendor Panel</strong></a>
+      <a href="index.html"><strong>Seller Panel</strong></a>
     </div>
 
     <div class="dropdown">
@@ -139,7 +134,6 @@
 
   <!-- ACTION BAR -->
   <div class="action-bar d-flex align-items-center gap-2 flex-wrap mb-3">
-
     <button class="btn btn-outline-primary">
       Analytics
     </button>
@@ -198,7 +192,7 @@
         </div>
 
         <div class="modal-body p-4">
-          <form method="post" id="prod-form" enctype="multipart/form-data">
+          <form id="prod-form" enctype="multipart/form-data">
 
             <div class="mb-2">
               <label class="form-label">Name</label>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <title>Product Info</title>
+  <link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.png" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+  
+  <!-- <link rel="stylesheet" href="CSS/styles.css"> -->
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="CSS/styles.css">
+  <link href="CSS/navbar.css" rel="stylesheet" />
+  <link rel="stylesheet" href="CSS/mediaqueries.css">
+  <!-- <script src="http://localhost:35729/livereload.js"></script> -->
+</head>
+
+<body style="background-color: #fafafa;">
+  <header class="navbar-container spacing"></header>
+
+  <!-- Product Section -->
+  <section class="py-5" style="background: #fafafa;">
+    <div class="container px-4 px-lg-5 my-2">
+      <div class="row gx-4 gx-lg-5 align-items-center">
+        <div class="col-md-6">
+          <img class="card-img-top mb-5 mb-md-0 shadow-lg" src="/assets/images/bowl.jpg" alt="Dog Bowl" />
+        </div>
+        <div class="col-md-6">
+          <div class="small mb-1"><strong>Type: </strong> <span class="catgory">Dog</span></div>
+          <h1 class="display-5 fw-bolder">Dog Bowl</h1>
+          <div class="fs-5 mb-5">
+            <span class="text-decoration-line-through">$45.00</span>
+            <span class="text-success">$40.00</span>
+          </div>
+          <p class="lead">This durable dog bowl is perfect for pets of all sizes. Made from high-quality, non-toxic materials, it ensures safe feeding. Its non-slip base prevents spills, while the sleek design complements any home. Easy to clean and built to last, it makes mealtime convenient and enjoyable for your furry friend.</p>
+          <div class="d-flex">
+            <div class="d-flex">
+              <label for="quantity" class="fs-5">Quantity&nbsp;</label>
+              <input type="number" class="form-control text-center" id="inputQuantity" value="1" min="1" 
+                     style="width: 50px; height: 45px; padding: 0; font-size: 12px;">
+            </div>
+          </div>
+          <div class="d-flex mt-3">
+            <button class="btn btn-outline-success flex-shrink-0 mx-2" type="button">
+              <i class="bi-cart-fill me-1"></i>
+              Add to Cart
+            </button>
+            <button class="btn btn-outline-secondary flex-shrink-0" type="button">
+              <i class="bi-heart-fill me-1"></i>
+              Wish +
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-2 bg-success-subtle">
+    <div class="container">
+      <p class="m-0 text-center text-black">Copyright &copy; @Pupkit 2025</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Custom JS -->
+   <script src="Script/main.js"></script>
+  <script src="Script/modal.js"></script>
+  <script src="Script/signin.js"></script>
+  <script src="Script/signout.js"></script>
+  <script src="Script/iProducts.js"></script>
+  <script src="Script/wishPage.js"></script>
+</body>
+
+</html>

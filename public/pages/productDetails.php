@@ -48,7 +48,7 @@ $found = false;
 
 foreach ($featuredItems as $item) {
     if ($item['id'] == $searchid) { // use == for type coercion
-        echo "Product Found: " . $item['name'] . " - Price: " . $item['price'];
+        // echo "Product Found: " . $item['name'] . " - Price: " .  $item['price'];
         $found = true;
         $product = $item;
         break; 
@@ -83,27 +83,27 @@ if (!$found) {
   <header class="navbar-container">
     <div class="header-main" style="background-color: #fafafa; height: 8rem;">
       <div class="logo-container">
-        <a href="index.php" ><strong>Pupkit</strong></a>
+        <a href="../index.php" ><strong>Pupkit</strong></a>
       </div>
       <div class="search-bar">
         <input type="search" name="search" class="search-field" placeholder="Enter your product name..." />
         <button class="search-btn">
-          <img src="../assets/images/search.svg" alt="search-btn" style="height: 20px; width: 30px;">
+          <img src="../assets/images/index/search.svg" alt="search-btn" style="height: 20px; width: 30px;">
         </button>
       </div>
 
       <div class="top-right-icons">
         <button class="action-btn">
           
-          <img src="../assets/images/heart (1).svg" alt="wishlist" class="show-wishlist ion-icon">
+          <img src="../assets/images/index/heart (1).svg" alt="wishlist" class="show-wishlist ion-icon">
           <span class="badge" id="wish-badge">0</span>
         </button>
         <button  class="action-btn">  
-           <img src="../assets/images/cart.svg" alt="cart" class="show-cart ion-icon">
+           <img src="../assets/images/index/cart.svg" alt="cart" class="show-cart ion-icon">
           <span class="badge" id="cart-badge">0</span>
         </button>
         <button class="action-btn user-login">
-          <img src="../assets/images/usericon.svg" alt="userIcon" class="ion-icon">
+          <img src="../assets/images/index/usericon.svg" alt="userIcon" class="ion-icon">
         </button>
         
       </div>
@@ -134,7 +134,7 @@ if (!$found) {
     <div class="container px-4 px-lg-5 my-2">
       <div class="row gx-4 gx-lg-5 align-items-center">
         <div class="col-md-6">
-          <img class="card-img-top mb-5 mb-md-0 shadow rounded-0" src="<?=($product['image'])?>" alt="<?=htmlspecialchars($product['name'])?>"/>
+          <img class="card-image mb-5 mb-md-0 shadow rounded-0" src="<?=($product['image'])?>" alt="<?=htmlspecialchars($product['name'])?>"/>
         </div>
         <div class="col-md-6">
           <div class="small mb-1"><strong>Type: </strong><span class="catgory"><?=htmlspecialchars($product['category'])?></span></div>

@@ -47,7 +47,7 @@
         <ul class="dropdown-menu">
           <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#changePasswordForm">Change
           Password</button></li>
-          <li><button class="dropdown-item log-out-btn">Logout</button></li>
+          <li><button class="log-out-btn dropdown-item">Logout</button></li>
         </ul>
       </div>
     </nav>
@@ -100,7 +100,7 @@
       </div>
     </div>
 
-    <!-- BOOTSTRAP DASHBOARD CARDS (ADDED BEFORE ACTIONS) -->
+    <!--Dashboard Cards-->
     <div class="container-fluid mb-4">
       <div class="row">
 
@@ -209,7 +209,7 @@
           Seller Control
         </button>
         <ul id="sellerDropdownMenu" class="dropdown-menu" aria-labelledby="sellerDropdown">
-          <li><button class="dropdown-item">Applications</button></li>
+          <li><button class="dropdown-item" id="ftch-apps">Applications</button></li>
           <li><button class="dropdown-item">Details</button></li>
           <li><button class="dropdown-item">Manage</button></li>
         </ul>
@@ -240,40 +240,25 @@
           Search
         </button>
       </form>
-
     </div>
 
 
-    <!-- CONTENT -->
+    <!-- Content -->
     <div class="content-box">
-      <div class="userData">
+      <div class="userData">  
         <table id="userInfo-table"></table>
+      </div>
+      <div class="seller-apps" id="seller-apps">
+        <table id="apps-table"></table>
       </div>
     </div>
 
   </main>
-   <script>
-  document.addEventListener("DOMContentLoaded", () => {
-  const guestAccount = document.querySelector('.guest-account');
-  const userAccount = document.querySelector('.user-account');
-
-    fetch("../backend/auth/checkSession.php")
-        .then(res => res.json())
-        .then(data => {
-            if (data.loggedIn) {
-               
-            } else {
-               
-            }
-        })
-        .catch(err => console.error("Failed to check session:", err));
-});
-  </script>
-
   <!-- Scripts -->
   <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="../assets/js/adminScript.js"></script>
   <script src="../assets/js/viewUsers.js"></script>
+  <script src="../assets/js/signout.js"></script>
 
 </body>
 

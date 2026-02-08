@@ -76,11 +76,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $mysqli->close();
 
     } catch (Exception $e) {
-        http_response_code(400);
+        // http_response_code(400);
         echo json_encode([
             'status' => 'error',
             'message' => $e->getMessage()
         ]);
     }
 }
-?>
