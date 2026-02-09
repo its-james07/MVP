@@ -251,3 +251,8 @@ input:focus,select:focus,textarea:focus{
         order:1;
     }
 }
+
+.formError{
+    display: none;
+    color: red;
+}

@@ -1,55 +1,76 @@
 <?php 
 require_once('../config/db.php');
-require('../config/sanitizedata.php');
 header('Content-Type: application/json');
+
 try {
     if($_SERVER["REQUEST_METHOD"] !== "POST"){
-        throw new Exception("Invalid Request Method");
+        throw new Exception("Invalid Request");
     }
 
-    $shopName = test_input($_POST['shop_name']);
-    $shopAddress = test_input($_POST['shop_address']);
-    $ownerName = test_input($_POST['owner_name']);
-    $type = test_input($_POST['shop_type']);
-    $sellerEmail = $_POST['email'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    $contact = $_POST['phone'];
-    $role = "pending";
+    $shopName = trim($_POST['shop_name']);
+    $ownerName = trim($_POST['owner_name']);
+    $shopAddress = trim($_POST['shop_address']);
+    $city = trim($_POST['city']);
+    $sellerEmail = trim($_POST['email']);
+    $contact = trim($_POST['phone']);
+    $rawPassword = $_POST['password'];
 
-    $query1 = "INSERT INTO users(fname, email, password, role) VALUES(?, ?, ?, ?)";
-    $query2 = "INSERT INTO sellers(oname, ocontact) VALUES(?,?)";
-    $query3 = "INSERT INTO shops(sname, saddress, stype, oid) VALUES(?, ?, ?, ?)";
+    if(!filter_var($sellerEmail, FILTER_VALIDATE_EMAIL)){
+        throw new Exception("Invalid email");
+    }
+
+    if(strlen($rawPassword) < 8){
+        throw new Exception("Password too short");
+    }
+
+    if(!preg_match('/^[0-9]{10}$/',$contact)){
+        throw new Exception("Invalid phone");
+    }
+
+    // check duplicate email
+    $check = $conn->prepare("SELECT id FROM users WHERE email=? LIMIT 1");
+    $check->bind_param("s",$sellerEmail);
+    $check->execute();
+    $check->store_result();
+    if($check->num_rows > 0){
+        echo json_encode(["status"=>"error","message"=>"Email already registered"]);
+        exit;
+    }
+
+    $password = password_hash($rawPassword, PASSWORD_DEFAULT);
+    $role = "seller";
+    $status = "pending";
 
     $conn->begin_transaction();
-    $stmt1 =  $conn->prepare($query1);
-    if(!$stmt1) throw new Exception($conn->error);
 
-    $stmt1->bind_param("ssss", $ownerName, $sellerEmail, $password, $role);
-    if(!$stmt1->execute()) throw new Exception("Execute Failed" .$stmt1->error);
-    $stmt1->close();
+    // users
+    $stmt1 = $conn->prepare("INSERT INTO users(fname,email,password,role) VALUES(?,?,?,?)");
+    $stmt1->bind_param("ssss",$ownerName,$sellerEmail,$password,$role);
+    $stmt1->execute();
+    $user_id = $conn->insert_id;
 
-    $stmt2 =  $conn->prepare($query2);
-    if(!$stmt2) throw new Exception($conn->error);
+    // sellers
+    $stmt2 = $conn->prepare("INSERT INTO sellers(user_id,business_phone,status) VALUES(?,?,?)");
+    $stmt2->bind_param("iss",$user_id,$contact,$status);
+    $stmt2->execute();
+    $seller_id = $conn->insert_id;
 
-    $stmt2->bind_param("ss", $ownerName, $contact);
-    if(!$stmt2->execute()) throw new Exception("Execute Failed" .$stmt2->error);
-    $oid = $conn->insert_id;
-    $stmt2->close();
-
-    $stmt3 =  $conn->prepare($query3);
-    if(!$stmt3) throw new Exception($conn->error);
-
-    $stmt3->bind_param("sssi", $shopName, $shopAddress, $type, $oid);
-    if(!$stmt3->execute()) throw new Exception("Execute Failed" .$stmt3->error);
-    $stmt3->close();
+    // shops
+    $stmt3 = $conn->prepare("INSERT INTO shops(seller_id,store_name,address,city) VALUES(?,?,?,?)");
+    $stmt3->bind_param("isss",$seller_id,$shopName,$shopAddress,$city);
+    $stmt3->execute();
 
     $conn->commit();
-    echo json_encode(["status" => "success", "message" =>"Successful! Wait for Admin Approval"]);
+
+    echo json_encode([
+        "status"=>"success",
+        "message"=>"Registration successful. Wait for admin approval."
+    ]);
+
 }catch(Throwable $e){
-    $conn->rollback();
+    if($conn->connect_error === null){
+        $conn->rollback();
+    }
     error_log($e->getMessage());
-    echo json_encode(["status" => "error", "message" => "Registration Failed"]);
-}finally{
-    $conn->close();
+    echo json_encode(["status"=>"error","message"=>"Registration failed"]);
 }
-?>

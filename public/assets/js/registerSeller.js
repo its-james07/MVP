@@ -1,11 +1,11 @@
-const form = document.getElementById('sr-form');
+const form = document.getElementById('regForm');
 form.addEventListener('submit', (e)=>{
   e.preventDefault();
   if(!validateForm()){
     return;
   }
 
-  const submitBtn = document.getElementById('sr-btn');
+  const submitBtn = document.getElementById('submitBtn');
   submitBtn.disabled = true;
   submitBtn.textContent = "Submitting ..";
   setTimeout(()=>{
@@ -33,35 +33,76 @@ form.addEventListener('submit', (e)=>{
   }, 2000);
 })
 
-function validateForm(){
-  const password = document.getElementById("pwd").value.trim();
-  const confirmPass = document.getElementById("cpwd").value.trim();
+function validateForm() {
+    const storeName = document.getElementById('shop_name').value.trim();
+    const ownerName = document.getElementById('owner_name').value.trim();
+    const email = document.querySelector('input[name="email"]').value.trim();
+    const password = document.querySelector('input[name="password"]').value.trim();
+    const confirmPass = document.querySelector('input[name="confirm_password"]').value.trim();
+    const phone = document.querySelector('input[name="phone"]').value.trim();
 
-  const emailError = document.getElementById("emailError");
-  const passInvalidError = document.getElementById("invalid-pass");
-  const notConfirm = document.getElementById("not-confirm");
+    // Error elements
+    const storeNameError = document.getElementById("storeNameError");
+    const ownerNameError = document.getElementById("ownerNameError");
+    const emailError = document.getElementById("emailError");
+    const passInvalidError = document.getElementById("invalid-pass");
+    const notConfirm = document.getElementById("not-confirm");
+    const passLengthError = document.getElementById("passLengthError");
+    const phoneError = document.getElementById("phoneError");
 
-  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    storeNameError?.style.display = "none";
+    ownerNameError?.style.display = "none";
+    emailError?.style.display = "none";
+    passInvalidError?.style.display = "none";
+    notConfirm?.style.display = "none";
+    passLengthError?.style.display = "none";
+    phoneError?.style.display = "none";
 
-  emailError.style.display = "none";
-  passInvalidError.style.display = "none";
-  notConfirm.style.display = "none";
+    // Regex
+    const textRegex = /^[A-Za-z\s]+$/; 
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    const phoneRegex = /^[0-9]{10}$/;
 
-if (password.length < 8) {
-    passLengthError.style.display = "block";
-    return false;
-} else {
+    // Validate text fields
+    if (!textRegex.test(storeName)) {
+        storeNameError.style.display = "block";
+        return false;
+    }
+
+    if (!textRegex.test(ownerName)) {
+        ownerNameError.style.display = "block";
+        return false;
+    }
+
+    // Validate email (basic)
+    if (!email) {
+        emailError.style.display = "block";
+        return false;
+    }
+
+    // Validate password
+    if (password.length < 8) {
+        passLengthError.style.display = "block";
+        return false;
+    }
+
     if (!passwordRegex.test(password)) {
         passInvalidError.style.display = "block";
         return false;
-    } else {
-        if (password !== confirmPass) {
-            notConfirm.style.display = "block";
-            return false;
-        }
     }
-}
-  return true;
+
+    if (password !== confirmPass) {
+        notConfirm.style.display = "block";
+        return false;
+    }
+
+    // Validate phone
+    if (!phoneRegex.test(phone)) {
+        phoneError.style.display = "block";
+        return false;
+    }
+
+    return true;
 }
 
 function showToast(message, type = 'success', duration = 3000) {
@@ -76,8 +117,6 @@ function showToast(message, type = 'success', duration = 3000) {
 }
 
 function clearForm() {
-    const userForm = document.getElementById('sr-form');
-    if (userForm) {
-        userForm.reset(); 
-    }
+    const form = document.getElementById('regForm');
+    form.reset();
 }

@@ -12,91 +12,87 @@
 </head>
 
 <body>
+<main class="container">
+    <section id="pageInfo">
+        <img src="../assets/images/sellerRegistration.png" alt="seller registration illustration">
+        <h3>Grow | Expand | Earn</h3>
+    </section>
+    <section class="seller-section">
+        <div class="card">
+            <div class="progress-container">
+                <div class="progress" id="progress"></div>
+                <div class="circle active">1</div>
+                <div class="circle">2</div>
+        </div>
+<form id="regForm" method="POST">
+    <div class="form-step active" id="step1">
+        <h2>Shop Information</h2>
 
-    <main class="container">
-        <section id="pageInfo">
-            <img src="../assets/images/sellerRegistration.png" alt="seller registration illustration">
-            <h3>Grow Your Business With Us</h3>
-        </section>
-        <section class="seller-section">
-            <div class="card">
-                <div class="progress-container">
-                    <div class="progress" id="progress"></div>
-                    <div class="circle active">1</div>
-                    <div class="circle">2</div>
-                </div>
+        <label>Shop Name</label>
+        <input type="text" id="shop_name" name="shop_name" required>
+        <span id="storeNameError" class="formError">Only letters allowed in Shop Name</span>
 
-                <form id="regForm" method="POST" action="seller_register.php">
+        <label>Owner Full Name</label>
+        <input type="text" id="owner_name" name="owner_name" required>
+        <span id="ownerNameError" class="formError">Only letters allowed in Owner Name</span>
 
-                    <div class="form-step active" id="step1">
-                        <h2>Shop Information</h2>
+        <label>Business Address</label>
+        <input type="text" name="shop_address" required>
 
-                        <label>Shop Name</label>
-                        <input type="text" name="shop_name">
+        <label>City</label>
+        <!-- <input type="text" name="city"> -->
+        <select name="city" id="city" required>
+            <option value="">Select a City</option>
+            <option value="kathmandu">Kathmandu</option>
+            <option value="bhaktapur">Bhaktapur</option>
+            <option value="lalitpur">Lalitpur</option>
+        </select>
 
-                        <label>Owner Full Name</label>
-                        <input type="text" name="owner_name">
+        <div class="btn-group">
+            <button type="button" class="nav-btn" onclick="nextStep()">Next</button>
+        </div>
+</div>
+<div class="form-step" id="step2">
+    <h2>Account Details</h2>
 
-                        <label>Shop Type</label>
-                        <select name="shop_type">
-                            <option value="">Select shop type</option>
-                            <option value="dog">Dog Products</option>
-                            <option value="cat">Cat Products</option>
-                            <option value="bird">Bird Products</option>
-                            <option value="fish">Fish Products</option>
-                            <option value="all">All Pets</option>
-                        </select>
+    <label>Email</label>
+    <input type="email" name="email" required>
+    <span id="emailError" class="formError">Please enter a valid email</span>
 
-                        <label>Business Address</label>
-                        <input type="text" name="shop_address">
+    <label>Password</label>
+    <input type="password" name="password" minlength="8" required>
+    <span id="passLengthError" class="formError">Password must be at least 8 characters</span>
+    <span id="invalid-pass" class="formError">Password must include uppercase, lowercase, and number</span>
 
-                        <label>City</label>
-                        <input type="text" name="city">
+    <label>Confirm Password</label>
+    <input type="password" name="confirm_password" required>
+    <span id="not-confirm" class="formError">Passwords do not match</span>
 
-                        <!-- <label>Country</label>
-                    <input type="text" name="country" value="Nepal" disabled> -->
+    <div class="show-pass">
+        <input type="checkbox" id="toggle-password" onclick="togglePassword();">
+        <label for="toggle-password" id="show-text"><strong>Show</strong></label>
+    </div>
 
-                        <div class="btn-group">
-                            <button type="button" class="nav-btn" onclick="nextStep()">Next</button>
-                        </div>
-                    </div>
+    <label>Phone Number</label>
+    <input type="tel" name="phone" pattern="[0-9]{10}" required>
+    <span id="phoneError" class="formError">Phone number must be 10 digits</span>
 
-                    <div class="form-step" id="step2">
-                        <h2>Account Details</h2>
+    <div class="terms">
+        <input type="checkbox" required>
+        <a href="#main">I agree to Terms & Conditions</a>
+    </div>
 
-                        <label>Email</label>
-                        <input type="email" name="email">
-
-                        <label>Password</label>
-                        <input type="password" name="password" minlength="8">
-
-                        <label>Confirm Password</label>
-                        <input type="password" name="confirm_password">
-                        <div class="show-pass">
-                            <input type="checkbox" id="toggle-password" onclick="togglePassword();"
-                            >
-                            <label for="toggle-password" id="show-text"><strong>Show</strong></label>
-                        </div>
-
-                        <label>Phone Number</label>
-                        <input type="tel" name="phone" pattern="[0-9]{10}">
-
-                        <div class="terms">
-                            <input type="checkbox" required>
-                            <a href="#main">I agree to Terms & Conditions</a>
-                        </div>
-
-                        <div class="btn-group">
-                            <button type="button" class="nav-btn" onclick="prevStep()">Previous</button>
-                            <button type="submit" class="btn">Register Seller</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </section>
-    </main>
-
-    <script>
+    <div class="btn-group">
+        <button type="button" class="nav-btn" onclick="prevStep()">Previous</button>
+        <button id="submitBtn" type="submit" class="btn">Register Seller</button>
+    </div>
+    </div>
+</form>
+</div>
+</section>
+<div id="toast" class="toast"></div>
+</main>
+<script>
         const formSteps = document.querySelectorAll(".form-step");
         const circles = document.querySelectorAll(".circle");
         const progress = document.getElementById("progress");
@@ -133,6 +129,6 @@
             progress.style.width = stepIndex === 1 ? "100%" : "0%";
         }
     </script>
+    <script src="../assets/js/registerSeller.js"></script>
 </body>
-
 </html>
