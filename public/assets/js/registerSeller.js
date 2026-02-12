@@ -1,23 +1,59 @@
+const nextStepBtn = document.getElementById('nextBtn');
+const prevStepBtn = document.getElementById('prevBtn');
+const togglePasswordBtn = document.getElementById('toggle-password') ;
+
+const formSteps = document.querySelectorAll(".form-step");
+const circles = document.querySelectorAll(".circle");
+const progress = document.getElementById("progress");
 const form = document.getElementById('regForm');
+
+
+nextStepBtn && (nextStepBtn.addEventListener('click',nextStep));
+prevStepBtn && (prevStepBtn.addEventListener('click',prevStep));
+togglePasswordBtn && (togglePasswordBtn.addEventListener('change', togglePassword));
+
+function nextStep() {
+    if (!firstStepValidation()) return;
+        formSteps[0].classList.remove("active");
+        formSteps[1].classList.add("active");
+        updateProgress(1);
+}
+
+function prevStep() {
+    formSteps[1].classList.remove("active");
+    formSteps[0].classList.add("active");
+    updateProgress(0);
+}
+
+function updateProgress(stepIndex) {
+    circles.forEach((circle, idx) => {
+        if (idx <= stepIndex) circle.classList.add("active");
+        else circle.classList.remove("active");
+    });
+    progress.style.width = stepIndex === 1 ? "100%" : "0%";
+}
+
+
 form.addEventListener('submit', (e)=>{
   e.preventDefault();
-  if(!validateForm()){
+  if(!secondStepValidation()){
+    console.log("Error");
     return;
   }
 
-  const submitBtn = document.getElementById('submitBtn');
+  const submitBtn = form.querySelector('button[type="submit"]');
   submitBtn.disabled = true;
-  submitBtn.textContent = "Submitting ..";
-  setTimeout(()=>{
+  submitBtn.textContent = "Submitting..";
     const formData = new FormData(form);
     fetch('../../backend/users/registerSeller.php', {
       method: 'POST', 
       body: formData
     })
-    .then(res => res.json())
+    .then(response => response.json())
     .then(data =>{
       submitBtn.disabled = false;
       submitBtn.textContent = "Register";
+
       if(data.status === 'success'){
         showToast(data.message, data.status);
         clearForm();  
@@ -26,78 +62,101 @@ form.addEventListener('submit', (e)=>{
       }
     }).catch(err =>{
       submitBtn.disabled = false;
-        submitBtn.textContent = "Create Account";
-        showToast("Oops! omething went wrong");
+        submitBtn.textContent = "Register Seller";
+        showToast("Oops! something went wrong");
         console.error(err);
     })
-  }, 2000);
-})
+  });
 
-function validateForm() {
+function show(e1){
+    if(e1) e1.style.display = 'block';
+}
+
+function hide(e1){
+    if(e1) e1.style.display = 'none';
+}
+
+function firstStepValidation(){
     const storeName = document.getElementById('shop_name').value.trim();
     const ownerName = document.getElementById('owner_name').value.trim();
-    const email = document.querySelector('input[name="email"]').value.trim();
-    const password = document.querySelector('input[name="password"]').value.trim();
-    const confirmPass = document.querySelector('input[name="confirm_password"]').value.trim();
-    const phone = document.querySelector('input[name="phone"]').value.trim();
 
-    // Error elements
     const storeNameError = document.getElementById("storeNameError");
     const ownerNameError = document.getElementById("ownerNameError");
-    const emailError = document.getElementById("emailError");
-    const passInvalidError = document.getElementById("invalid-pass");
-    const notConfirm = document.getElementById("not-confirm");
-    const passLengthError = document.getElementById("passLengthError");
-    const phoneError = document.getElementById("phoneError");
 
-    storeNameError?.style.display = "none";
-    ownerNameError?.style.display = "none";
-    emailError?.style.display = "none";
-    passInvalidError?.style.display = "none";
-    notConfirm?.style.display = "none";
-    passLengthError?.style.display = "none";
-    phoneError?.style.display = "none";
-
-    // Regex
+    hide(storeNameError);
+    hide(ownerNameError);
     const textRegex = /^[A-Za-z\s]+$/; 
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-    const phoneRegex = /^[0-9]{10}$/;
 
-    // Validate text fields
-    if (!textRegex.test(storeName)) {
-        storeNameError.style.display = "block";
+    if(!storeName){
+        show(storeNameError);
+        storeNameError.textContent = "Store name required";
+        return false;
+    }
+
+     if (!textRegex.test(storeName)) {
+        show(storeNameError);
+        storeNameError.textContent = "Only letters allowed";
+        return false;
+    }
+
+    if(!ownerName){
+        show(ownerNameError);
+        ownerNameError.textContent = "Owner name required";
         return false;
     }
 
     if (!textRegex.test(ownerName)) {
-        ownerNameError.style.display = "block";
+        show(ownerNameError);
+        ownerNameError.textContent = "Only letters allowed";
         return false;
     }
+    return true;
+}
 
-    // Validate email (basic)
+function secondStepValidation(){
+    const email = document.querySelector('input[name="email"]').value.trim();
+    const password = document.querySelector('input[name="password"]').value.trim();
+    const confirmPass = document.querySelector('input[name="confirm_password"]').value.trim();
+    const phone = document.querySelector('input[name="phone"]').value.trim();
+   
+    const emailError = document.getElementById("emailError");
+    const notConfirm = document.getElementById("not-confirm");
+    const passError = document.getElementById("passError");
+    const phoneError = document.getElementById("phoneError");
+
+    hide(emailError);
+    hide(notConfirm);
+    hide(passError);
+    hide(phoneError);
+
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^[0-9]{10}$/;
     if (!email) {
-        emailError.style.display = "block";
+        show(emailError);
+        emailError.textContent = "Email Cannot be Empty";
         return false;
     }
 
-    // Validate password
+    if(!emailRegex.test(email)){
+        show(emailError);
+        emailError.textContent = "Invalid email format";
+        return false;
+    }
+
     if (password.length < 8) {
-        passLengthError.style.display = "block";
-        return false;
-    }
-
-    if (!passwordRegex.test(password)) {
-        passInvalidError.style.display = "block";
+        show(passError);
+        passError.textContent = "At least 8 Characters";
         return false;
     }
 
     if (password !== confirmPass) {
-        notConfirm.style.display = "block";
+        show(notConfirm);
+        notConfirm.textContent = "Password donot match";
         return false;
     }
 
-    // Validate phone
-    if (!phoneRegex.test(phone)) {
+     if (!phoneRegex.test(phone)) {
         phoneError.style.display = "block";
         return false;
     }
@@ -106,17 +165,25 @@ function validateForm() {
 }
 
 function showToast(message, type = 'success', duration = 3000) {
-    const toast = document.getElementById('toast');  
-    toast.textContent = message;                     
-    toast.classList.remove('success', 'error');      
-    toast.classList.add(type, 'show');               
+    const toast = document.getElementById('toast');
+    if(!toast) return;
+
+    toast.textContent = message;
+    toast.className = `toast ${type} show`;
 
     setTimeout(() => {
-        toast.classList.remove('show');  
+        toast.classList.remove('show');
     }, duration);
 }
 
 function clearForm() {
     const form = document.getElementById('regForm');
     form.reset();
+}
+
+function togglePassword() {
+    const passwordToggle = document.querySelectorAll('.toggle');
+    passwordToggle.forEach(field =>{
+        field.type = field.type === "password" ? "text" : "password";
+    })
 }

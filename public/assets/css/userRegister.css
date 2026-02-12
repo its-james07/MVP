@@ -123,7 +123,7 @@ button:hover {
     color: #1c267a;
     text-decoration: none;}
 
-.toast {
+/* .toast {
     position: fixed;
     top: 20px;
     right: 20px;
@@ -141,7 +141,7 @@ button:hover {
 }
 
 .toast.success { background-color: #4CAF50; }
-.toast.error { background-color: #f44336; }
+.toast.error { background-color: #f44336; } */
 
 .show-pass{
     float: right;
@@ -244,7 +244,7 @@ button:hover {
         font-size: 25px;
     }
 
-    .auth-container{
+    /* .auth-container{
         
-    }
+    } */
 }

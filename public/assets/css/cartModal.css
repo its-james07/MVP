@@ -7,11 +7,14 @@
   border-radius: 10px;
   box-shadow: 0 5px 20px rgba(0,0,0,0.2);
   padding: 20px;
-  font-family: Arial, sans-serif;
+  /* font-family: Arial, sans-serif; */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
   z-index: 999;
   opacity: 0;
-  transform: translate(-50%, -50%) scale(0.8);
-  pointer-events: none; /* Prevent interaction when hidden */
+  transform: translate(-50%, -50%) scale(1);
+  /* transform: translate(-50%, -50%) scale(0.8); */
+  /* pointer-events: none;  */
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
@@ -60,8 +63,8 @@ table{
 }
 
 thead th{
+    font-size: 16px;
     color:#777;
-    font-size:14px;
     padding:10px;
 }
 

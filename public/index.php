@@ -1,4 +1,8 @@
+<?php
+  require("components/navbar.php");
+  require("components/cartModal.php");
 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,6 +14,8 @@
   <link rel="stylesheet" href="assets/css/mediaqueries.css" />
   <link rel="stylesheet" href="assets/css/wishModal.css" />
   <link rel="stylesheet" href="assets/css/cartModal.css" />
+  <link rel="stylesheet" href="assets/css/toast.css" />
+
   <link rel="stylesheet" href="assets/css/accountModal.css" />
 
   <link rel="icon" href="assets/favicon/favicon.png">
@@ -19,7 +25,7 @@
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 <body>
-  <header class="navbar-container">
+  <!-- <header class="navbar-container">
     <div class="header-main" style="background-color: #fafafa; height: 8rem;">
       <div class="logo-container">
         <a href="index.php" ><strong>Pupkit</strong></a>
@@ -48,7 +54,6 @@
       </div>
     </div>
 
-    <!-- Mobile Bottom Nav -->
     <div class="mobile-bottom-navigation">
       <button class="action-btn"><ion-icon name="menu-outline"></ion-icon></button>
       <button class="action-btn">
@@ -66,7 +71,7 @@
         <img src="assets/images/usericon.svg" alt="userIcon" class="ion-icon">
       </button>
     </div>
-  </header>
+  </header> -->
 
   <!-- Main Section  -->
   <main class="spacing">
@@ -300,54 +305,7 @@
         </div>
     </div>
 
-  <!-- Cart Modal -->
-  <div class="cart-modal">
-  <!-- <div class="cart-modal-content"> -->
-  <div class="cart-header">
-    <h2>Shopping cart</h2>
-    <button class="close-btn">&times;</button>
-  </div>
-
-   <table>
-        <thead>
-            <tr>
-                <th></th>
-                <th>Product</th>
-                <th>Price</th>
-                <th>Qty</th>
-                <th>Total</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            <tr>
-                <td>
-                    <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/vans.png">
-                </td>
-                <td>Vans Sk8-Hi Shoes</td>
-                <td>$89</td>
-                <td class="qty"><input type="number" value="2"></td>
-                <td>$178</td>
-                <td>
-                    <button class="delete-btn">X</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="total">
-        Total: <span>$178</span>
-    </div>
-
-    <div class="modal-footer">
-        <a href="#" class="btn btn-close">Clear</a>
-        <button class="btn btn-checkout">Checkout</button>
-    </div>
-
-
-  <!-- </div> -->
-</div>
+  
 
   <div class="account-modal">
   <!-- Guest Section -->
@@ -424,6 +382,7 @@
   <script src="assets/js/viewProduct.js"></script>
   <script src="assets/js/renderProducts.js"></script>
   <script src="assets/js/wishPage.js"></script>
+  <script src="assets/js/cartModal.js"></script>
   <!-- <script src="Script/validateForm.js"></script> -->
   <script src="assets/js/accordionEffect.js"></script>
 </body>

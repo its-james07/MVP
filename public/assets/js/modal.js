@@ -49,7 +49,7 @@ wishlistBtn.addEventListener('click', ()=>{
 
 cartBtn.addEventListener('click', ()=>{
   cartModal.classList.add('show');
-  overlay.classList.add('show');
+  // overlay.classList.add('show');
   document.body.classList.add('modal-open');
   wishlistModal.style.display = "none";
 });

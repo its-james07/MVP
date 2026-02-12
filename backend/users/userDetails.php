@@ -8,41 +8,24 @@ try {
         throw new Exception("Invalid request method");
     }
 
-    // Sanitize input
-    $fname = test_input($_POST["fname"]);
-    $email = test_input($_POST["reg-email"]);
-    $password = $_POST["new-pass"];
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-    // Check if email exists
-    $stmt = $conn->prepare("SELECT email FROM users WHERE email = ?");
-    if ($stmt === false) {
-        throw new Exception("Prepare failed: " . $conn->error);
-    }
-
-    $stmt->bind_param("s", $email);
-    if (!$stmt->execute()) {
-        throw new Exception("Execute failed: " . $stmt->error);
-    }
-
-    $stmt->store_result();
-    if ($stmt->num_rows > 0) {
-        echo json_encode(["status" => "email_exists", "message" => "Email Already Exists"]);
-        $stmt->close();
-        $conn->close();
+    $result = validateUser($_POST, $conn);
+    if(isset($result[0])){
+        echo json_encode(["status" => "error", "message" => $result]);
         exit;
     }
-    $stmt->close();
 
-    // Insert new user
+    $fname = $result['fname'];
+    $email = $result['email'];
+    $hashedPassword = $result['password'];
+
     $stmt = $conn->prepare("INSERT INTO users(fname, email, password) VALUES (?, ?, ?)");
     if ($stmt === false) {
-        throw new Exception("Prepare failed: " . $conn->error);
+        throw new Exception("Prepare failed: ".$conn->error);
     }
 
     $stmt->bind_param("sss", $fname, $email, $hashedPassword);
     if (!$stmt->execute()) {
-        throw new Exception("Execute failed: " . $stmt->error);
+        throw new Exception("Execute failed: ".$stmt->error);
     }
 
     echo json_encode(["status" => "success", "message" =>"Signup Successful"]);
@@ -51,10 +34,58 @@ try {
     $conn->close();
 
 } catch (Exception $e) {
-    // Log the detailed error for debugging (server-side)
     error_log($e->getMessage());
 
-    // Return a generic error to the client
     echo json_encode(["status" => "error", "message" => "Something went wrong"]);
     exit;
+}
+
+function validateUser($data, $conn){
+    $errors = [];
+
+    $fname = sanitizeData($data["fname"]);
+    $email = sanitizeData($data["reg-email"]);
+    $password = $data["new-pass"];
+
+    // name validation
+    if(empty($fname) || !preg_match("/^[a-zA-Z ]+$/", $fname)){
+        $errors[] = "Empty or Invalid Name";
+    }
+
+    if(empty($email)){
+        $errors[] = "Empty Email Field";
+    }
+    
+    if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+        $errors[] = "Invalid Email Format";
+    }
+    
+    if(strlen($password) < 8){
+        $errors[] = "Password too Short";
+    }
+
+    if(empty($errors)){
+        $check = $conn->prepare("SELECT user_id FROM users WHERE email=? LIMIT 1");
+        if(!$check) throw new Exception("Prepare failed: ".$conn->error);
+
+        $check->bind_param("s", $email);
+        if(!$check->execute()) throw new Exception("Execution failed: ".$check->error);
+
+        $check->store_result();
+        if($check->num_rows > 0){
+            $errors[] = "Email already registered";
+        }
+
+        $check->close();
+    }
+    
+    if(!empty($errors)){
+        return $errors;
+    }
+
+    return [
+        "fname" => $fname,
+        "email" => $email,
+        "password" => password_hash($password, PASSWORD_DEFAULT)
+    ];
 }

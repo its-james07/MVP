@@ -662,7 +662,7 @@ input[type=password]:focus {
 } */
 
 
-.toast {
+/* .toast {
     position: fixed;
     top: 13%;
     left: 45%;
@@ -681,7 +681,7 @@ input[type=password]:focus {
 }
 
 .toast.success { background-color: #4CAF50; }
-.toast.error { background-color: #f44336; }
+.toast.error { background-color: #f44336; } */
 
 .show-pass{
     /* float: right; */

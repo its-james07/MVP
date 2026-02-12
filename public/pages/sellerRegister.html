@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seller Registration</title>
     <link rel="stylesheet" href="../assets/css/SRF.css">
+    <link rel="stylesheet" href="../assets/css/toast.css">
     <!-- <link rel="stylesheet" href="../assets/css/styles.css"> -->
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
@@ -28,18 +29,18 @@
     <div class="form-step active" id="step1">
         <h2>Shop Information</h2>
 
-        <label>Shop Name</label>
+        <label for="shop_name">Shop Name</label>
         <input type="text" id="shop_name" name="shop_name" required>
-        <span id="storeNameError" class="formError">Only letters allowed in Shop Name</span>
+        <span id="storeNameError" class="formError"></span>
 
-        <label>Owner Full Name</label>
+        <label for="owner_name">Owner Full Name</label>
         <input type="text" id="owner_name" name="owner_name" required>
-        <span id="ownerNameError" class="formError">Only letters allowed in Owner Name</span>
+        <span id="ownerNameError" class="formError"></span>
 
-        <label>Business Address</label>
-        <input type="text" name="shop_address" required>
+        <label for="shop_address">Business Address</label>
+        <input type="text" id="shop_address" name="shop_address" required>
 
-        <label>City</label>
+        <label for="city">City</label>
         <!-- <input type="text" name="city"> -->
         <select name="city" id="city" required>
             <option value="">Select a City</option>
@@ -49,41 +50,40 @@
         </select>
 
         <div class="btn-group">
-            <button type="button" class="nav-btn" onclick="nextStep()">Next</button>
+            <button type="button" id="nextBtn" class="nav-btn">Next</button>
         </div>
 </div>
 <div class="form-step" id="step2">
     <h2>Account Details</h2>
 
-    <label>Email</label>
-    <input type="email" name="email" required>
-    <span id="emailError" class="formError">Please enter a valid email</span>
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" autocomplete="email" required>
+    <span id="emailError" class="formError"></span>
 
-    <label>Password</label>
-    <input type="password" name="password" minlength="8" required>
-    <span id="passLengthError" class="formError">Password must be at least 8 characters</span>
-    <span id="invalid-pass" class="formError">Password must include uppercase, lowercase, and number</span>
+    <label for="password">Password</label>
+    <input type="password" id="password" class="toggle" name="password" minlength="8" required>
+    <span id="passError" class="formError"></span>
 
-    <label>Confirm Password</label>
-    <input type="password" name="confirm_password" required>
-    <span id="not-confirm" class="formError">Passwords do not match</span>
+    <label for="confirm_password">Confirm Password</label>
+    <input type="password" id="confirm_password" class="toggle" name="confirm_password" required>
+    <span id="not-confirm" class="formError"></span>
 
     <div class="show-pass">
-        <input type="checkbox" id="toggle-password" onclick="togglePassword();">
+        <input type="checkbox" id="toggle-password">
         <label for="toggle-password" id="show-text"><strong>Show</strong></label>
     </div>
 
-    <label>Phone Number</label>
-    <input type="tel" name="phone" pattern="[0-9]{10}" required>
-    <span id="phoneError" class="formError">Phone number must be 10 digits</span>
+    <label for="phone">Phone Number</label>
+    <input type="tel" id="phone" name="phone" autocomplete="tel" pattern="[0-9]{10}" required>
+    <span id="phoneError" class="formError"></span>
 
     <div class="terms">
-        <input type="checkbox" required>
+        <input type="checkbox" id="terms&conditions" required>
         <a href="#main">I agree to Terms & Conditions</a>
     </div>
 
     <div class="btn-group">
-        <button type="button" class="nav-btn" onclick="prevStep()">Previous</button>
+        <button type="button" id="prevBtn" class="nav-btn">Previous</button>
         <button id="submitBtn" type="submit" class="btn">Register Seller</button>
     </div>
     </div>
@@ -92,43 +92,6 @@
 </section>
 <div id="toast" class="toast"></div>
 </main>
-<script>
-        const formSteps = document.querySelectorAll(".form-step");
-        const circles = document.querySelectorAll(".circle");
-        const progress = document.getElementById("progress");
-
-        function nextStep() {
-            // Validation check for Step 1
-            const inputs = formSteps[0].querySelectorAll("input, select");
-            let valid = true;
-            inputs.forEach(input => {
-                if (!input.checkValidity()) {
-                    input.reportValidity();
-                    valid = false;
-                }
-            });
-
-            if (valid) {
-                formSteps[0].classList.remove("active");
-                formSteps[1].classList.add("active");
-                updateProgress(1);
-            }
-        }
-
-        function prevStep() {
-            formSteps[1].classList.remove("active");
-            formSteps[0].classList.add("active");
-            updateProgress(0);
-        }
-
-        function updateProgress(stepIndex) {
-            circles.forEach((circle, idx) => {
-                if (idx <= stepIndex) circle.classList.add("active");
-                else circle.classList.remove("active");
-            });
-            progress.style.width = stepIndex === 1 ? "100%" : "0%";
-        }
-    </script>
-    <script src="../assets/js/registerSeller.js"></script>
+<script src="../assets/js/registerSeller.js"></script>
 </body>
 </html>

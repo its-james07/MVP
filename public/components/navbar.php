@@ -15,22 +15,23 @@
     <div class="search-bar">
       <input type="search" name="search" class="search-field" placeholder="Enter your product name..." />
       <button class="search-btn">
-        <img src="assets/images/index/search.svg" alt="search-btn" style="height: 20px; width: 30px;">
+        <img src="/mvp/public/assets/images/index/search.svg" alt="search-btn" style="height: 20px; width: 30px;">
+        <!-- <img src="../assets/images/index/search.svg" alt="search-btn" style="height: 20px; width: 30px;"> -->
       </button>
     </div>
 
     <div class="top-right-icons">
       <button class="action-btn">
 
-        <img src="assets/images/index/heart (1).svg" alt="wishlist" class="show-wishlist ion-icon">
+        <img src="/mvp/public/assets/images/index/heart (1).svg" alt="wishlist" class="show-wishlist ion-icon">
         <span class="badge" id="wish-badge">0</span>
       </button>
       <button class="action-btn">
-        <img src="assets/images/index/cart.svg" alt="cart" class="show-cart ion-icon">
+        <img src="/mvp/public/assets/images/index/cart.svg" alt="cart" class="show-cart ion-icon">
         <span class="badge" id="cart-badge">0</span>
       </button>
       <button class="action-btn user-login">
-        <img src="assets/images/index/usericon.svg" alt="userIcon" class="ion-icon">
+        <img src="/mvp/public/assets/images/index/usericon.svg" alt="userIcon" class="ion-icon">
       </button>
 
     </div>

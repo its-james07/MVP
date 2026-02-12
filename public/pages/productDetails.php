@@ -1,4 +1,8 @@
 <?php
+  require("../components/navbar.php");
+  require("../components/cartModal.php");
+  ?>
+<?php
 $featuredItems = [
   ["id" => 1, "name" => "Monge Adult Food", "price" => 2200, "category" => "Dog Food",      "description" => "High-quality adult dog food made with balanced nutrients for healthy growth and coat.",
         "image" => "../assets/images/dogProducts/dog-chain.png"
@@ -69,18 +73,26 @@ if (!$found) {
   <meta name="author" content="" />
   <title><?= htmlspecialchars($product['name'])?></title>
   <link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.png" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" /> -->
   
+    <link rel="stylesheet" href="../assets/css/styles.css">
   <link rel="stylesheet" href="../assets/css/navbar.css">
   <link rel="stylesheet" href="../assets/css/mediaqueries.css">
-  <link rel="stylesheet" href="../assets/css/styles.css">
-  <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/css/cartModal.css">
+  <link rel="stylesheet" href="assets/css/accountModal.css" />
+
+  <!-- <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css"> -->
 
   <!-- <script src="http://localhost:35729/livereload.js"></script> -->
+   <link rel="icon" href="assets/favicon/favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0z-beta3/css/all.min.css" /> 
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 
 <body style="background-color: #fafafa;">
-  <header class="navbar-container">
+  <!-- <header class="navbar-container">
     <div class="header-main" style="background-color: #fafafa; height: 8rem;">
       <div class="logo-container">
         <a href="../index.php" ><strong>Pupkit</strong></a>
@@ -109,7 +121,6 @@ if (!$found) {
       </div>
     </div>
 
-    <!-- Mobile Bottom Nav -->
     <div class="mobile-bottom-navigation">
       <button class="action-btn"><ion-icon name="menu-outline"></ion-icon></button>
       <button class="action-btn">
@@ -127,7 +138,7 @@ if (!$found) {
         <img src="../assets/images/usericon.svg" alt="userIcon" class="ion-icon">
       </button>
     </div>
-  </header>
+  </header> -->
 
   <!-- Product Section -->
   <section class="py-5" style="background: #fafafa;">
@@ -152,7 +163,7 @@ if (!$found) {
             </div>
           </div>
           <div class="d-flex mt-3">
-            <button class="btn btn-outline-success flex-shrink-0 mx-2" type="button">
+            <button class="btn btn-outline-success flex-shrink-0 mx-2" id="add-to-cart" type="button">
               <i class="bi-cart-fill me-1"></i>
               Add to Cart
             </button>
@@ -183,6 +194,8 @@ if (!$found) {
   <script src="../assets/js/signout.js"></script>
   <script src="../assets/js/renderProducts.js"></script>
   <script src="../assets/js/wishPage.js"></script>
+  <script src="../assets/js/cartModal.js"></script>
+
 
 </body>
 

@@ -1,4 +1,5 @@
-<?php function test_input($data){
-    return htmlspecialchars(stripslashes(trim($data)));
+<?php 
+function sanitizeData($data) {
+    return htmlspecialchars(strip_tags(stripslashes(trim($data))));
 }
 ?>
