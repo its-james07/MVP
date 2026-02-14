@@ -18,7 +18,18 @@
     <tbody>
       <tr>
         <td>
-          <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/vans.png">
+          <img src="assets/images/catProducts/cat-wear.png">
+          </td>
+          <td>Vans Sk8-Hi Shoes</td>
+          <td class="qty"><input type="number" value="2"></td>
+          <td>$178</td>
+          <td>
+            <button class="delete-btn">X</button>
+          </td>
+          </tr>
+          <tr>
+        <td>
+          <img src="assets/images/catProducts/cat-wear.png">
           </td>
           <td>Vans Sk8-Hi Shoes</td>
           <td class="qty"><input type="number" value="2"></td>
@@ -35,7 +46,7 @@
     </div>
 
     <div class="modal-footer">
-        <a href="#" class="btn btn-close">Clear</a>
+        <button class="btn btn-update">Update</button>
         <button class="btn btn-checkout">Checkout</button>
     </div>
 

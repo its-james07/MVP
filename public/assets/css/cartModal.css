@@ -3,10 +3,11 @@
   top: 50%;
   left: 50%;  
   width: 800px;
+  max-height: 500px;
   background-color: #fafafa;
   border-radius: 10px;
   box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-  padding: 20px;
+  padding: 15px;
   /* font-family: Arial, sans-serif; */
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
@@ -14,7 +15,8 @@
   opacity: 0;
   transform: translate(-50%, -50%) scale(1);
   /* transform: translate(-50%, -50%) scale(0.8); */
-  /* pointer-events: none;  */
+  pointer-events: none; 
+  user-select: none;
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
@@ -122,6 +124,7 @@ td img{
     border-radius:6px;
     cursor:pointer;
     font-size:15px;
+    background-color: #f0f0f0;   
 }
 
 .btn-close{
@@ -135,5 +138,6 @@ td img{
 }
 
 .btn-checkout:hover{
+    color: white;
     background:#218838;
 }

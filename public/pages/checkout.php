@@ -37,12 +37,12 @@
         <div class="row g-3">
           <div class="col-md-6">
             <label for="firstName" class="form-label">First Name</label>
-            <input type="text" class="form-control" id="firstName" placeholder="John" required>
+            <input type="text" class="form-control" id="firstName" placeholder="James" required>
             <div class="invalid-feedback">First name is required.</div>
           </div>
           <div class="col-md-6">
             <label for="lastName" class="form-label">Last Name</label>
-            <input type="text" class="form-control" id="lastName" placeholder="Doe" required>
+            <input type="text" class="form-control" id="lastName" placeholder="Karki" required>
             <div class="invalid-feedback">Last name is required.</div>
           </div>
         </div>

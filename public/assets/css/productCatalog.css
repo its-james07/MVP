@@ -4,7 +4,7 @@
   background: linear-gradient(135deg, #7D8D86 0%, #6a7b75 100%);
   padding: 24px 20px;
   box-shadow: 0 4px 20px rgba(125, 141, 134, 0.3);
-  z-index: 999;
+  z-index: 99;
   backdrop-filter: blur(10px);
   border-bottom: 2px solid rgba(231, 222, 175, 0.2);
 }

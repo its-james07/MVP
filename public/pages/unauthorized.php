@@ -100,7 +100,7 @@
 Please log in with the correct account.
 </p>
 <!-- Redirect Button -->
-<a href="../index.php">Go to Login</a>
+<a href="/mvp/public/index.php">Go to Login</a>
 </div>
 <script>
         // Load Lottie animation

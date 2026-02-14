@@ -4,19 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link rel="stylesheet" href="../pages/test.css">
 </head>
 <body>
   <header class="navbar-container">
   <div class="header-main" style="background-color: #fafafa; height: 8rem;">
     <div class="logo-container">
-      <a href="index.php"><strong>Pupkit</strong></a>
+      <a href="/mvp/public/index.php"><strong>Pupkit</strong></a>
     </div>
     <div class="search-bar">
       <input type="search" name="search" class="search-field" placeholder="Enter your product name..." />
       <button class="search-btn">
         <img src="/mvp/public/assets/images/index/search.svg" alt="search-btn" style="height: 20px; width: 30px;">
-        <!-- <img src="../assets/images/index/search.svg" alt="search-btn" style="height: 20px; width: 30px;"> -->
       </button>
     </div>
 

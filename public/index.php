@@ -1,7 +1,9 @@
 <?php
   require("components/navbar.php");
   require("components/cartModal.php");
-
+  require("components/loginmodal.php");
+  require("components/accountmodal.php");
+  require("components/wishmodal.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +17,6 @@
   <link rel="stylesheet" href="assets/css/wishModal.css" />
   <link rel="stylesheet" href="assets/css/cartModal.css" />
   <link rel="stylesheet" href="assets/css/toast.css" />
-
   <link rel="stylesheet" href="assets/css/accountModal.css" />
 
   <link rel="icon" href="assets/favicon/favicon.png">
@@ -25,54 +26,6 @@
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 <body>
-  <!-- <header class="navbar-container">
-    <div class="header-main" style="background-color: #fafafa; height: 8rem;">
-      <div class="logo-container">
-        <a href="index.php" ><strong>Pupkit</strong></a>
-      </div>
-      <div class="search-bar">
-        <input type="search" name="search" class="search-field" placeholder="Enter your product name..." />
-        <button class="search-btn">
-          <img src="assets/images/index/search.svg" alt="search-btn" style="height: 20px; width: 30px;">
-        </button>
-      </div>
-
-      <div class="top-right-icons">
-        <button class="action-btn">
-          
-          <img src="assets/images/index/heart (1).svg" alt="wishlist" class="show-wishlist ion-icon">
-          <span class="badge" id="wish-badge">0</span>
-        </button>
-        <button  class="action-btn">  
-           <img src="assets/images/index/cart.svg" alt="cart" class="show-cart ion-icon">
-          <span class="badge" id="cart-badge">0</span>
-        </button>
-        <button class="action-btn user-login">
-          <img src="assets/images/index/usericon.svg" alt="userIcon" class="ion-icon">
-        </button>
-        
-      </div>
-    </div>
-
-    <div class="mobile-bottom-navigation">
-      <button class="action-btn"><ion-icon name="menu-outline"></ion-icon></button>
-      <button class="action-btn">
-        <img src="assets/images/cart.svg" alt="cart" class="show-cart ion-icon">
-        <span class="badge" id="cart-badge">0</span>
-      </button>
-      <button class="action-btn" onclick="window.location.href='index.html'">
-        <ion-icon name="home-outline"></ion-icon>
-      </button>
-      <button class="action-btn">
-        <img src="assets/images/heart (1).svg" alt="wishlist" class="show-wishlist ion-icon">
-        <span class="badge" id="wish-badge">0</span>
-      </button>
-      <button class="action-btn user-login">
-        <img src="assets/images/usericon.svg" alt="userIcon" class="ion-icon">
-      </button>
-    </div>
-  </header> -->
-
   <!-- Main Section  -->
   <main class="spacing">
     <!-- Hero section  -->
@@ -88,8 +41,8 @@
             <p>Pet essentials you can trust.</p>
           </div>
           <div class="hbanner-links">
-            <a href="pages/browseProduct.php" class="buy-link">Buy now!</a>
-            <a href="pages/sellerRegister.html" class="login-btn">Become a Seller</a>
+            <a href="pages/productCatalog.php" class="buy-link">Buy now!</a>
+            <a href="pages/sellerRegister.php" class="login-btn">Become a Seller</a>
           </div>
         </div>
       </div>
@@ -123,19 +76,19 @@
       <div class="category-items">
         <div class="citem one">
           <img src="assets/images/index/cDog.png" alt="Dog" draggable="false" />
-          <a href="pages/browseProduct.php">Dog</a>
+          <a href="pages/productCatalog.php">Dog</a>
         </div>
         <div class="citem two">
           <img src="assets/images/index/cCat.png" alt="Cat" draggable="false" />
-          <a href="pages/browseProduct.php">Cat</a>
+          <a href="pages/productCatalog.php">Cat</a>
         </div>
         <div class="citem three">
           <img src="assets/images/index/cFish.png" alt="Fish" draggable="false" />
-          <a href="pages/browseProduct.php">Fish</a>
+          <a href="pages/productCatalog.php">Fish</a>
         </div>
         <div class="citem four">
           <img src="assets/images/index/cBird.png" alt="Bird" draggable="false" />
-          <a href="pages/browseProduct.php">Bird</a>
+          <a href="pages/productCatalog.php">Bird</a>
         </div>
       </div>
     </section>
@@ -159,7 +112,7 @@
     <!-- Dog Featured Products-->
     <section class="dfeatured-section">
       <h2 style="display: inline">Our Recommendation</h2>
-      <span class="view-more"><a href="pages/browseProduct.php">View all</a></span>
+      <span class="view-more"><a href="pages/productCatalog.php">View all</a></span>
       <div class="dfeatured-items" id="dfeatured-items">
         <!-- Product Card Example -->
         <!-- <div class="dfitem">
@@ -190,7 +143,7 @@
         <!-- Featured Products-->
     <section class="cfeatured-section">
       <h2 style="display: inline">Our Recommendation</h2>
-      <span class="view-more"><a href="pages/browseProduct.php">View all</a></span>
+      <span class="view-more"><a href="pages/productCatalog.php">View all</a></span>
 
       <div class="cfeatured-items" id="cfeatured-items">
         <!-- Product Card Example -->
@@ -223,7 +176,6 @@
         <p class="panel">Absolutely! Our platform uses industry-standard encryption and secure payment gateways to protect your information. We accept major credit/debit cards, PayPal, and other secure payment methods. Your data is never shared with third parties without your consent</p>
       </ul>
     </section>
-
   </main>
 
   <!-- Footer section  -->
@@ -259,102 +211,10 @@
   </footer>
 
   <!-- Login Modal -->
-  <div id="login-modal" class="login-modal">
-    <button class="close-btn" style="font-size: 1.9rem">&times;</button>
-    <div class="login-bar">
-      <form name="login-form" class="login-form" id="login-form" action="../../backend/login.php" method="POST">
-        <label for="log-email">Email</label>
-        <input type="email" id="login-email" name="log-email" placeholder="abc@example.com" required />
-        <label for="log-pass">Password<span class="pass-error">Invalid Password</span></label>
-        <input type="password" id="login-pass" name="log-pass" placeholder="my password" required />
-        
-        <!-- <span class="toggle-btn"><ion-icon id="togglePassword" name="eye-outline" class="toggle-icon"></ion-icon></span> -->
 
-        <div class="btn">
-          <button type="submit" class="login-btn"><strong>Login</strong></button>
-        </div>
-        <a href="#main" id="fp">Forgot password?</a>
-        <hr />
-        <div class="reg-btn">
-    <a href="userRegister.html" class="register-link">Create an account</a>
-    </div>
-    </form>
-      
-  </div>
-</div>
-  <div class="loader"><div></div></div>
-
-  <div class="wishlist-modal">
-        <div class="wishlist-header">Wishlist
-        <button class="close-btn" style="font-size: 1.9rem; color: #2c6e49;">&times;</button>
-        </div>
-        <!-- Example items -->
-        <div class="wishlists">
-            <div class="wish-info"><a href="#main">Dog Biscuit</a></div>
-            <div class="wish-actions">
-                <button>Remove</button>
-                <button>Add to Cart</button>
-            </div>
-        </div>
-        <div class="wishlists">
-            <div class="wish-info"><a href="#">NeckBand</a></div>
-            <div class="wish-actions">
-                <button>Remove</button>
-                <button>Add to Cart</button>
-            </div>
-        </div>
-    </div>
-
+  <div class="modal-overlay"></div>
   
-
-  <div class="account-modal">
-  <!-- Guest Section -->
-  <div class="guest-account">
-    <div class="guest-info">
-      <div class="guest-welcome"><strong>Welcome, Guest</strong></div>
-      <div class="guest-text">You’re not signed in</div><hr>
-    </div>
-
-    <div class="guest-menu">
-      <div class="guest-menu-item">
-        <ion-icon name="log-in-outline" class="icon-login"></ion-icon>
-        <button class="log-modal">Login</button>
-      </div>
-      <div class="guest-menu-item">
-        <ion-icon name="person-add-outline" class="icon-create"></ion-icon>
-        <span class="menu-text"><a href="pages/userRegister.html">Create an account</a></span>
-      </div>
-      <div class="guest-menu-item">
-        <ion-icon name="briefcase-outline" class="icon-seller"></ion-icon>
-        <span class="menu-text"><a href="sellerRegister.html">Become a Seller</a></span>
-      </div>
-    </div>
-  </div>
-
-  <!-- User Section -->
-  <div class="user-account">
-    <div class="user-info">
-      <div class="user-name-text">Olivia Winters</div>
-    </div>
-
-    <div class="user-menu">
-      <div class="user-menu-item">
-        <ion-icon name="person-outline" class="icon-profile"></ion-icon>
-        <span class="menu-text">Profile</span>
-      </div>
-      <div class="user-menu-item">
-        <ion-icon name="settings-outline" class="icon-settings"></ion-icon>
-        <span class="menu-text">Settings</span>
-      </div>
-      <div class="menu-divider"></div>
-      <div class="user-menu-item logout">
-        <ion-icon name="log-out-outline" class="icon-logout"></ion-icon>
-        <button class="log-out-btn">Logout</button>
-        <!-- class="menu-btn" -->
-      </div>
-    </div>
-  </div>
-</div>
+<div class="loader"><div></div></div>  
 <div class="toast" id="toast"></div>
   <script>
     document.addEventListener("DOMContentLoaded", () => {

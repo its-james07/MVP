@@ -2,14 +2,12 @@ const userLogin = document.querySelectorAll(".user-login");
 const closeBtns = document.querySelectorAll(".close-btn");
 const wishlistBtn = document.querySelector(".show-wishlist");
 const wishlistModal = document.querySelector(".wishlist-modal");
-const cartBtn = document.querySelector(".show-cart");
+const cartBtns = document.querySelectorAll(".show-cart");
+const overlay = document.querySelector(".modal-overlay");
 const cartModal = document.querySelector(".cart-modal");
 const accountModal = document.querySelector(".account-modal");
-const guestAccount = document.querySelector(".guest-account");
-const userAccount = document.querySelector(".user-account");
-const loginBtn = document.querySelector('.log-modal');
+const loginBtns = document.querySelectorAll('.log-modal');
 const loginModal = document.getElementById('login-modal');
-const createNew = document.querySelector(".create-btn");
 
 let hideTimeout;
 
@@ -18,40 +16,48 @@ function showAccountModal() {
   wishlistModal.style.display = "none";
   cartModal.classList.remove('show');
 }
+
 function hideAccountModal() {
   hideTimeout = setTimeout(() => {
     accountModal.style.display = "none";
   }, 200);
 }
 
-loginBtn.addEventListener('click', () => {
+loginBtns.forEach(btn => {
+  btn.addEventListener('click', ()=>{
     loginModal.style.display = 'block';
   });
+});
 
-userLogin.forEach((btn) => {
+userLogin.forEach(btn => {
   btn.addEventListener("click", showAccountModal);
   btn.addEventListener("mouseleave", () => {
-    if (!accountModal.matches(":hover")) {
-      hideAccountModal();
-    }
+    if (!accountModal.matches(":hover")) hideAccountModal();
   });
 });
-accountModal.addEventListener("mouseenter", () => {
-  clearTimeout(hideTimeout);
-  showAccountModal();
-});
-accountModal.addEventListener("mouseleave", hideAccountModal);
 
-wishlistBtn.addEventListener('click', ()=>{
-  wishlistModal.style.display = "block";
-  cartModal.classList.remove('show');
-});
+if(accountModal){
+  accountModal.addEventListener("mouseenter", () => {
+    clearTimeout(hideTimeout);
+    showAccountModal();
+  });
+  accountModal.addEventListener("mouseleave", hideAccountModal);
+}
 
-cartBtn.addEventListener('click', ()=>{
-  cartModal.classList.add('show');
-  // overlay.classList.add('show');
-  document.body.classList.add('modal-open');
-  wishlistModal.style.display = "none";
+if (wishlistBtn) {
+  wishlistBtn.addEventListener('click', ()=>{
+    wishlistModal.style.display = "block";
+    cartModal.classList.remove('show');
+  });
+}
+
+cartBtns.forEach(cartBtn=>{
+  cartBtn.addEventListener('click', ()=>{
+    cartModal.classList.add('show');
+    document.body.classList.add('modal-open');
+    overlay.classList.add('show');
+    wishlistModal.style.display = "none";
+  });
 });
 
 closeBtns.forEach(btn => {
@@ -60,21 +66,7 @@ closeBtns.forEach(btn => {
     accountModal.style.display = "none";
     wishlistModal.style.display = "none";
     cartModal.classList.remove('show');
+    overlay.classList.remove('show');
+    document.body.classList.remove('modal-open');
   });
 });
-
-
-function showMenu() {
-    const guestAccount = document.querySelector('.guest-account');
-    const userAccount = document.querySelector('.user-account');
-    guestAccount.style.display = "none";
-    userAccount.style.display = "block";
-}
-
-// function openModal(modal){
-
-// }
-
-// function closeModal(){
-
-// }

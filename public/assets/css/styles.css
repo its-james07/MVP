@@ -712,4 +712,5 @@ input[type=password]:focus {
 /* Disable scroll when modal is open */
 body.modal-open {
   overflow: hidden;
+  pointer-events: none;
 }

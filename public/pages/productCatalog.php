@@ -1,5 +1,9 @@
 <?php 
-
+  require("../components/navbar.php");
+  require("../components/cartmodal.php");
+  require("../components/loginmodal.php");
+  require("../components/accountmodal.php");
+  require("../components/wishmodal.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,65 +16,18 @@
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../assets/favicon/favicon.png" />
 
-    <link rel="stylesheet" href="../assets/css/navbar.css">
-    <link rel="stylesheet" href="../assets/css/styles.css">
-    <link rel="stylesheet" href="../assets/css/footer.css">
-    <link rel="stylesheet" href="../assets/css/mediaqueries.css">
-    <link rel="stylesheet" href="../assets/css/shopPage.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+   <link rel="stylesheet" href="../assets/css/navbar.css">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <link rel="stylesheet" href="../assets/css/mediaqueries.css">
+  <link rel="stylesheet" href="../assets/css/cartModal.css">
+  <link rel="stylesheet" href="../assets/css/accountModal.css" />
+  <link rel="stylesheet" href="../assets/css/wishModal.css" />
+  <link rel="stylesheet" href="../assets/css/productCatalog.css" />
+  <link rel="stylesheet" href="../assets/css/productDetails.css" />
     <!-- <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css" /> -->
   </head>
 
-  <body>
-    <!-- <header class="spacing navbar-container"></header> -->
-     <header class="navbar-container">
-    <div class="header-main" style="background-color: #fafafa; height: 8rem;">
-      <div class="logo-container">
-        <a href="../index.php" ><strong>Pupkit</strong></a>
-      </div>
-      <div class="search-bar">
-        <input type="search" name="search" class="search-field" placeholder="Enter your product name..." />
-        <button class="search-btn">
-          <img src="../assets/images/index/search.svg" alt="search-btn" style="height: 20px; width: 30px;">
-        </button>
-      </div>
-
-      <div class="top-right-icons">
-        <button class="action-btn">
-          
-          <img src="../assets/images/index/heart (1).svg" alt="wishlist" class="show-wishlist ion-icon">
-          <span class="badge" id="wish-badge">0</span>
-        </button>
-        <button  class="action-btn">  
-           <img src="../assets/images/index/cart.svg" alt="cart" class="show-cart ion-icon">
-          <span class="badge" id="cart-badge">0</span>
-        </button>
-        <button class="action-btn user-login">
-          <img src="../assets/images/index/usericon.svg" alt="userIcon" class="ion-icon">
-        </button>
-        
-      </div>
-    </div>
-
-    <!-- Mobile Bottom Nav -->
-    <div class="mobile-bottom-navigation">
-      <button class="action-btn"><ion-icon name="menu-outline"></ion-icon></button>
-      <button class="action-btn">
-        <img src="../assets/images/cart.svg" alt="cart" class="show-cart ion-icon">
-        <span class="badge" id="cart-badge">0</span>
-      </button>
-      <button class="action-btn" onclick="window.location.href='index.html'">
-        <ion-icon name="home-outline"></ion-icon>
-      </button>
-      <button class="action-btn">
-        <img src="../assets/images/heart (1).svg" alt="wishlist" class="show-wishlist ion-icon">
-        <span class="badge" id="wish-badge">0</span>
-      </button>
-      <button class="action-btn user-login">
-        <img src="../assets/images/usericon.svg" alt="userIcon" class="ion-icon">
-      </button>
-    </div>
-  </header>
+<body>   
 <section class="filter-section" >
   <div class="filter-container">
     <h2>Browse Products</h2>
@@ -110,9 +67,9 @@
         </div> -->
       </div>
     </section>
-  <div class="load-more" style="display: flex; align-items: center; color: red">
+  <!-- <div class="load-more" style="display: flex; align-items: center; color: red">
   <button class="load-data">Centered Button</button>
-  </div>
+  </div> -->
     <!-- Footer -->
     <!-- <footer class="py-2 bg-dark">
       <div class="container">
@@ -138,8 +95,13 @@
         .catch(err => console.error("Failed to check session:", err));
 });
   </script>
+    <script src="../assets/js/main.js"></script>
     <script src="../assets/js/renderProducts.js"></script>
     <script src="../assets/js/browse.js"></script>
-    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/modal.js"></script>
+    <script src="../assets/js/signin.js"></script>
+    <script src="../assets/js/signout.js"></script>
+  <script src="../assets/js/viewProduct.js"></script>
+  <script src="../assets/js/cartModal.js"></script>
   </body>
 </html>

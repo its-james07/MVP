@@ -1,0 +1,23 @@
+<div id="login-modal" class="login-modal">
+    <button class="close-btn" style="font-size: 1.9rem">&times;</button>
+    <div class="login-bar">
+      <form name="login-form" class="login-form" id="login-form" action="../../backend/login.php" method="POST">
+        <label for="log-email">Email</label>
+        <input type="email" id="login-email" name="log-email" placeholder="abc@example.com" required />
+        <label for="log-pass">Password<span class="pass-error">Invalid Password</span></label>
+        <input type="password" id="login-pass" name="log-pass" placeholder="my password" required />
+        
+        <!-- <span class="toggle-btn"><ion-icon id="togglePassword" name="eye-outline" class="toggle-icon"></ion-icon></span> -->
+
+        <div class="btn">
+          <button type="submit" class="login-btn"><strong>Login</strong></button>
+        </div>
+        <a href="#main" id="fp">Forgot password?</a>
+        <hr />
+        <div class="reg-btn">
+    <a href="userRegister.html" class="register-link">Create an account</a>
+    </div>
+    </form>
+      
+  </div>
+</div>

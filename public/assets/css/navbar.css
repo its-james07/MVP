@@ -6,6 +6,11 @@ header{
     margin: 0 auto;
 }
 
+.spacing{
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
 .header-main {
     display: flex;
     justify-content: space-between;
