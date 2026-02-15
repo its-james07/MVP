@@ -36,7 +36,7 @@
   </div>
 
   <!-- Mobile Bottom Nav -->
-  <!-- <div class="mobile-bottom-navigation">
+  <div class="mobile-bottom-navigation">
       <button class="action-btn"><ion-icon name="menu-outline"></ion-icon></button>
       <button class="action-btn">
         <img src="assets/images/cart.svg" alt="cart" class="show-cart ion-icon">
@@ -52,7 +52,7 @@
       <button class="action-btn user-login">
         <img src="assets/images/usericon.svg" alt="userIcon" class="ion-icon">
       </button>
-    </div> -->
+    </div>
 <div class="mobile-bottom-navigation">
     <a href="index.html" class="nav-item active"><i class="bi bi-house"></i><span>Home</span></a>
     <a href="#" class="nav-item show-wishlist"><i class="bi bi-heart"></i><span>Wishlist</span></a>

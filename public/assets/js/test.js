@@ -3,6 +3,6 @@ const object = {
     b: 42,
 }
 
-for(const [key, value] of Object.entries(object)){
-    console.log(`${key}:${value}`);
-}
+Object.keys(object).forEach(key=>{
+    console.log(key);
+})

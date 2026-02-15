@@ -77,61 +77,61 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-// Example cart data
-// let cart = [
-//   {name:'Headphones', price:50, qty:1},
-//   {name:'Mouse', price:25, qty:2},
-//   {name:'Keyboard', price:70, qty:1},
-// ];
+Example cart data
+let cart = [
+  {name:'Headphones', price:50, qty:1},
+  {name:'Mouse', price:25, qty:2},
+  {name:'Keyboard', price:70, qty:1},
+];
 
-// function renderCart() {
-//   const itemsDiv = document.getElementById('cart-items');
-//   const totalDiv = document.getElementById('cart-total');
-//   const countSpan = document.getElementById('cart-count');
-//   itemsDiv.innerHTML = '';
-//   let total = 0;
-//   let count = 0;
-//   cart.forEach(item => {
-//     total += item.price * item.qty;
-//     count += item.qty;
-//     const li = document.createElement('li');
-//     li.className = 'list-group-item d-flex justify-content-between lh-sm';
-//     li.innerHTML = `<div><h6 class="my-0">${item.name}</h6></div>
-//                     <span>$${item.price*item.qty}</span>`;
-//     itemsDiv.appendChild(li);
-//   });
-//   totalDiv.innerText = '$'+total;
-//   countSpan.innerText = count;
-// }
+function renderCart() {
+  const itemsDiv = document.getElementById('cart-items');
+  const totalDiv = document.getElementById('cart-total');
+  const countSpan = document.getElementById('cart-count');
+  itemsDiv.innerHTML = '';
+  let total = 0;
+  let count = 0;
+  cart.forEach(item => {
+    total += item.price * item.qty;
+    count += item.qty;
+    const li = document.createElement('li');
+    li.className = 'list-group-item d-flex justify-content-between lh-sm';
+    li.innerHTML = `<div><h6 class="my-0">${item.name}</h6></div>
+                    <span>$${item.price*item.qty}</span>`;
+    itemsDiv.appendChild(li);
+  });
+  totalDiv.innerText = '$'+total;
+  countSpan.innerText = count;
+}
 
-// document.getElementById('checkout-form').addEventListener('submit', function(e){
-//   e.preventDefault();
-//   if(cart.length===0){
-//     alert('Cart is empty');
-//     return;
-//   }
-//   alert('Order placed successfully!');
-//   cart = [];
-//   renderCart();
-//   this.reset();
-// });
+document.getElementById('checkout-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  if(cart.length===0){
+    alert('Cart is empty');
+    return;
+  }
+  alert('Order placed successfully!');
+  cart = [];
+  renderCart();
+  this.reset();
+});
 
-// Bootstrap form validation
-// (() => {
-//   'use strict'
-//   const forms = document.querySelectorAll('.needs-validation')
-//   Array.from(forms).forEach(form => {
-//     form.addEventListener('submit', event => {
-//       if (!form.checkValidity()) {
-//         event.preventDefault()
-//         event.stopPropagation()
-//       }
-//       form.classList.add('was-validated')
-//     }, false)
-//   })
-// })();
+Bootstrap form validation
+(() => {
+  'use strict'
+  const forms = document.querySelectorAll('.needs-validation')
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+      form.classList.add('was-validated')
+    }, false)
+  })
+})();
 
-// renderCart();
+renderCart();
 </script>
 
 </body>

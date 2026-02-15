@@ -48,7 +48,7 @@ form.addEventListener('submit', (e) => {
     // --- Send to backend ---
     setTimeout(()=>{
         const formData = new FormData(form);
-    fetch('../../backend/products/addProduct.php', {
+    fetch('../../backend/products/add-product.php', {
         method: 'POST',
         body: formData
     })

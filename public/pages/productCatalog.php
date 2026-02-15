@@ -23,7 +23,7 @@
   <link rel="stylesheet" href="../assets/css/accountModal.css" />
   <link rel="stylesheet" href="../assets/css/wishModal.css" />
   <link rel="stylesheet" href="../assets/css/productCatalog.css" />
-  <link rel="stylesheet" href="../assets/css/productDetails.css" />
+  <!-- <link rel="stylesheet" href="../assets/css/productDetails.css" /> -->
     <!-- <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css" /> -->
   </head>
 
@@ -76,6 +76,7 @@
         <p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p>
       </div>
     </footer> -->
+    <div class="overlay"></div>
     <script>
     document.addEventListener("DOMContentLoaded", () => {
     const guestAccount = document.querySelector('.guest-account');

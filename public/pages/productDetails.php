@@ -13,7 +13,7 @@ $featuredItems = [
     "price" => 2200,
     "category" => "Dog Food",
     "description" => "High-quality adult dog food made with balanced nutrients for healthy growth and coat.",
-    "image" => "../assets/images/dogProducts/dog-chain.png"
+    "image" => "/mvp/public/assets/images/dogProducts/dog-chain.png"
   ],
   [
     "id" => 2,
@@ -21,7 +21,7 @@ $featuredItems = [
     "price" => 3200,
     "category" => "Dog Food",
     "description" => "Nutritious puppy food to support development and energy levels during early growth stages.",
-    "image" => "../assets/images/dogProducts/collar.png"
+    "image" => "/mvp/public/assets/images/dogProducts/collar.png"
   ],
   [
     "id" => 3,
@@ -29,7 +29,7 @@ $featuredItems = [
     "price" => 2200,
     "category" => "Toys",
     "description" => "Durable chew balls to keep your dog active and entertained while promoting dental health.",
-    "image" => "assets/images/dogProducts/play-balls.png"
+    "image" => "/mvp/public/assets/images/dogProducts/play-balls.png"
   ],
   [
     "id" => 4,
@@ -37,7 +37,7 @@ $featuredItems = [
     "price" => 1200,
     "category" => "Grooming",
     "description" => "Soft fur scrubber for easy grooming and removal of loose hair and dirt from your dog’s coat.",
-    "image" => "assets/images/dogProducts/cleaner.png"
+    "image" => "/mvp/public/assets/images/dogProducts/cleaner.png"
   ],
   [
     "id" => 5,
@@ -45,7 +45,7 @@ $featuredItems = [
     "price" => 900,
     "category" => "Accessories",
     "description" => "Sturdy and comfortable leash for daily walks, made with durable material for safety.",
-    "image" => "assets/images/dogProducts/dog-leash.png"
+    "image" => "/mvp/public/assets/images/dogProducts/dog-leash.png"
   ]
 ];
 
@@ -90,6 +90,8 @@ if (!$found) {
   <link rel="stylesheet" href="../assets/css/accountModal.css" />
   <link rel="stylesheet" href="../assets/css/wishModal.css" />
   <link rel="stylesheet" href="../assets/css/productDetails.css" />
+  <link rel="stylesheet" href="../assets/css/overlay-effect.css" />
+  <link rel="stylesheet" href="../assets/css/toast.css" />
 
 
 
@@ -97,8 +99,8 @@ if (!$found) {
   <link rel="icon" href="assets/favicon/favicon.png">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-pV4mrjbl1aJb8yHHnZ2MLycXvPiDkhJ4b0xQdF5Tc9zHZo0r3UOy2rJwAi5uT8lDdIkY1+jEfrFcv0q4fZ0Yw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <!-- <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script> -->
+   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
   
 </head>
 
@@ -168,8 +170,9 @@ if (!$found) {
             <input type="number" class="quantity-input" id="productQuantity" value="1" min="1">
           </div>
           <div class="action-buttons">
-            <button class="btn btn-add-to-cart" onclick="addToCart(<?= $product['id']?>)">
+            <button class="btn btn-add-to-cart">
               Add to Cart
+              <!-- onclick="addToCart(<?= $product['id']?>) -->
             </button>
             <button class="btn btn-wishlist">
               Wish
@@ -179,6 +182,8 @@ if (!$found) {
       </div>
     </div>
   </section>
+  <div class="modal-overlay"></div>
+<div class="toast" id="toast"></div>
 
   <footer class="site-footer">
     <div class="main-container">
@@ -196,6 +201,7 @@ if (!$found) {
   <script src="../assets/js/signout.js"></script>
   <script src="../assets/js/viewProduct.js"></script>
   <script src="../assets/js/cartModal.js"></script>
+  <script src="../assets/js/toast.js"></script>
 </body>
 
 </html>

@@ -3,7 +3,7 @@ const closeBtns = document.querySelectorAll(".close-btn");
 const wishlistBtn = document.querySelector(".show-wishlist");
 const wishlistModal = document.querySelector(".wishlist-modal");
 const cartBtns = document.querySelectorAll(".show-cart");
-const overlay = document.querySelector(".modal-overlay");
+const overlays = document.querySelectorAll(".modal-overlay");
 const cartModal = document.querySelector(".cart-modal");
 const accountModal = document.querySelector(".account-modal");
 const loginBtns = document.querySelectorAll('.log-modal');
@@ -26,6 +26,10 @@ function hideAccountModal() {
 loginBtns.forEach(btn => {
   btn.addEventListener('click', ()=>{
     loginModal.style.display = 'block';
+    overlays.forEach(overlay=>{
+      overlay.classList.add('show');
+    })
+    // document.body.classList.add('modal-open');
   });
 });
 
@@ -55,7 +59,9 @@ cartBtns.forEach(cartBtn=>{
   cartBtn.addEventListener('click', ()=>{
     cartModal.classList.add('show');
     document.body.classList.add('modal-open');
-    overlay.classList.add('show');
+    overlays.forEach(overlay=>{
+      overlay.classList.add('show');
+    })
     wishlistModal.style.display = "none";
   });
 });
@@ -66,7 +72,9 @@ closeBtns.forEach(btn => {
     accountModal.style.display = "none";
     wishlistModal.style.display = "none";
     cartModal.classList.remove('show');
-    overlay.classList.remove('show');
+    overlays.forEach(overlay=>{
+      overlay.classList.remove('show');
+    })
     document.body.classList.remove('modal-open');
   });
 });

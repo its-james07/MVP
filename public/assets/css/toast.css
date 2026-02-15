@@ -21,14 +21,15 @@
 
 .toast {
     position: fixed;
-    top: 20px;
-    right: 20px;
+    top: 100px;
+    right: 120px;
     padding: 15px 20px;
     color: white;
     border-radius: 5px;
     opacity: 0;
-    transform: translateX(100%);
+    transform: translateX(60%);
     transition: opacity 0.5s, transform 0.5s;
+    z-index: 999;
 }
 
 .toast.show {

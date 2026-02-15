@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="assets/css/cartModal.css" />
   <link rel="stylesheet" href="assets/css/toast.css" />
   <link rel="stylesheet" href="assets/css/accountModal.css" />
+  <link rel="stylesheet" href="assets/css/overlay-effect.css" />
 
   <link rel="icon" href="assets/favicon/favicon.png">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
@@ -32,7 +33,7 @@
     <section class="hero-section">
       <div class="hero-banner">
         <picture>
-          <source srcset="assets/images/index.hero-mobile.png" media="(max-width: 767px)" />
+          <source srcset="assets/images/index/hero-mobile.png" media="(max-width: 767px)" />
           <img src="assets/images/index/hero-desktop.png" alt="Poppy" />
         </picture>
         <div class="hbanner-content">

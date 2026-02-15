@@ -4,19 +4,20 @@
     <h2>Shopping cart</h2>
     <button class="close-btn">&times;</button>
 </div>
-  <table>
+<form id="cart-form">
+  <div id="inside-cart">
+   <table>
     <thead>
       <tr>
-        <th></th>
+        <th>Image</th>
         <th>Product</th>
-                <!-- <th>Price</th> -->
         <th>Qty</th>
         <th>Total</th>
         <th>Action</th>
       </tr>
     </thead>
-    <tbody>
-      <tr>
+    <tbody id="cart-items">
+      <!-- <tr>
         <td>
           <img src="assets/images/catProducts/cat-wear.png">
           </td>
@@ -37,19 +38,17 @@
           <td>
             <button class="delete-btn">X</button>
           </td>
-          </tr>
+          </tr> -->
   </tbody>
 </table>
-
+  </div>
     <div class="total">
-        Total: <span>$178</span>
+        Total: $<span id="cart-total"></span>
     </div>
-
     <div class="modal-footer">
-        <button class="btn btn-update">Update</button>
-        <button class="btn btn-checkout">Checkout</button>
+        <button type="button" id="btn-update" class="cart-btn btn-update">Update</button>
+        <button type="button" class="cart-btn btn-checkout">Checkout</button>
     </div>
-
-
   <!-- </div> -->
+</form>
 </div>
