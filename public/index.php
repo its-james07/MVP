@@ -1,4 +1,5 @@
 <?php
+session_start();
   require("components/navbar.php");
   require("components/cartModal.php");
   require("components/loginmodal.php");
@@ -19,6 +20,7 @@
   <link rel="stylesheet" href="assets/css/toast.css" />
   <link rel="stylesheet" href="assets/css/accountModal.css" />
   <link rel="stylesheet" href="assets/css/overlay-effect.css" />
+  <link rel="stylesheet" href="assets/css/loader.css" />
 
   <link rel="icon" href="assets/favicon/favicon.png">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
@@ -215,7 +217,7 @@
 
   <div class="modal-overlay"></div>
   
-<div class="loader"><div></div></div>  
+<!-- <div class="loader"><div></div></div>   -->
 <div class="toast" id="toast"></div>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -238,7 +240,7 @@
   </script>
   <!-- <script src="Script/main.js"></script> -->
   <script src="assets/js/modal.js"></script>
-  <script src="assets/js/signin.js"></script>
+  <script src="assets/js/login.js"></script>
   <script src="assets/js/signout.js"></script>
   <script src="assets/js/viewProduct.js"></script>
   <script src="assets/js/renderProducts.js"></script>

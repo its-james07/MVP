@@ -92,6 +92,7 @@ if (!$found) {
   <link rel="stylesheet" href="../assets/css/productDetails.css" />
   <link rel="stylesheet" href="../assets/css/overlay-effect.css" />
   <link rel="stylesheet" href="../assets/css/toast.css" />
+  <link rel="stylesheet" href="../assets/css/loader.css" />
 
 
 
@@ -170,11 +171,11 @@ if (!$found) {
             <input type="number" class="quantity-input" id="productQuantity" value="1" min="1">
           </div>
           <div class="action-buttons">
-            <button class="btn btn-add-to-cart">
+            <button class="cart-btn btn-add-to-cart">
               Add to Cart
               <!-- onclick="addToCart(<?= $product['id']?>) -->
             </button>
-            <button class="btn btn-wishlist">
+            <button class="wish-btn btn-wishlist">
               Wish
             </button>
           </div>
@@ -197,7 +198,7 @@ if (!$found) {
   </footer>
   <script src="../assets/js/main.js"></script>
   <script src="../assets/js/modal.js"></script>
-  <script src="../assets/js/signin.js"></script>
+  <script src="../assets/js/login.js"></script>
   <script src="../assets/js/signout.js"></script>
   <script src="../assets/js/viewProduct.js"></script>
   <script src="../assets/js/cartModal.js"></script>

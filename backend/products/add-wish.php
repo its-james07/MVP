@@ -5,14 +5,8 @@ session_start();
     exit();
   }
 
-//   if($_SESSION['role'] != 'seller'){
-//     header('Location: unauthorized.html');
-//     exit();
-//   }
-
-// Initialize cart if not exists
-if (!isset($_SESSION['cart'])) {
-    $_SESSION['cart'] = [];
+if (!isset($_SESSION['wish'])) {
+    $_SESSION['wish'] = [];
 }
 
 // Product data (should match your product list)

@@ -100,7 +100,7 @@
     <script src="../assets/js/renderProducts.js"></script>
     <script src="../assets/js/browse.js"></script>
     <script src="../assets/js/modal.js"></script>
-    <script src="../assets/js/signin.js"></script>
+    <script src="../assets/js/login.js"></script>
     <script src="../assets/js/signout.js"></script>
   <script src="../assets/js/viewProduct.js"></script>
   <script src="../assets/js/cartModal.js"></script>

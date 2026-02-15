@@ -24,7 +24,7 @@
   <!-- User Section -->
   <div class="user-account">
     <div class="user-info">
-      <div class="user-name-text">Olivia Winters</div>
+      <div class="user-name-text"><?php echo $_SESSION['username']?></div>
     </div>
 
     <div class="user-menu">
@@ -39,7 +39,7 @@
       <div class="menu-divider"></div>
       <div class="user-menu-item logout">
         <ion-icon name="log-out-outline" class="icon-logout"></ion-icon>
-        <button class="log-out-btn">Logout</button>
+        <button type="button" class="log-out-btn">Logout</button>
         <!-- class="menu-btn" -->
       </div>
     </div>

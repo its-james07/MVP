@@ -31,12 +31,17 @@ header{
     margin: 2px 5px;
 }
 
+
+
 .logo-container a{
     color: #2c6e49;
     font-size: 35px;
     text-decoration: none;
+    
+
     /* color: rgb(13, 12, 12); */
 }
+
 
 .search-bar{
     display: flex; 

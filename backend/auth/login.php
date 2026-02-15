@@ -6,12 +6,11 @@ header('Content-Type: application/json');
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $lemail = test_input($_POST["log-email"] ?? '');
+    $lemail = sanitizeData($_POST["log-email"] ?? '');
     $lpass  = $_POST["log-pass"] ?? '';
 
     $stmt = $conn->prepare(
-        "SELECT id, fname, email, role, password FROM users WHERE email = ?"
-    );
+        "SELECT user_id, fname, email, password, role FROM users WHERE email=?");
 
     if (!$stmt) {
         echo json_encode(["status" => "error", "message" => "DB prepare failed"]);
@@ -20,12 +19,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $stmt->bind_param("s", $lemail);
     $stmt->execute();
-    $stmt->bind_result($userId, $username, $userMail, $role, $dbpassword);
+    $stmt->bind_result($userId, $username, $userMail, $dbpassword, $role);
 
     if ($stmt->fetch()) {
-
         if (password_verify($lpass, $dbpassword)) {
-
             $_SESSION['user_id'] = $userId;
             $_SESSION['username'] = $username;
             $_SESSION['usermail'] = $userMail;
