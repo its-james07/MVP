@@ -152,7 +152,7 @@ function secondStepValidation(){
 
     if (password !== confirmPass) {
         show(notConfirm);
-        notConfirm.textContent = "Password donot match";
+        notConfirm.textContent = "Password doesnot match";
         return false;
     }
 

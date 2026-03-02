@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const cartModal = document.querySelector('.cart-modal');
     const cartItems = document.getElementById('cart-items');
     const cartTotal = document.getElementById('cart-total');
     const cartAPI = '/mvp/backend/products/cartActions.php';
@@ -14,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Function to fetch and display cart
     function fetchCart() {
         fetch(cartAPI, {
             method: 'POST',
@@ -159,11 +157,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then(res => res.json())
                 .then(data => {
                     console.log('Added to cart:', data);
+                    if(data.task === "login"){
+                        openLoginModal();
+                        showToast(data.message, 'error');
+                    }
                     if (data.success) {
                         showToast(data.message, 'success');
                         // Refresh cart if modal is open
                         fetchCart();
-                    } else {
+                    }else{
                         showToast(data.message, 'error');
                     }
                 })
@@ -177,3 +179,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Make fetchCart available globally if needed
     window.fetchCart = fetchCart;
 });
+
+// function openLoginModal(){
+//     const userLogin = document.querySelectorAll(".user-login");
+//     const overlays = document.querySelectorAll(".modal-overlay");
+//     const loginModal = document.getElementById('login-modal');
+//     loginModal.style.display = 'block';
+//     overlays.forEach(overlay=>{
+//       overlay.classList.add('show');
+//     })
+// }

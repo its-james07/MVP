@@ -7,20 +7,21 @@ form.addEventListener('submit', function(e){
     }   
 
     const submitBtn = form.querySelector('button[type="submit"]');
+    // submitBtn.disabled = true;
+    // submitBtn.textContent = "Creating account...";
     submitBtn.disabled = true;
-    submitBtn.textContent = "Creating account...";
+    submitBtn.innerHTML = `<div class="btn-loader"><div></div></div>`;
     
     const formData = new FormData(form);
-    
+setTimeout(()=>{
     fetch('../../backend/users/userDetails.php',{
-        method: 'POST', 
-        body: formData
+    method: 'POST', 
+    body: formData
     })
     .then(response => response.json())
     .then(data => {
         submitBtn.disabled = false;
         submitBtn.textContent = "Create Account";
-        
         if(data.status === 'success'){
             showToast(data.message, 'success');
             clearForm();
@@ -34,6 +35,7 @@ form.addEventListener('submit', function(e){
         showToast("Oops! Something went wrong", 'error');
         console.error(err);
     });
+    }, 2000);
 });
 
 function validateForm(){

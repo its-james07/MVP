@@ -14,16 +14,16 @@ $row = $result->fetch_assoc();
 $responseData['total_users'] = (int) $row['total'];
 
 //Total Sellers
-$result = $conn->query( "SELECT COUNT(*) AS total FROM users WHERE role = 'seller'");
+$result = $conn->query( "SELECT COUNT(*) AS total FROM users WHERE role='seller'");
 $row = $result->fetch_assoc();
 $responseData['total_sellers'] = (int) $row['total'];
 
 //Total Products
-$result = $conn->query(
-    "SELECT COUNT(*) AS total FROM products"
-);
-$row = $result->fetch_assoc();
-$responseData['total_products'] = (int) $row['total'];
+// $result = $conn->query(
+//     "SELECT COUNT(*) AS total FROM products"
+// );
+// $row = $result->fetch_assoc();
+// $responseData['total_products'] = (int) $row['total'];
 
 //Pending User Requests
 $result = $conn->query(

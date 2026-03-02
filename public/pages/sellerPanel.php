@@ -249,13 +249,30 @@
       </div>
     </div>
   </div>
+  <!-- <div class="toast-container position-fixed bottom-0 end-0 p-4"> -->
+  <!-- <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+       style="width: 380px; font-size: 16px;">
+       
+    <div class="toast-header">
+      <img src="..." class="rounded me-2" alt="...">
+      <strong class="me-auto">Message</strong>
+      <small>11 mins ago</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+    </div>
 
+    <div class="toast-body" style="padding:16px;">
+      Hello, world! This is a toast message.
+    </div>
+  </div> -->
+<!-- </div> -->
+
+  <!-- <button type="button" class="btn btn-primary" id="liveToastBtn">Show Live Toast</button> -->
 </main>
-
 <!-- Scripts -->
 <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="../assets/js/signout.js"></script>
 <script src="../assets/js/uploadProduct.js"></script>
+<script src="../assets/js/bootstrap-alert.js"></script>
 <script src="../assets/js/sellerScript.js"></script>
 
 </body>

@@ -1,6 +1,6 @@
 const featuredItems = [
-    {id: 1,name: "Monge Adult Food", price: 2200, image: "../assets/images/dogProducts/dog-chain.png"},
-    {id: 2,name: "Monge Puppy Dog", price: 3200, image: "../assets/images/dogProducts/collar.png"},
+    {id: 1,name: "Demo Dog Food", price: 2200, image: "assets/images/dogProducts/dog-chain.png"},
+    {id: 2,name: "Demo Puppy Collar", price: 3200, image: "assets/images/dogProducts/collar.png"},
     {id: 3,name: "Drools Balls", price: 2200, image: "assets/images/dogProducts/play-balls.png"},
     {id: 4,name: "Fur scrubber", price: 1200, image: "assets/images/dogProducts/cleaner.png"},
     {id: 5,name: "Fur scrubber", price: 1200, image: "assets/images/dogProducts/cleaner.png"} 

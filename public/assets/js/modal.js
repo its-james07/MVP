@@ -23,12 +23,16 @@ function hideAccountModal() {
   }, 200);
 }
 
-loginBtns.forEach(btn => {
-  btn.addEventListener('click', ()=>{
-    loginModal.style.display = 'block';
+function openLoginModal(){
+  loginModal.style.display = 'block';
     overlays.forEach(overlay=>{
       overlay.classList.add('show');
     })
+}
+
+loginBtns.forEach(btn => {
+  btn.addEventListener('click', ()=>{
+    openLoginModal();
     // document.body.classList.add('modal-open');
   });
 });

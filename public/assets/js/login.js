@@ -1,7 +1,6 @@
 const loginForm = document.getElementById('login-form');
 const invalidPass = document.querySelector('.pass-error');
 invalidPass.style.display = "none";
-
 const loginAPI = '/mvp/backend/auth/login.php';
 
 loginForm.addEventListener('submit', function (e) {
@@ -28,13 +27,11 @@ loginForm.addEventListener('submit', function (e) {
             return response.json();
         })
         .then(data => {
-            console.log(data);
-
             if (data.status === 'redirect_admin') {
-                window.location.href = "adminDashboard.html";
+                window.location.href = "adminPanel.php";
             } 
             else if (data.status === 'redirect_seller') {
-                window.location.href = "sellerDashboard.html";
+                window.location.href = "sellerPanel.php";
             } 
             else if (data.status === 'redirect_user') {
                 showToast("Login Successful!", "success");

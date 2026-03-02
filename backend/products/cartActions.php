@@ -1,7 +1,7 @@
 <?php
 session_start();
   if(!isset($_SESSION['user_id'])){
-    echo json_encode(["status"=>"error", "message"=>"You need to login first"]);
+    echo json_encode(["success"=> false,"task"=>"login", "message"=>"You need to login first"]);
     exit();
   }
 

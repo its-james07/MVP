@@ -29,7 +29,6 @@
 </head>
 
 <body>
-
   <header>
     <nav class="header-main">
       <div class="logo-container">
@@ -88,7 +87,7 @@
                 <input type="password" id="new-pwd" name="new-pwd" placeholder="Your new password">
               </div>
               <button type="cancel" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-              <button type="submit" class="btn btn-success float-end">Change</button>
+              <button type="submit" class="btn btn-success float-end" id="changeBtn">Change</button>
             </form>
 
           </div>
@@ -197,7 +196,6 @@
     <button class="action-btn" id="ftch-users">User Control</button>
   </div> -->
     <div class="action-bar d-flex align-items-center gap-2 flex-wrap">
-
       <!-- Seller Control Dropdown -->
       <div class="dropdown">
         <button class="btn btn-primary dropdown-toggle" type="button" id="sellerDropdown" data-bs-toggle="dropdown"
@@ -218,7 +216,7 @@
           Product Control
         </button>
         <ul id="productDropdownMenu" class="dropdown-menu" aria-labelledby="productDropdown">
-          <li><button class="dropdown-item">Applications</button></li>
+          <li><button class="dropdown-item" id="applicationBtn">Applications</button></li>
           <li><button class="dropdown-item">View Product Details</button></li>
           <li><button class="dropdown-item">Remove Product</button></li>
         </ul>
@@ -244,17 +242,19 @@
       <div class="userData">  
         <table id="userInfo-table"></table>
       </div>
-      <div class="seller-apps" id="seller-apps">
-        <table id="apps-table"></table>
+      <div class="" id="s-container"></div>
+      <div class="prod-panel" id="seller-apps">
       </div>
     </div>
+<!-- <div class="toast" id="toast"></div> -->
 
   </main>
   <!-- Scripts -->
   <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="../assets/js/adminScript.js"></script>
+  <script src="../assets/js/admin/adminScript.js"></script>
   <script src="../assets/js/viewUsers.js"></script>
   <script src="../assets/js/signout.js"></script>
+  <script src="../assets/js/admin/seller-applications.js"></script>
 
 </body>
 

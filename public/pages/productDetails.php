@@ -1,4 +1,5 @@
 <?php
+session_start();
 require("../components/navbar.php");
 require("../components/cartmodal.php");
 require("../components/loginmodal.php");

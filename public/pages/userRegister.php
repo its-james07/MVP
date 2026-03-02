@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../assets/css/userRegister.css">
     <link rel="stylesheet" href="../assets/css/toast.css">
     <link rel="stylesheet" href="../assets/css/mediaqueries.css">
+    <link rel="stylesheet" href="../assets/css/loader.css">
   </head>
   <body>
     <div class="main-page">
