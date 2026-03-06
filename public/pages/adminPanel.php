@@ -255,6 +255,8 @@
   <script src="../assets/js/viewUsers.js"></script>
   <script src="../assets/js/signout.js"></script>
   <script src="../assets/js/admin/seller-applications.js"></script>
+  <script src="../assets/js/admin/users-control.js"></script>
+  <script src="../assets/js/admin/products-control.js"></script>
 
 </body>
 

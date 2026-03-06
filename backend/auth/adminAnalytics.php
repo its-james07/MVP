@@ -1,7 +1,8 @@
 <?php 
 
-require_once('../config/db.php');
+
 header('Content-Type: application/json');
+require_once('../config/db.php');
 // if(!isset($_SESSION['user_id']) || $_SESSION['role'] != 'admin'){
 //     http_response_code(403);
 //     echo json_encode(["error" => "unauthorized"]);
@@ -26,11 +27,9 @@ $responseData['total_sellers'] = (int) $row['total'];
 // $responseData['total_products'] = (int) $row['total'];
 
 //Pending User Requests
-$result = $conn->query(
-    "SELECT COUNT(*) AS total FROM users WHERE role = 'pending'"
-);
-$row = $result->fetch_assoc();
-$responseData['pending_requests'] = (int) $row['total'];
+$result = $conn->query("SELECT COUNT(*) AS total FROM sellers WHERE status = 'pending'");
+if (!$result) { echo json_encode(["error" => $conn->error]); exit(); }
+$responseData['pending_requests'] = (int) $result->fetch_assoc()['total'];
 
 echo json_encode($responseData);
 exit();

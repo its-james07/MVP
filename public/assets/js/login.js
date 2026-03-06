@@ -28,10 +28,10 @@ loginForm.addEventListener('submit', function (e) {
         })
         .then(data => {
             if (data.status === 'redirect_admin') {
-                window.location.href = "adminPanel.php";
+                window.location.href = "/mvp/public/pages/adminPanel.php";
             } 
             else if (data.status === 'redirect_seller') {
-                window.location.href = "sellerPanel.php";
+                window.location.href = "/mvp/public/pages/sellerPanel.php";
             } 
             else if (data.status === 'redirect_user') {
                 showToast("Login Successful!", "success");

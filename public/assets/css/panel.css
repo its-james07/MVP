@@ -140,3 +140,11 @@ table{
       background-color: #7d8d86;
       box-shadow: 2px 7px 12px #7D8D86;
     }
+  
+#sellers-table thead th {
+    font-size: 1rem;
+}
+
+#sellers-table tbody td {
+    font-size: 1.1rem;
+}

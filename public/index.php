@@ -242,9 +242,9 @@ session_start();
   <script src="assets/js/modal.js"></script>
   <script src="assets/js/login.js"></script>
   <script src="assets/js/signout.js"></script>
-  <script src="assets/js/viewProduct.js"></script>
+  <!-- <script src="assets/js/viewProduct.js"></script> -->
   <script src="assets/js/renderProducts.js"></script>
-  <script src="assets/js/wishPage.js"></script>
+  <!-- <script src="assets/js/wishPage.js"></script> -->
   <script src="assets/js/cartModal.js"></script>
   <!-- <script src="Script/validateForm.js"></script> -->
   <script src="assets/js/accordionEffect.js"></script>

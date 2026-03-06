@@ -1,115 +1,160 @@
-// document.addEventListener('DOMContentLoaded', () => {
-//     loadPendingSellers();
-// });
+document.addEventListener('DOMContentLoaded', () => {
+    const loadBtn = document.getElementById('ftch-apps'); 
+    loadBtn.addEventListener('click', loadPendingSellers);
+});
 
-// const fetchApplications = document.getElementById('');
+// ─── Fetch & Render ───────────────────────────────────────────
 
-// async function loadPendingSellers() {
-//     const container = document.getElementById('s-container');
-//     container.innerHTML = `<p>Loading seller applications...</p>`;
-//     try {
-//         const response = await fetch('../backend/users/seller/seller-applications.php', {
-//             cache: 'no-store'
-//         });
+async function loadPendingSellers() {
+    const container = document.getElementById('s-container');
+    container.innerHTML = `<p class="text-muted">Loading seller applications...</p>`;
+    try {
+        const response = await fetch('../../backend/users/admin/seller-applications.php', {
+            cache: 'no-store'
+        });
 
-//         if (!response.ok) {
-//             throw new Error(`Network error: ${response.status}`);
-//         }
+        if (!response.ok) {
+            throw new Error(`Network error: ${response.status}`);
+        }
 
-//         const result = await response.json();
+        const result = await response.json();
 
-//         if (!result.success) {
-//             throw new Error(result.message || 'Failed to fetch applications');
-//         }
+        if (!result.success) {
+            throw new Error(result.message || 'Failed to fetch applications');
+        }
 
-//         renderApplications(result.data);
-//     } catch (err) {
-//         console.error(err);
-//         container.innerHTML = `<p class="error">Failed to load seller applications.</p>`;
-//     }
-// }
+        renderApplications(result.data);
 
-// function renderApplications(applications) {
-//     const container = document.getElementById('s-container');
-//     container.innerHTML = '';
+    } catch (err) {
+        console.error(err);
+        container.innerHTML = `<div class="alert alert-danger">Failed to load seller applications: ${err.message}</div>`;
+    }
+}
 
-//     if (!applications || applications.length === 0) {
-//         container.innerHTML = `<p>No pending applications</p>`;
-//         return;
-//     }
+function renderApplications(applications) {
+    const container = document.getElementById('s-container');
+    container.innerHTML = '';
 
-//     applications.forEach(seller => {
-//         const div = document.createElement('div');
-//         div.className = 'seller-item';
+    if (!applications || applications.length === 0) {
+        container.innerHTML = `<div class="alert alert-info">No pending applications found.</div>`;
+        return;
+    }
 
-//         // Safe XSS-free rendering
-//         const name = document.createElement('h3');
-//         name.textContent = seller.user_name;
-//         div.appendChild(name);
+    container.innerHTML = `
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="fas fa-store me-2"></i>Pending Seller Applications</h5>
+                <span class="badge bg-warning text-dark">${applications.length} Pending</span>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered align-middle mb-0" id="sellers-table">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Owner Name</th>
+                                <th>Email</th>
+                                <th>Shop Name</th>
+                                <th>Address</th>
+                                <th>City</th>
+                                <th>Status</th>
+                                <th>Applied Date</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sellers-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    `;
 
-//         const email = document.createElement('p');
-//         email.textContent = `Email: ${seller.user_email}`;
-//         div.appendChild(email);
+    const tbody = document.getElementById('sellers-tbody');
 
-//         const shop = document.createElement('p');
-//         shop.textContent = `Shop: ${seller.shop_name}`;
-//         div.appendChild(shop);
+    applications.forEach((seller, index) => {
+        const tr = document.createElement('tr');
+        tr.id = `seller-row-${seller.seller_id}`;
 
-//         const address = document.createElement('p');
-//         address.textContent = `Address: ${seller.address}`;
-//         div.appendChild(address);
+        tr.innerHTML = `
+            <td>${index + 1}</td>
+            <td><strong>${seller.user_name}</strong></td>
+            <td>${seller.user_email}</td>
+            <td>${seller.shop_name}</td>
+            <td>${seller.address ?? '—'}</td>
+            <td>${seller.city ?? '—'}</td>
+            <td>
+                <span class="badge bg-warning text-dark">${seller.status}</span>
+            </td>
+            <td>${new Date(seller.created_at).toLocaleDateString()}</td>
+            <td class="text-center">
+                <button class="btn btn-success btn-sm me-1" onclick="updateStatus(${seller.seller_id}, 'approved', this)">
+                    <i class="fas fa-check me-1"></i>Approve
+                </button>
+                <button class="btn btn-danger btn-sm" onclick="handleReject(${seller.seller_id}, '${seller.user_name}', this)">
+                    <i class="fas fa-times me-1"></i>Reject
+                </button>
+            </td>
+        `;
 
-//         const status = document.createElement('p');
-//         status.textContent = `Status: ${seller.status}`;
-//         div.appendChild(status);
+        tbody.appendChild(tr);
+    });
+}
 
-//         const btnContainer = document.createElement('div');
-//         btnContainer.className = 'button-container';
+// ─── Update Status ────────────────────────────────────────────
 
-//         const approveBtn = document.createElement('button');
-//         approveBtn.textContent = 'Approve';
-//         approveBtn.className = 'approve-btn';
-//         approveBtn.addEventListener('click', () => updateStatus(seller.seller_id, 'approved'));
-//         btnContainer.appendChild(approveBtn);
+function handleReject(sellerId, sellerName, btn) {
+    if (confirm(`Are you sure you want to reject ${sellerName}?`)) {
+        updateStatus(sellerId, 'rejected', btn);
+    }
+}
 
-//         const rejectBtn = document.createElement('button');
-//         rejectBtn.textContent = 'Reject';
-//         rejectBtn.className = 'reject-btn';
-//         rejectBtn.addEventListener('click', () => {
-//             if (confirm('Are you sure you want to reject this seller?')) {
-//                 updateStatus(seller.seller_id, 'rejected');
-//             }
-//         });
-//         btnContainer.appendChild(rejectBtn);
+async function updateStatus(sellerId, status, btn) {
+    const row = document.getElementById(`seller-row-${sellerId}`);
+    const buttons = row.querySelectorAll('button');
+    buttons.forEach(b => b.disabled = true);
 
-//         div.appendChild(btnContainer);
-//         container.appendChild(div);
-//     });
-// }
+    try {
+        const response = await fetch('../../backend/users/admin/update-status.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ seller_id: sellerId, status })
+        });
 
-// async function updateStatus(sellerId, status) {
-//     try {
-//         const response = await fetch('/api/update-seller-status.php', {
-//             method: 'POST',
-//             headers: { 'Content-Type': 'application/json' },
-//             body: JSON.stringify({ seller_id: sellerId, status })
-//         });
+        const result = await response.json();
 
-//         const result = await response.json();
+        if (result.success) {
+            // Update badge in row instead of removing it
+            const statusBadge = row.querySelector('.badge');
+            if (status === 'approved') {
+                statusBadge.className = 'badge bg-success';
+                statusBadge.textContent = 'approved';
+            } else {
+                statusBadge.className = 'badge bg-danger';
+                statusBadge.textContent = 'rejected';
+            }
 
-//         if (result.success) {
-//             alert(`Seller ${status} successfully.`);
-//             loadPendingSellers(); // refresh the list
-//         } else {
-//             alert(result.message || `Failed to ${status} seller.`);
-//         }
-//     } catch (err) {
-//         console.error(err);
-//         alert('Error updating seller status. Check console for details.');
-//     }
-// }
+            // Remove action buttons after decision
+            row.querySelector('td:last-child').innerHTML = `
+                <span class="text-muted fst-italic">Updated</span>
+            `;
 
-const applicationBtn = document.getElementById('applicationBtn');
-applicationBtn.addEventListener('change', ()=>{
-    console.log("Hello world");
-})
+            // Update pending count badge in header
+            const remaining = document.querySelectorAll('#sellers-tbody button').length;
+            const headerBadge = document.querySelector('.card-header .badge');
+            if (headerBadge) {
+                const pendingRows = [...document.querySelectorAll('#sellers-tbody tr')]
+                    .filter(r => r.querySelector('.badge.bg-warning'));
+                headerBadge.textContent = `${pendingRows.length} Pending`;
+            }
+
+        } else {
+            alert(result.message || `Failed to ${status} seller.`);
+            buttons.forEach(b => b.disabled = false);
+        }
+
+    } catch (err) {
+        console.error(err);
+        alert('Error updating seller status. Check console for details.');
+        buttons.forEach(b => b.disabled = false);
+    }
+}
