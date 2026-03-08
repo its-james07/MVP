@@ -1,6 +1,6 @@
 <?php
 header("Content-Type: application/json");
-require_once "../../config/db.php";
+require_once "../../auth/config/db.php";
 
 try {
     $body = json_decode(file_get_contents("php://input"), true);

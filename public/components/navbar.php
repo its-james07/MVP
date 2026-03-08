@@ -1,11 +1,10 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
 </head>
-<body>
+<body> -->
   <header class="navbar-container">
   <div class="header-main" style="background-color: #fafafa; height: 8rem;">
     <div class="logo-container">
@@ -39,18 +38,18 @@
   <div class="mobile-bottom-navigation">
       <button class="action-btn"><ion-icon name="menu-outline"></ion-icon></button>
       <button class="action-btn">
-        <img src="assets/images/cart.svg" alt="cart" class="show-cart ion-icon">
+        <img src="/mvp/public/assets/images/index/cart.svg" alt="cart" class="show-cart ion-icon">
         <span class="badge" id="cart-badge">0</span>
       </button>
       <button class="action-btn" onclick="window.location.href='index.html'">
         <ion-icon name="home-outline"></ion-icon>
       </button>
       <button class="action-btn">
-        <img src="assets/images/heart (1).svg" alt="wishlist" class="show-wishlist ion-icon">
+        <img src="/mvp/public/assets/images/index/heart (1).svg" alt="wishlist" class="show-wishlist ion-icon">
         <span class="badge" id="wish-badge">0</span>
       </button>
       <button class="action-btn user-login">
-        <img src="assets/images/usericon.svg" alt="userIcon" class="ion-icon">
+        <img src="/mvp/public/assets/images/index/usericon.svg" alt="userIcon" class="ion-icon">
       </button>
     </div>
 <div class="mobile-bottom-navigation">
@@ -61,5 +60,5 @@
     <a href="#" class="nav-item user-login"><i class="bi bi-person"></i><span>Profile</span></a>
 </div>
 </header>
-</body>
-</html>
+<!-- </body>
+</html> -->

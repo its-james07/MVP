@@ -93,9 +93,16 @@ function clearForm() {
     }
 }
 
-function togglePassword() {
-    const showHide = document.querySelectorAll('.showHide');
-    showHide.forEach(field => {
-        field.type = field.type === "password" ? "text" : "password";
-    });
+function toggleField(fieldId, iconWrapper) {
+    const input = document.getElementById(fieldId);
+    const icon  = iconWrapper.querySelector('ion-icon');
+
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.name  = 'eye-off-outline';
+    } else {
+        input.type = 'password';
+        icon.name  = 'eye-outline';
+    }
 }
+

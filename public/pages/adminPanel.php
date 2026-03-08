@@ -203,7 +203,7 @@
           Seller Control
         </button>
         <ul id="sellerDropdownMenu" class="dropdown-menu" aria-labelledby="sellerDropdown">
-          <li><button class="dropdown-item" id="ftch-apps">Applications</button></li>
+          <li><button class="dropdown-item" id="ftch-seller-apps">Applications</button></li>
           <li><button class="dropdown-item">Details</button></li>
           <li><button class="dropdown-item">Manage</button></li>
         </ul>
@@ -216,7 +216,7 @@
           Product Control
         </button>
         <ul id="productDropdownMenu" class="dropdown-menu" aria-labelledby="productDropdown">
-          <li><button class="dropdown-item" id="applicationBtn">Applications</button></li>
+          <li><button class="dropdown-item" id="ftch-product-apps">Applications</button></li>
           <li><button class="dropdown-item">View Product Details</button></li>
           <li><button class="dropdown-item">Remove Product</button></li>
         </ul>
@@ -251,8 +251,8 @@
   </main>
   <!-- Scripts -->
   <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="../assets/js/admin/adminScript.js"></script>
-  <script src="../assets/js/viewUsers.js"></script>
+  <script src="../assets/js/admin/admin-script.js"></script>
+  <script src="../assets/js/view-user.js"></script>
   <script src="../assets/js/signout.js"></script>
   <script src="../assets/js/admin/seller-applications.js"></script>
   <script src="../assets/js/admin/users-control.js"></script>

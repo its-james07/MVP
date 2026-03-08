@@ -250,6 +250,7 @@ if ($_SESSION['role'] != 'seller') {
 <script src="../assets/js/signout.js"></script>
 <script src="../assets/js/bootstrap-alert.js"></script>
 <script src="../assets/js/seller/add-product.js"></script>
+<script src="../assets/js/seller/seller-script.js"></script>
 
 </body>
 </html>

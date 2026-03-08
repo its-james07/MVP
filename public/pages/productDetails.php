@@ -1,10 +1,10 @@
 <?php
 session_start();
 require("../components/navbar.php");
-require("../components/cartmodal.php");
-require("../components/loginmodal.php");
-require("../components/accountmodal.php");
-require("../components/wishmodal.php");
+require("../components/cart-modal.php");
+require("../components/login-modal.php");
+require("../components/account-modal.php");
+require("../components/wish-modal.php");
 ?>
 <?php
 $featuredItems = [
@@ -87,10 +87,10 @@ if (!$found) {
   <link rel="stylesheet" href="../assets/css/navbar.css">
   <link rel="stylesheet" href="../assets/css/styles.css">
   <link rel="stylesheet" href="../assets/css/mediaqueries.css">
-  <link rel="stylesheet" href="../assets/css/cartModal.css">
-  <link rel="stylesheet" href="../assets/css/accountModal.css" />
-  <link rel="stylesheet" href="../assets/css/wishModal.css" />
-  <link rel="stylesheet" href="../assets/css/productDetails.css" />
+  <link rel="stylesheet" href="../assets/css/cart-modal.css">
+  <link rel="stylesheet" href="../assets/css/account-modal.css" />
+  <link rel="stylesheet" href="../assets/css/wish-modal.css" />
+  <link rel="stylesheet" href="../assets/css/product-details.css" />
   <link rel="stylesheet" href="../assets/css/overlay-effect.css" />
   <link rel="stylesheet" href="../assets/css/toast.css" />
   <link rel="stylesheet" href="../assets/css/loader.css" />
@@ -201,8 +201,8 @@ if (!$found) {
   <script src="../assets/js/modal.js"></script>
   <script src="../assets/js/login.js"></script>
   <script src="../assets/js/signout.js"></script>
-  <script src="../assets/js/viewProduct.js"></script>
-  <script src="../assets/js/cartModal.js"></script>
+  <script src="../assets/js/view-product.js"></script>
+  <script src="../assets/js/cart-modal.js"></script>
   <script src="../assets/js/toast.js"></script>
 </body>
 

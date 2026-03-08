@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const loadBtn = document.getElementById('ftch-apps'); 
+    const loadBtn = document.getElementById('ftch-seller-apps'); 
     loadBtn.addEventListener('click', loadPendingSellers);
 });
 

@@ -13,11 +13,11 @@
       </div>
       <div class="guest-menu-item">
         <ion-icon name="person-add-outline" class="icon-create"></ion-icon>
-        <span class="menu-text"><a href="/mvp/public/pages/userRegister.php">Create an account</a></span>
+        <span class="menu-text"><a href="/mvp/public/pages/user-register.php">Create an account</a></span>
       </div>
       <div class="guest-menu-item">
         <ion-icon name="briefcase-outline" class="icon-seller"></ion-icon>
-        <span class="menu-text"><a href="/mvp/public/pages/sellerRegister.php">Become a Seller</a></span>
+        <span class="menu-text"><a href="/mvp/public/pages/seller-register.php">Become a Seller</a></span>
       </div>
     </div>
   </div>

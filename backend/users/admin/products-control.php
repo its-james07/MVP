@@ -1,28 +1,25 @@
 <?php
-// ─── products-control.php ──────────────────────────────────────
-// Place at: backend/products/admin/products-control.php
-
 header('Content-Type: application/json');
-require __DIR__ . '/../../../config/db.php';
+require_once '../../auth/config/db.php';
 
 // ─── GET: Fetch all products ───────────────────────────────────
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $result = $conn->query("
         SELECT 
-            p.id        AS product_id,
+            p.product_id  AS product_id,
             p.name,
             p.description,
             p.price,
-            p.category,
+            c.name        AS category,
             p.status,
             p.created_at,
-            u.name      AS seller_name,
-            u.email     AS seller_email
+            u.fname       AS seller_name,
+            u.email       AS seller_email
         FROM products p
-        LEFT JOIN users u ON p.user_id = u.id
-        ORDER BY 
-            FIELD(p.status, 'pending', 'approved', 'rejected'),
-            p.created_at DESC
+        LEFT JOIN users u        ON p.seller_id   = u.user_id
+        LEFT JOIN categories c   ON p.category_id = c.category_id
+        WHERE p.status = 'pending'
+        ORDER BY p.created_at DESC
     ");
 
     if (!$result) {
@@ -49,12 +46,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($action === 'delete') {
-        $stmt = $conn->prepare("DELETE FROM products WHERE id = ?");
+        $stmt = $conn->prepare("DELETE FROM products WHERE product_id = ?");
         $stmt->bind_param("i", $product_id);
 
     } else {
         $newStatus = $action === 'approve' ? 'approved' : 'rejected';
-        $stmt = $conn->prepare("UPDATE products SET status = ? WHERE id = ?");
+        $stmt = $conn->prepare("UPDATE products SET status = ? WHERE product_id = ?");
         $stmt->bind_param("si", $newStatus, $product_id);
     }
 

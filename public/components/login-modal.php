@@ -13,7 +13,7 @@
         <a href="#main" id="fp">Forgot password?</a>
         <hr />
         <div class="reg-btn">
-          <a href="/mvp/public/pages/userRegister.php" class="register-link">Create an account</a>
+          <a href="/mvp/public/pages/user-register.php" class="register-link">Create an account</a>
         </div>
       </form>
     </div>

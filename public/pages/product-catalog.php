@@ -19,10 +19,12 @@
    <link rel="stylesheet" href="../assets/css/navbar.css">
   <link rel="stylesheet" href="../assets/css/styles.css">
   <link rel="stylesheet" href="../assets/css/mediaqueries.css">
-  <link rel="stylesheet" href="../assets/css/cartModal.css">
-  <link rel="stylesheet" href="../assets/css/accountModal.css" />
-  <link rel="stylesheet" href="../assets/css/wishModal.css" />
-  <link rel="stylesheet" href="../assets/css/productCatalog.css" />
+  <link rel="stylesheet" href="../assets/css/cart-modal.css">
+  <link rel="stylesheet" href="../assets/css/account-modal.css" />
+  <link rel="stylesheet" href="../assets/css/wish-modam.css" />
+  <link rel="stylesheet" href="../assets/css/product-catalog.css" />
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
   <!-- <link rel="stylesheet" href="../assets/css/productDetails.css" /> -->
     <!-- <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css" /> -->
   </head>
@@ -97,12 +99,12 @@
 });
   </script>
     <script src="../assets/js/main.js"></script>
-    <script src="../assets/js/renderProducts.js"></script>
+    <script src="../assets/js/render-products.js"></script>
     <script src="../assets/js/browse.js"></script>
     <script src="../assets/js/modal.js"></script>
     <script src="../assets/js/login.js"></script>
     <script src="../assets/js/signout.js"></script>
-  <script src="../assets/js/viewProduct.js"></script>
-  <script src="../assets/js/cartModal.js"></script>
+  <script src="../assets/js/view-product.js"></script>
+  <script src="../assets/js/cart-modal.js"></script>
   </body>
 </html>

@@ -1,15 +1,13 @@
-const nextStepBtn = document.getElementById('nextBtn');
-const prevStepBtn = document.getElementById('prevBtn');
-const togglePasswordBtn = document.getElementById('toggle-password');
+const nextStepBtn    = document.getElementById('nextBtn');
+const prevStepBtn    = document.getElementById('prevBtn');
 
 const formSteps = document.querySelectorAll(".form-step");
-const circles = document.querySelectorAll(".circle");
-const progress = document.getElementById("progress");
-const form = document.getElementById('regForm');
+const circles   = document.querySelectorAll(".circle");
+const progress  = document.getElementById("progress");
+const form      = document.getElementById('regForm');
 
 nextStepBtn && (nextStepBtn.addEventListener('click', nextStep));
 prevStepBtn && (prevStepBtn.addEventListener('click', prevStep));
-togglePasswordBtn && (togglePasswordBtn.addEventListener('change', togglePassword));
 
 function nextStep() {
     if (!firstStepValidation()) return;
@@ -32,6 +30,20 @@ function updateProgress(stepIndex) {
     progress.style.width = stepIndex === 1 ? "100%" : "0%";
 }
 
+// ─── Toggle individual password field ────────────────────────
+function toggleField(fieldId, iconWrapper) {
+    const input = document.getElementById(fieldId);
+    const icon  = iconWrapper.querySelector('ion-icon');
+
+    if (input.type === 'password') {
+        input.type  = 'text';
+        icon.name   = 'eye-off-outline';
+    } else {
+        input.type  = 'password';
+        icon.name   = 'eye-outline';
+    }
+}
+
 form.addEventListener('submit', (e) => {
     e.preventDefault();
     if (!secondStepValidation()) {
@@ -40,7 +52,7 @@ form.addEventListener('submit', (e) => {
     }
 
     const submitBtn = form.querySelector('button[type="submit"]');
-    submitBtn.disabled = true;
+    submitBtn.disabled    = true;
     submitBtn.textContent = "Submitting..";
 
     const formData = new FormData(form);
@@ -50,7 +62,6 @@ form.addEventListener('submit', (e) => {
         body: formData
     })
     .then(response => {
-        // Guard: make sure we got JSON back before parsing
         const contentType = response.headers.get("content-type");
         if (!contentType || !contentType.includes("application/json")) {
             throw new Error("Server returned non-JSON response. Check PHP for errors.");
@@ -58,7 +69,7 @@ form.addEventListener('submit', (e) => {
         return response.json();
     })
     .then(data => {
-        submitBtn.disabled = false;
+        submitBtn.disabled    = false;
         submitBtn.textContent = "Register";
 
         if (data.status === 'success') {
@@ -69,20 +80,15 @@ form.addEventListener('submit', (e) => {
         }
     })
     .catch(err => {
-        submitBtn.disabled = false;
+        submitBtn.disabled    = false;
         submitBtn.textContent = "Register Seller";
         showToast("Oops! Something went wrong. Check console for details.", "error");
         console.error("Registration error:", err);
     });
 });
 
-function show(e1) {
-    if (e1) e1.style.display = 'block';
-}
-
-function hide(e1) {
-    if (e1) e1.style.display = 'none';
-}
+function show(e1) { if (e1) e1.style.display = 'block'; }
+function hide(e1) { if (e1) e1.style.display = 'none';  }
 
 function firstStepValidation() {
     const storeName = document.getElementById('shop_name').value.trim();
@@ -101,19 +107,16 @@ function firstStepValidation() {
         storeNameError.textContent = "Store name required";
         return false;
     }
-
     if (!textRegex.test(storeName)) {
         show(storeNameError);
         storeNameError.textContent = "Only letters allowed";
         return false;
     }
-
     if (!ownerName) {
         show(ownerNameError);
         ownerNameError.textContent = "Owner name required";
         return false;
     }
-
     if (!textRegex.test(ownerName)) {
         show(ownerNameError);
         ownerNameError.textContent = "Only letters allowed";
@@ -124,14 +127,14 @@ function firstStepValidation() {
 }
 
 function secondStepValidation() {
-    const email = document.querySelector('input[name="email"]').value.trim();
-    const password = document.querySelector('input[name="password"]').value.trim();
+    const email       = document.querySelector('input[name="email"]').value.trim();
+    const password    = document.querySelector('input[name="password"]').value.trim();
     const confirmPass = document.querySelector('input[name="confirm_password"]').value.trim();
-    const phone = document.querySelector('input[name="phone"]').value.trim();
+    const phone       = document.querySelector('input[name="phone"]').value.trim();
 
     const emailError = document.getElementById("emailError");
     const notConfirm = document.getElementById("not-confirm");
-    const passError = document.getElementById("passError");
+    const passError  = document.getElementById("passError");
     const phoneError = document.getElementById("phoneError");
 
     hide(emailError);
@@ -147,25 +150,21 @@ function secondStepValidation() {
         emailError.textContent = "Email cannot be empty";
         return false;
     }
-
     if (!emailRegex.test(email)) {
         show(emailError);
         emailError.textContent = "Invalid email format";
         return false;
     }
-
     if (password.length < 8) {
         show(passError);
         passError.textContent = "At least 8 characters required";
         return false;
     }
-
     if (password !== confirmPass) {
         show(notConfirm);
         notConfirm.textContent = "Passwords do not match";
         return false;
     }
-
     if (!phoneRegex.test(phone)) {
         show(phoneError);
         phoneError.textContent = "Enter a valid 10-digit phone number";
@@ -180,7 +179,7 @@ function showToast(message, type = 'success', duration = 3000) {
     if (!toast) return;
 
     toast.textContent = message;
-    toast.className = `toast ${type} show`;
+    toast.className   = `toast ${type} show`;
 
     setTimeout(() => {
         toast.classList.remove('show');
@@ -188,13 +187,9 @@ function showToast(message, type = 'success', duration = 3000) {
 }
 
 function clearForm() {
-    const form = document.getElementById('regForm');
-    form.reset();
-}
-
-function togglePassword() {
-    const passwordToggle = document.querySelectorAll('.toggle');
-    passwordToggle.forEach(field => {
-        field.type = field.type === "password" ? "text" : "password";
+    document.getElementById('regForm').reset();
+    // Reset eye icons back to eye-outline after form clear
+    document.querySelectorAll('.toggle-icon ion-icon').forEach(icon => {
+        icon.name = 'eye-outline';
     });
 }
