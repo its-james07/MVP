@@ -28,7 +28,7 @@
   <link rel="icon" href="../assets/favicon/favicon.png" />
 </head>
 
-<body>
+<body style="overflow: hidden">
   <header>
     <nav class="header-main">
       <div class="logo-container">
@@ -238,7 +238,7 @@
 
 
     <!-- Content -->
-    <div class="content-box">
+    <div class="content-box" style="overflow: scroll">
       <div class="userData">  
         <table id="userInfo-table"></table>
       </div>

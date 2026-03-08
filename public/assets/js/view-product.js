@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     button.addEventListener('click', ()=>{
         const id = button.getAttribute('data-id'); 
         console.log('View button clicked for ID:', id);
-        window.location.href = '../public/pages/productDetails.php?id=' + id;
+        window.location.href = '../public/pages/product-details.php?id=' + id;
     });
 });
 

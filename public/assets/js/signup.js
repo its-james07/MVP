@@ -7,8 +7,6 @@ form.addEventListener('submit', function(e){
     }   
 
     const submitBtn = form.querySelector('button[type="submit"]');
-    // submitBtn.disabled = true;
-    // submitBtn.textContent = "Creating account...";
     submitBtn.disabled = true;
     submitBtn.innerHTML = `<div class="btn-loader"><div></div></div>`;
     

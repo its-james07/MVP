@@ -10,7 +10,7 @@ require_once('../auth/config/db.php');
 // }
 
 $responseData = [];
-$result = $conn->query("SELECT COUNT(*) AS total FROM users WHERE role='user'");
+$result = $conn->query("SELECT COUNT(*) AS total FROM users");
 $row = $result->fetch_assoc();
 $responseData['total_users'] = (int) $row['total'];
 

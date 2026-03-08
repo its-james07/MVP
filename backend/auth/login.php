@@ -6,14 +6,12 @@ header('Content-Type: application/json');
 require 'config/db.php';
 require 'config/sanitizedata.php';
 
-// ─── Only allow POST ───────────────────────────────────────────
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     echo json_encode(["status" => "error", "message" => "Invalid request method."]);
     ob_end_flush();
     exit;
 }
 
-// ─── Sanitize Inputs ───────────────────────────────────────────
 $lemail = sanitizeData($_POST["log-email"] ?? '');
 $lpass  = $_POST["log-pass"] ?? '';
 
@@ -23,7 +21,6 @@ if (empty($lemail) || empty($lpass)) {
     exit;
 }
 
-// ─── Fetch User ────────────────────────────────────────────────
 $stmt = $conn->prepare("SELECT user_id, fname, email, password, role FROM users WHERE email = ?");
 
 if (!$stmt) {
@@ -38,7 +35,6 @@ $stmt->bind_result($userId, $username, $userMail, $dbpassword, $role);
 $found = $stmt->fetch();
 $stmt->close();
 
-// ─── Validate User ─────────────────────────────────────────────
 if (!$found) {
     echo json_encode(["status" => "error", "message" => "User not found."]);
     ob_end_flush();
@@ -51,14 +47,12 @@ if (!password_verify($lpass, $dbpassword)) {
     exit;
 }
 
-// ─── Set Session ───────────────────────────────────────────────
 $_SESSION['user_id']   = $userId;
 $_SESSION['username']  = $username;
 $_SESSION['usermail']  = $userMail;
 $_SESSION['role']      = $role;
 $_SESSION['logged-in'] = true;
 
-// ─── Redirect by Role ──────────────────────────────────────────
 if ($role === 'admin') {
 
     echo json_encode(["status" => "redirect_admin"]);

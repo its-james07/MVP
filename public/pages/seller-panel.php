@@ -1,13 +1,13 @@
 <?php
-session_start();
-if (!isset($_SESSION['user_id'])) {
-    header('Location: ../index.php');
-    exit();
-}
-if ($_SESSION['role'] != 'seller') {
-    header('Location: unauthorized.html');
-    exit();
-}
+// session_start();
+// if (!isset($_SESSION['user_id'])) {
+//     header('Location: ../index.php');
+//     exit();
+// }
+// if ($_SESSION['role'] != 'seller') {
+//     header('Location: unauthorized.html');
+//     exit();
+// }
 ?>
 
 <!DOCTYPE html>
@@ -46,7 +46,7 @@ if ($_SESSION['role'] != 'seller') {
     .toast.error   { background-color: #c0392b; color: #fff; }
   </style>
 </head>
-<body>
+<body style="overflow: hidden">
 <header>
   <nav class="header-main">
     <div class="logo-container">

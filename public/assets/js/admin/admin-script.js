@@ -13,7 +13,7 @@ setupDropdown("sellerDropdown", "sellerDropdownMenu");
 setupDropdown("productDropdown", "productDropdownMenu");
 
 document.addEventListener("DOMContentLoaded", () => {
-    fetch("../../backend/auth/adminAnalytics.php")
+    fetch("../../backend/auth/admin-analytics.php")
         .then(res => {
             const contentType = res.headers.get("content-type");
             if (!res.ok) {
