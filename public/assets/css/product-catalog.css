@@ -1,7 +1,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --clr-bg: #FCF8F8;
+  --clr-bg: rgba(232, 237, 232, 0.45);
   --clr-surface: #FFFFFF;
   --clr-border: #E8E1D9;
   --clr-text: #1C1917;

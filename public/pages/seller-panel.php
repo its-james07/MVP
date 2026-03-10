@@ -1,11 +1,8 @@
 <?php
-// session_start();
-// if (!isset($_SESSION['user_id'])) {
+session_start();
+
+// if (!isset($_SESSION['seller_id'])) {
 //     header('Location: ../index.php');
-//     exit();
-// }
-// if ($_SESSION['role'] != 'seller') {
-//     header('Location: unauthorized.html');
 //     exit();
 // }
 ?>
@@ -41,12 +38,14 @@
       z-index: 9999;
       min-width: 250px;
     }
-    .toast.show    { opacity: 1; }
+    .toast.show { opacity: 1; }
     .toast.success { background-color: #2c6e49; color: #fff; }
-    .toast.error   { background-color: #c0392b; color: #fff; }
+    .toast.error { background-color: #c0392b; color: #fff; }
   </style>
 </head>
+
 <body style="overflow: hidden">
+
 <header>
   <nav class="header-main">
     <div class="logo-container">
@@ -68,7 +67,7 @@
 
 <main class="spacing">
 
-  <!-- ANALYTICS CARDS -->
+  <!-- Dashboard Cards -->
   <div class="container-fluid mb-4">
     <div class="row">
 
@@ -139,8 +138,9 @@
     </div>
   </div>
 
-  <!-- ACTION BAR -->
+  <!-- Action Bar -->
   <div class="action-bar d-flex align-items-center gap-2 flex-wrap mb-3">
+
     <button class="btn btn-outline-primary">Analytics</button>
 
     <div class="dropdown">
@@ -165,19 +165,20 @@
       </ul>
     </div>
 
-    <button type="button" class="btn btn-warning ms-auto"
+    <button class="btn btn-warning ms-auto"
       data-bs-toggle="modal"
       data-bs-target="#exampleModalCenteredScrollable">
       Add Product
     </button>
+
   </div>
 
-  <!-- CONTENT -->
+  <!-- Content -->
   <div class="content-box">
     <h3>Data</h3>
   </div>
 
-  <!-- ADD PRODUCT MODAL -->
+  <!-- Add Product Modal -->
   <div class="modal fade" id="exampleModalCenteredScrollable" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
       <div class="modal-content">
@@ -188,9 +189,11 @@
         </div>
 
         <div class="modal-body p-4">
+
           <form id="productUploadForm" enctype="multipart/form-data">
-          <!-- <input type="hidden" name="seller_id" value="3"> -->
-           <input type="hidden" name="seller_id" value="<?= htmlspecialchars($_SESSION['seller_id']) ?>">
+
+            <input type="hidden" name="seller_id" value="<?= htmlspecialchars($_SESSION['seller_id']) ?>">
+
             <div class="mb-2">
               <label class="form-label">Name</label>
               <input type="text" class="form-control" name="name" id="product_name" required>
@@ -234,18 +237,16 @@
             </div>
 
           </form>
-        </div>
 
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Toast -->
   <div id="toast" class="toast"></div>
 
 </main>
 
-<!-- Scripts -->
 <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="../assets/js/signout.js"></script>
 <script src="../assets/js/bootstrap-alert.js"></script>

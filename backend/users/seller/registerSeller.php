@@ -1,14 +1,14 @@
 <?php
 header('Content-Type: application/json');
-require_once('../../config/db.php');
-require '../../config/sanitizedata.php';
+require_once('../../auth/config/db.php');
+require '../../auth/config/sanitizedata.php';
 
 $transactionStarted = false;
 
 try {
-    if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-        throw new Exception("Invalid Request");
-    }
+    // if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    //     throw new Exception("Invalid Request");
+    // }
 
     $result = validateSeller($_POST, $conn);
 

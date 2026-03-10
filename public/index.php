@@ -94,6 +94,10 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch(err => console.error("Failed to check session:", err));
 });
+
+window.addEventListener('scroll', () => {
+    document.querySelector('header').classList.toggle('scrolled', window.scrollY > 10);
+});
 </script>
 
 <script src="assets/js/modal.js"></script>

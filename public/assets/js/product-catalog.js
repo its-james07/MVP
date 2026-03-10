@@ -1,166 +1,267 @@
+/**
+ * sidebar.js
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Handles all behaviour for the left-panel filter sidebar:
+ *   1. Mobile drawer  – open / close / overlay / Escape key
+ *   2. Accordion      – collapsible filter groups with animated max-height
+ *   3. Price slider   – dual-thumb range with live track fill and price labels
+ *   4. Apply filters  – reads all controls and fires a custom event
+ *   5. Clear filters  – resets every control back to its default state
+ * ─────────────────────────────────────────────────────────────────────────────
+ */
+
+'use strict';
+
 document.addEventListener('DOMContentLoaded', () => {
 
-  document.querySelectorAll('.filter-group-header').forEach(header => {
-    const group = header.closest('.filter-group');
-    const body = group.querySelector('.filter-group-body');
-    body.style.maxHeight = body.scrollHeight + 'px';
-
-    header.addEventListener('click', () => {
-      const isCollapsed = group.classList.toggle('collapsed');
-      header.setAttribute('aria-expanded', String(!isCollapsed));
-
-      if (isCollapsed) {
-        body.style.maxHeight = '0';
-      } else {
-        body.style.maxHeight = body.scrollHeight + 'px';
-      }
-    });
-  });
-
-  const sidebar = document.getElementById('sidebar');
+  /* ─────────────────────────────────────────────────────────────────────────
+   * DOM REFERENCES
+   * Cache every element the sidebar needs so we never query the DOM twice.
+   * ───────────────────────────────────────────────────────────────────────── */
+  const sidebar         = document.getElementById('sidebar');
+  const overlay         = document.getElementById('sidebarOverlay');
   const filterToggleBtn = document.getElementById('filterToggle');
-  const sidebarClose = document.getElementById('sidebarClose');
-  const overlay = document.getElementById('sidebarOverlay');
+  const sidebarCloseBtn = document.getElementById('sidebarClose');
+  const applyBtn        = document.getElementById('applyFilters')  || document.querySelector('.apply-filters-btn');
+  const clearBtn        = document.getElementById('clearFilters')  || document.querySelector('.clear-filters-btn');
+  const rangeMin        = document.getElementById('rangeMin');
+  const rangeMax        = document.getElementById('rangeMax');
+  const priceMinLabel   = document.getElementById('priceMin');
+  const priceMaxLabel   = document.getElementById('priceMax');
+  const rangeTrack      = document.querySelector('.range-slider-wrap');
 
-  function openSidebar() {
+
+  /* ─────────────────────────────────────────────────────────────────────────
+   * 1. MOBILE DRAWER
+   * On screens ≤ 1024 px the sidebar slides in from the left.
+   * The overlay behind it closes the drawer when clicked.
+   * ───────────────────────────────────────────────────────────────────────── */
+
+  /**
+   * Opens the sidebar drawer.
+   * Adds .open to the sidebar, .active to the overlay, and locks page scroll
+   * so the background does not scroll while the panel is open.
+   */
+  const openSidebar = () => {
     sidebar.classList.add('open');
     overlay.classList.add('active');
     document.body.style.overflow = 'hidden';
-  }
+  };
 
-  function closeSidebar() {
+  /**
+   * Closes the sidebar drawer.
+   * Removes .open and .active, restores page scroll.
+   */
+  const closeSidebar = () => {
     sidebar.classList.remove('open');
     overlay.classList.remove('active');
     document.body.style.overflow = '';
-  }
+  };
 
-  filterToggleBtn.addEventListener('click', openSidebar);
-  sidebarClose.addEventListener('click', closeSidebar);
-  overlay.addEventListener('click', closeSidebar);
+  // Open when the mobile "Filters" toggle button is clicked
+  filterToggleBtn?.addEventListener('click', openSidebar);
 
+  // Close via the ✕ button inside the sidebar
+  sidebarCloseBtn?.addEventListener('click', closeSidebar);
+
+  // Close when clicking the dark overlay behind the sidebar
+  overlay?.addEventListener('click', closeSidebar);
+
+  // Close on Escape key – standard accessibility pattern for drawers
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') closeSidebar();
   });
 
-  const rangeMin = document.getElementById('rangeMin');
-  const rangeMax = document.getElementById('rangeMax');
-  const priceMin = document.getElementById('priceMin');
-  const priceMax = document.getElementById('priceMax');
 
-  function formatPrice(val) {
-    return 'Rs ' + parseInt(val).toLocaleString('en-IN');
-  }
+  /* ─────────────────────────────────────────────────────────────────────────
+   * 2. ACCORDION FILTER GROUPS
+   * Each .filter-group contains a header button and a collapsible body.
+   * Toggling adds/removes .collapsed on the group, which the CSS uses to
+   * rotate the chevron icon. We animate max-height explicitly here because
+   * CSS cannot transition from a fixed value to `auto`.
+   * ───────────────────────────────────────────────────────────────────────── */
 
-  function updateRange() {
-    let minVal = parseInt(rangeMin.value);
-    let maxVal = parseInt(rangeMax.value);
+  /**
+   * Toggles a single filter group open or closed.
+   * @param {HTMLElement} header - The clicked .filter-group-header button
+   */
+  const toggleGroup = header => {
+    const group = header.closest('.filter-group');
+    const body  = group.querySelector('.filter-group-body');
 
+    const isNowCollapsed = group.classList.toggle('collapsed');
+
+    // aria-expanded reflects the visible state for screen readers
+    header.setAttribute('aria-expanded', String(!isNowCollapsed));
+
+    // Animate max-height: collapsed → 0, expanded → measured scrollHeight
+    body.style.maxHeight = isNowCollapsed ? '0' : `${body.scrollHeight}px`;
+  };
+
+  // Set an explicit initial max-height on every group body so the CSS
+  // transition has a concrete pixel value to animate from on first toggle
+  document.querySelectorAll('.filter-group').forEach(group => {
+    const header = group.querySelector('.filter-group-header');
+    const body   = group.querySelector('.filter-group-body');
+
+    // Start expanded
+    body.style.maxHeight = `${body.scrollHeight}px`;
+    header.setAttribute('aria-expanded', 'true');
+
+    header.addEventListener('click', () => toggleGroup(header));
+  });
+
+
+  /* ─────────────────────────────────────────────────────────────────────────
+   * 3. DUAL-THUMB PRICE RANGE SLIDER
+   * Two overlapping <input type="range"> elements share the same track.
+   * We repaint a CSS gradient on the track to fill only the selected segment,
+   * and update the visible Rs labels on every input event.
+   * ───────────────────────────────────────────────────────────────────────── */
+
+  /**
+   * Formats a number as a localised Indian-Rupee price string.
+   * @param   {number} value
+   * @returns {string}  e.g. "Rs 1,299"
+   */
+  const formatPrice = value =>
+    'Rs\u00a0' + parseInt(value, 10).toLocaleString('en-IN');
+
+  /**
+   * Reads both range inputs, enforces a minimum gap between the thumbs,
+   * updates the price labels, and repaints the coloured track segment.
+   */
+  const updateRangeSlider = () => {
+    let minVal = parseInt(rangeMin.value, 10);
+    let maxVal = parseInt(rangeMax.value, 10);
+    const absMax = parseInt(rangeMax.max, 10);
+
+    // Prevent the thumbs from crossing – maintain at least Rs 100 gap
     if (minVal > maxVal - 100) {
       minVal = maxVal - 100;
       rangeMin.value = minVal;
     }
 
-    priceMin.textContent = formatPrice(minVal);
-    priceMax.textContent = formatPrice(maxVal);
+    // Update the readable price labels above the slider
+    priceMinLabel.textContent = formatPrice(minVal);
+    priceMaxLabel.textContent = formatPrice(maxVal);
 
-    const min = parseInt(rangeMin.min);
-    const max = parseInt(rangeMax.max);
-    const left = ((minVal - min) / (max - min)) * 100;
-    const right = ((maxVal - min) / (max - min)) * 100;
+    // Compute percentage positions for the gradient breakpoints
+    const toPercent = v => ((v / absMax) * 100).toFixed(2);
+    const leftPct   = toPercent(minVal);
+    const rightPct  = toPercent(maxVal);
 
-    const wrap = document.querySelector('.range-slider-wrap');
-    wrap.style.background = `linear-gradient(to right, #E8E1D9 ${left}%, #2D6A4F ${left}%, #2D6A4F ${right}%, #E8E1D9 ${right}%)`;
-  }
+    // Repaint: grey | accent colour between thumbs | grey
+    rangeTrack.style.background =
+      `linear-gradient(to right,
+        var(--clr-border) ${leftPct}%,
+        var(--clr-accent) ${leftPct}%,
+        var(--clr-accent) ${rightPct}%,
+        var(--clr-border) ${rightPct}%)`;
+  };
 
-  rangeMin.addEventListener('input', updateRange);
-  rangeMax.addEventListener('input', updateRange);
-  updateRange();
+  rangeMin?.addEventListener('input', updateRangeSlider);
+  rangeMax?.addEventListener('input', updateRangeSlider);
 
-  const sortSelect = document.getElementById('sort-select');
-  sortSelect.addEventListener('change', () => {
-    const grid = document.getElementById('productGrid');
-    const cards = Array.from(grid.querySelectorAll('.product-card'));
+  // Paint the initial state on page load
+  updateRangeSlider();
 
-    cards.sort((a, b) => {
-      const priceA = parseFloat(a.querySelector('.card-price').textContent.replace(/[^0-9.]/g, ''));
-      const priceB = parseFloat(b.querySelector('.card-price').textContent.replace(/[^0-9.]/g, ''));
 
-      if (sortSelect.value === 'low-high') return priceA - priceB;
-      if (sortSelect.value === 'high-low') return priceB - priceA;
-      return 0;
-    });
+  /* ─────────────────────────────────────────────────────────────────────────
+   * 4. APPLY FILTERS
+   * Reads all sidebar controls, packages the values into a plain object,
+   * and dispatches a custom DOM event so the rest of your app can react
+   * without sidebar.js needing to know anything about the product grid.
+   * ───────────────────────────────────────────────────────────────────────── */
 
-    cards.forEach((card, i) => {
-      card.style.animation = 'none';
-      card.style.opacity = '0';
-      card.style.transform = 'translateY(12px)';
-      grid.appendChild(card);
-      setTimeout(() => {
-        card.style.transition = 'opacity .3s ease, transform .3s ease';
-        card.style.opacity = '1';
-        card.style.transform = 'translateY(0)';
-      }, i * 60);
-    });
+  /**
+   * Reads the checked values from all checkboxes inside a named filter group.
+   * @param   {string}   groupAttr  Value of the [data-group] attribute
+   * @returns {string[]}            Array of checked checkbox values
+   */
+  const getCheckedValues = groupAttr =>
+    [...document.querySelectorAll(`[data-group="${groupAttr}"] input[type="checkbox"]:checked`)]
+      .map(cb => cb.value);
 
-    showToast('Products sorted ✓', 'success');
-  });
+  /**
+   * Reads the currently selected minimum star rating from the radio group.
+   * Falls back to 0 if no radio is checked.
+   * @returns {number}
+   */
+  const getMinRating = () =>
+    parseFloat(
+      document.querySelector('input[name="rating"]:checked')?.value ?? 0
+    );
 
-  document.querySelector('.apply-filters-btn').addEventListener('click', () => {
+  /**
+   * Collects all current filter values and dispatches a 'filtersApplied'
+   * CustomEvent on the document. The product-grid module (or any other
+   * listener) can handle it independently.
+   *
+   * Event detail shape:
+   * {
+   *   pets:       string[],  // e.g. ['dogs', 'cats']
+   *   categories: string[],  // e.g. ['food', 'toys']
+   *   minPrice:   number,
+   *   maxPrice:   number,
+   *   minRating:  number,
+   * }
+   */
+  const applyFilters = () => {
+    const filterData = {
+      pets:       getCheckedValues('pet-type'),
+      categories: getCheckedValues('category'),
+      minPrice:   parseInt(rangeMin.value, 10),
+      maxPrice:   parseInt(rangeMax.value, 10),
+      minRating:  getMinRating(),
+    };
+
+    // Dispatch so the grid (or any other module) can listen and react
+    document.dispatchEvent(
+      new CustomEvent('filtersApplied', { detail: filterData, bubbles: true })
+    );
+
+    // Close the mobile drawer after applying
     closeSidebar();
-    showToast('Filters applied ✓', 'success');
-  });
+  };
 
-  document.querySelector('.clear-filters-btn').addEventListener('click', () => {
-    document.querySelectorAll('.sidebar input[type="checkbox"]').forEach(cb => cb.checked = false);
-    rangeMin.value = 0;
-    rangeMax.value = 5000;
-    updateRange();
-    showToast('Filters cleared', 'error');
-  });
+  applyBtn?.addEventListener('click', applyFilters);
 
-  const pageBtns = document.querySelectorAll('.page-btn');
 
-  pageBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const page = btn.dataset.page;
+  /* ─────────────────────────────────────────────────────────────────────────
+   * 5. CLEAR FILTERS
+   * Resets every control in the sidebar to its default state and fires a
+   * 'filtersCleared' event so the product grid can restore its full list.
+   * ───────────────────────────────────────────────────────────────────────── */
 
-      if (page === 'prev' || page === 'next') {
-        const active = document.querySelector('.page-btn.active');
-        const pages = Array.from(document.querySelectorAll('.page-btn:not([data-page="prev"]):not([data-page="next"]):not(.page-ellipsis)'));
-        const idx = pages.indexOf(active);
+  /**
+   * Resets all sidebar controls:
+   *   - Re-checks all pet-type and category checkboxes
+   *   - Resets the star-rating radio to "All"
+   *   - Resets both range thumbs to their min/max extents
+   *   - Repaints the slider track
+   * Then dispatches 'filtersCleared' so the product grid can react.
+   */
+  const clearFilters = () => {
+    // Re-check all checkboxes in the sidebar
+    sidebar.querySelectorAll('input[type="checkbox"]')
+      .forEach(cb => { cb.checked = true; });
 
-        if (page === 'prev' && idx > 0) pages[idx - 1].click();
-        if (page === 'next' && idx < pages.length - 1) pages[idx + 1].click();
-        return;
-      }
+    // Reset the minimum-rating radio back to "All" (value="0")
+    const allRatingRadio = sidebar.querySelector('input[name="rating"][value="0"]');
+    if (allRatingRadio) allRatingRadio.checked = true;
 
-      document.querySelector('.page-btn.active')?.classList.remove('active');
-      btn.classList.add('active');
+    // Reset both price thumbs to their full extents
+    rangeMin.value = rangeMin.min;
+    rangeMax.value = rangeMax.max;
+    updateRangeSlider();
 
-      const pages = Array.from(document.querySelectorAll('.page-btn[data-page]')).filter(b => !isNaN(b.dataset.page));
-      const newIdx = pages.indexOf(btn);
-      document.querySelector('[data-page="prev"]').disabled = (newIdx === 0);
-      document.querySelector('[data-page="next"]').disabled = (newIdx === pages.length - 1);
+    // Notify the rest of the app
+    document.dispatchEvent(
+      new CustomEvent('filtersCleared', { bubbles: true })
+    );
+  };
 
-      document.querySelector('.product-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-  });
-
-  let toastTimer;
-
-  function showToast(message, type = 'success', duration = 2500) {
-    const toast = document.getElementById('toast');
-    if (!toast) return;
-
-    clearTimeout(toastTimer);
-    toast.textContent = message;
-    toast.className = `toast ${type} show`;
-
-    toastTimer = setTimeout(() => {
-      toast.classList.remove('show');
-    }, duration);
-  }
-
-  window.showToast = showToast;
+  clearBtn?.addEventListener('click', clearFilters);
 
 });
