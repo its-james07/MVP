@@ -1,14 +1,4 @@
-/**
- * sidebar.js
- * ─────────────────────────────────────────────────────────────────────────────
- * Handles all behaviour for the left-panel filter sidebar:
- *   1. Mobile drawer  – open / close / overlay / Escape key
- *   2. Accordion      – collapsible filter groups with animated max-height
- *   3. Price slider   – dual-thumb range with live track fill and price labels
- *   4. Apply filters  – reads all controls and fires a custom event
- *   5. Clear filters  – resets every control back to its default state
- * ─────────────────────────────────────────────────────────────────────────────
- */
+
 
 'use strict';
 

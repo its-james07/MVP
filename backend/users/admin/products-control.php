@@ -2,23 +2,27 @@
 header('Content-Type: application/json');
 require_once '../../auth/config/db.php';
 
-// Fetch pending products
+// ── GET — Fetch pending products ─────────────────────────────────────────────
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     $result = $conn->query("
-        SELECT 
-            p.product_id AS product_id,
+        SELECT
+            p.product_id,
             p.name,
             p.description,
             p.price,
-            c.category_name AS category,
+            p.stock,
+            p.image,
             p.status,
             p.created_at,
-            u.fname AS seller_name,
-            u.email AS seller_email
+            c.category_name  AS category,
+            pt.type_name     AS product_type,
+            u.fname          AS seller_name,
+            u.email          AS seller_email
         FROM products p
-        LEFT JOIN users u ON p.seller_id = u.user_id
-        LEFT JOIN categories c ON p.category_id = c.category_id
+        LEFT JOIN users         u  ON p.seller_id   = u.user_id
+        LEFT JOIN categories    c  ON p.category_id = c.category_id
+        LEFT JOIN product_types pt ON p.type_id     = pt.type_id
         WHERE p.status = 'pending'
         ORDER BY p.created_at DESC
     ");
@@ -30,17 +34,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     echo json_encode([
         'success' => true,
-        'data' => $result->fetch_all(MYSQLI_ASSOC)
+        'data'    => $result->fetch_all(MYSQLI_ASSOC)
     ]);
     exit;
 }
 
-// Handle approve / reject / delete
+// ── POST — Approve / Reject / Delete ─────────────────────────────────────────
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $body = json_decode(file_get_contents('php://input'), true);
+    $body       = json_decode(file_get_contents('php://input'), true);
     $product_id = isset($body['product_id']) ? (int) $body['product_id'] : 0;
-    $action = $body['action'] ?? '';
+    $action     = $body['action'] ?? '';
 
     if (!$product_id || !in_array($action, ['approve', 'reject', 'delete'])) {
         echo json_encode(['success' => false, 'message' => 'Invalid request.']);
@@ -52,9 +56,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param("i", $product_id);
 
     } else {
+        // Store optional rejection reason when rejecting
         $newStatus = $action === 'approve' ? 'approved' : 'rejected';
-        $stmt = $conn->prepare("UPDATE products SET status = ? WHERE product_id = ?");
-        $stmt->bind_param("si", $newStatus, $product_id);
+        $reason    = trim($body['reason'] ?? '');
+
+        if ($action === 'reject' && $reason !== '') {
+            $stmt = $conn->prepare("
+                UPDATE products
+                SET status = ?, rejected_reason = ?
+                WHERE product_id = ?
+            ");
+            $stmt->bind_param("ssi", $newStatus, $reason, $product_id);
+        } else {
+            $stmt = $conn->prepare("
+                UPDATE products SET status = ? WHERE product_id = ?
+            ");
+            $stmt->bind_param("si", $newStatus, $product_id);
+        }
     }
 
     if ($stmt->execute()) {

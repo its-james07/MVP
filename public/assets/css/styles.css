@@ -314,8 +314,7 @@ input[type=password]:focus {
 .featured-section,
 .dfeatured-section,
 .cfeatured-secton,
-.faq-section,
-.footer-section{
+.faq-section{
     margin-top: 30px;
     padding: 10px;
     border-radius: 15px;
@@ -553,7 +552,6 @@ input[type=password]:focus {
     font-size: 2rem;
     margin-top: 50px;
     color: var(--primary-green);
-    background-color: var(--myWhite);
 }
 
 .faq-section h2,
@@ -571,6 +569,7 @@ input[type=password]:focus {
     display: none;
     padding: 20px;
     font-weight: 100;
+    background-color: rgba(232, 237, 232, 0.45);
 }
 
 .faqs li{
@@ -631,7 +630,7 @@ input[type=password]:focus {
     border-radius: 5px;
 }
 
-.footer-links{
+/* .footer-links{
     display: flex;
     flex-direction: row;
     margin-top: 5px;
@@ -640,7 +639,7 @@ input[type=password]:focus {
 
 .footer-links li{
     list-style-type: none;
-}
+} */
 
 .show-pass{
     display:flex;

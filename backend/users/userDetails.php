@@ -40,6 +40,7 @@ try {
     exit;
 }
 
+
 // ─── Validate & Sanitize ──────────────────────────────────────
 function validateUser($data, $conn) {
     $errors = [];
@@ -48,24 +49,36 @@ function validateUser($data, $conn) {
     $email    = sanitizeData($data['reg-email']  ?? '');
     $password = $data['new-pass']                ?? '';
 
-    // Name
-    if (empty($fname) || !preg_match("/^[a-zA-Z ]+$/", $fname)) {
-        $errors[] = "Empty or invalid name";
+    $nameRegex = "/^[a-zA-ZÀ-ÿ]+([ '-][a-zA-ZÀ-ÿ]+)*$/u";
+    if (empty($fname)) {
+        $errors[] = "Name field is required";
+    } elseif (!preg_match($nameRegex, $fname)) {
+        $errors[] = "Invalid name. Only letters, spaces, hyphens, and apostrophes are allowed (like Facebook names)";
+    } elseif (strlen($fname) < 2 || strlen($fname) > 50) {
+        $errors[] = "Name must be 2–50 characters long";
     }
 
-    // Email
+    // ── Email Validation ───────────────────────────────────────
     if (empty($email)) {
         $errors[] = "Email field is required";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errors[] = "Invalid email format";
+    } elseif (strlen($email) > 254) {
+        $errors[] = "Email address is too long";
     }
 
-    // Password
-    if (strlen($password) < 8) {
+    // ── Password Validation ─────────────────────────────────────
+    if (empty($password)) {
+        $errors[] = "Password field is required";
+    } elseif (strlen($password) < 8) {
         $errors[] = "Password must be at least 8 characters";
+    } elseif (strlen($password) > 72) {
+        $errors[] = "Password must not exceed 72 characters";
+    } elseif (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,72}$/', $password)) {
+        $errors[] = "Password must include uppercase, lowercase, number, and special character";
     }
 
-    // Duplicate email check (only if no errors so far)
+    // ── Duplicate Email Check ───────────────────────────────────
     if (empty($errors)) {
         $check = $conn->prepare("SELECT user_id FROM users WHERE email = ? LIMIT 1");
         if (!$check) throw new Exception("Prepare failed: " . $conn->error);

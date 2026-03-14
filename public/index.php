@@ -1,13 +1,6 @@
 <?php
 session_start();
-require("components/navbar.php");
-require("components/cart-modal.php");
-require("components/login-modal.php");
-require("components/account-modal.php");
-require("components/wish-modal.php");
-require("components/body.php");
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,12 +17,13 @@ require("components/body.php");
   <link rel="stylesheet" href="assets/css/account-modal.css" />
   <link rel="stylesheet" href="assets/css/overlay-effect.css" />
   <link rel="stylesheet" href="assets/css/loader.css" />
+  <link rel="stylesheet" href="assets/css/footer.css" />
 
   <link rel="icon" href="assets/favicon/favicon.png">
-
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
@@ -37,76 +31,49 @@ require("components/body.php");
 
 <body>
 
-<footer class="spacing">
-  <section class="footer-section">
-    <div class="top-foot">
-      <div class="about-us">
-        <h2>About Us</h2>
-        <p>
-          PupKit is your trusted destination for premium pet essentials, offering quality, comfort, and care for every furry friend. 
-          We provide thoughtfully curated products designed to keep pets happy and healthy. Our mission is to make pet parenting easier 
-          with reliable, affordable, and stylish solutions you and your pet will love.
-        </p>
-      </div>
+  <?php require("components/navbar.php"); ?>
+  <?php require("components/body.php"); ?>
+  <?php require("components/footer.php"); ?>
 
-      <div class="newsletter">
-        <h1>Get Latest Updates</h1>
-        <form action="">
-          <input type="email" name="subscribe-email" id="subscribe-email" placeholder="Subscribe to our newsletter">
-          <button type="submit"><b>Subscribe!</b></button>
-        </form>
-      </div>
-    </div>
+  <?php require("components/cart-modal.php"); ?>
+  <?php require("components/login-modal.php"); ?>
+  <?php require("components/account-modal.php"); ?>
+  <?php require("components/wish-modal.php"); ?>
 
-    <div class="bottom-foot">
-      <div class="quick-links">
-        <h3>Quick Links</h3>
-        <ul class="footer-links">
-          <li><a href="#main">Home</a></li>
-          <li><a href="#main">Products</a></li>
-          <li><a href="#main">Privacy Policy</a></li>
-          <li><a href="#main">About us</a></li>
-        </ul>
-      </div>
-    </div>
+  <div class="modal-overlay"></div>
+  <div class="toast" id="toast"></div>
 
-  </section>
-</footer>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const guestAccount = document.querySelector('.guest-account');
+      const userAccount  = document.querySelector('.user-account');
 
-<div class="modal-overlay"></div>
-<div class="toast" id="toast"></div>
+      fetch("../backend/auth/checkSession.php")
+        .then(res => res.json())
+        .then(data => {
+          if (data.loggedIn) {
+            if (guestAccount) guestAccount.style.display = "none";
+            if (userAccount)  userAccount.style.display  = "block";
+          } else {
+            if (guestAccount) guestAccount.style.display = "block";
+            if (userAccount)  userAccount.style.display  = "none";
+          }
+        })
+        .catch(err => console.error("Failed to check session:", err));
+    });
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const guestAccount = document.querySelector('.guest-account');
-  const userAccount = document.querySelector('.user-account');
+    window.addEventListener('scroll', () => {
+      document.querySelector('header').classList.toggle('scrolled', window.scrollY > 10);
+    });
+  </script>
 
-  fetch("../backend/auth/checkSession.php")
-    .then(res => res.json())
-    .then(data => {
-      if (data.loggedIn) {
-        if (guestAccount) guestAccount.style.display = "none";
-        if (userAccount) userAccount.style.display = "block";
-      } else {
-        if (guestAccount) guestAccount.style.display = "block";
-        if (userAccount) userAccount.style.display = "none";
-      }
-    })
-    .catch(err => console.error("Failed to check session:", err));
-});
-
-window.addEventListener('scroll', () => {
-    document.querySelector('header').classList.toggle('scrolled', window.scrollY > 10);
-});
-</script>
-
-<script src="assets/js/modal.js"></script>
-<script src="assets/js/login.js"></script>
-<script src="assets/js/signout.js"></script>
-<script src="assets/js/view-product.js"></script>
-<script src="assets/js/render-products.js"></script>
-<script src="assets/js/cart-modal.js"></script>
-<script src="assets/js/accordion-effect.js"></script>
+  <script src="assets/js/modal.js"></script>
+  <script src="assets/js/login.js"></script>
+  <script src="assets/js/signout.js"></script>
+  <script src="assets/js/view-product.js"></script>
+  <script src="assets/js/render-products.js"></script>
+  <script src="assets/js/cart-modal.js"></script>
+  <script src="assets/js/accordion-effect.js"></script>
 
 </body>
 </html>

@@ -53,7 +53,7 @@
 
             <div class="field">
               <label for="confirm-password">Confirm Password
-                <span id="not-confirm" class="errorInfo"><b>Password did not match</b></span>
+                <span id="not-confirm" class="errorInfo"><b>Passwords do not match</b></span>
               </label>
               <div class="input-wrapper">
                 <input type="password" id="confirm-password" placeholder="Re-enter your password" required/>

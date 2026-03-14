@@ -7,9 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateCartCount(count) {
         const cartBadge = document.getElementById('cart-badge');
         if (cartBadge) {
-            cartBadge.textContent = count;
-            // Optionally hide badge when cart is empty
-            //  
+            cartBadge.textContent = count;  
         }
     }
 
@@ -50,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                    data-id="${id}" 
                                    value="${item.quantity}" min="1">
                         </td>
-                        <td>$${(item.price * item.quantity).toFixed(2)}</td>
+                        <td>Rs ${(item.price * item.quantity).toFixed(2)}</td>
                         <td>
                             <button type="button" class="delete-btn" data-id="${id}">X</button>
                         </td>
@@ -175,6 +173,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
         });
     }
+    const checkOutBtn = document.getElementById('btn-checkout');
+
+checkOutBtn.addEventListener('click', () => {
+    window.location.href = '/mvp/public/pages/checkout-page.php';
+});
 
     // Make fetchCart available globally if needed
     window.fetchCart = fetchCart;
