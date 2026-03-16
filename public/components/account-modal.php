@@ -24,13 +24,17 @@
   <!-- User Section -->
   <div class="user-account">
     <div class="user-info">
-      <div class="user-name-text"><?php echo $_SESSION['username']?></div>
+      <div class="user-name-text"><?php echo $_SESSION['username']?><hr></div>
     </div>
 
     <div class="user-menu">
-      <div class="user-menu-item">
+      <!-- <div class="user-menu-item">
         <ion-icon name="person-outline" class="icon-profile"></ion-icon>
         <span class="menu-text">Profile</span>
+      </div> -->
+      <div class="user-menu-item">
+        <ion-icon name="receipt-outline"></ion-icon> 
+        <span class="menu-text"><a href="../public/pages/user-orders.php">Orders</a></span>
       </div>
       <div class="user-menu-item">
         <ion-icon name="settings-outline" class="icon-settings"></ion-icon>

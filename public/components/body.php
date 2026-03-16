@@ -12,7 +12,7 @@
             <p>Pet essentials you can trust.</p>
           </div>
           <div class="hbanner-links">
-            <a href="pages/productCatalog.php" class="buy-link">Buy now!</a>
+            <a href="pages/product-catalog.php" class="buy-link">Buy now!</a>
             <a href="pages/seller-register.php" class="login-btn">Become a Seller</a>
           </div>
         </div>

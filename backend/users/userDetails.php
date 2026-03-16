@@ -40,8 +40,6 @@ try {
     exit;
 }
 
-
-// ─── Validate & Sanitize ──────────────────────────────────────
 function validateUser($data, $conn) {
     $errors = [];
 
@@ -53,12 +51,11 @@ function validateUser($data, $conn) {
     if (empty($fname)) {
         $errors[] = "Name field is required";
     } elseif (!preg_match($nameRegex, $fname)) {
-        $errors[] = "Invalid name. Only letters, spaces, hyphens, and apostrophes are allowed (like Facebook names)";
+        $errors[] = "Invalid name. Only letters, spaces, hyphens, and apostrophes are allowed";
     } elseif (strlen($fname) < 2 || strlen($fname) > 50) {
         $errors[] = "Name must be 2–50 characters long";
     }
 
-    // ── Email Validation ───────────────────────────────────────
     if (empty($email)) {
         $errors[] = "Email field is required";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -67,7 +64,6 @@ function validateUser($data, $conn) {
         $errors[] = "Email address is too long";
     }
 
-    // ── Password Validation ─────────────────────────────────────
     if (empty($password)) {
         $errors[] = "Password field is required";
     } elseif (strlen($password) < 8) {
@@ -78,14 +74,11 @@ function validateUser($data, $conn) {
         $errors[] = "Password must include uppercase, lowercase, number, and special character";
     }
 
-    // ── Duplicate Email Check ───────────────────────────────────
     if (empty($errors)) {
         $check = $conn->prepare("SELECT user_id FROM users WHERE email = ? LIMIT 1");
         if (!$check) throw new Exception("Prepare failed: " . $conn->error);
-
         $check->bind_param("s", $email);
         if (!$check->execute()) throw new Exception("Execute failed: " . $check->error);
-
         $check->store_result();
         if ($check->num_rows > 0) {
             $errors[] = "Email is already registered";
@@ -104,3 +97,4 @@ function validateUser($data, $conn) {
         'password' => password_hash($password, PASSWORD_DEFAULT)
     ];
 }
+?>

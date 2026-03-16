@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-// if (!isset($_SESSION['seller_id'])) {
-//     header('Location: ../index.php');
-//     exit();
-// }
+if (!isset($_SESSION['seller_id'])) {
+    header('Location: ../index.php');
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -41,8 +41,6 @@ session_start();
     .toast.show { opacity: 1; }
     .toast.success { background-color: #2c6e49; color: #fff; }
     .toast.error   { background-color: #c0392b; color: #fff; }
-
-    /* SKU field style — read-only but visible */
     #product_sku {
       background-color: #f8f9fa;
       color: #6c757d;
@@ -76,7 +74,6 @@ session_start();
 
 <main class="spacing">
 
-  <!-- Dashboard Cards -->
   <div class="container-fluid mb-4">
     <div class="row">
 
@@ -147,7 +144,6 @@ session_start();
     </div>
   </div>
 
-  <!-- Action Bar -->
   <div class="action-bar d-flex align-items-center gap-2 flex-wrap mb-3">
 
     <button class="btn btn-outline-primary">Analytics</button>
@@ -174,20 +170,14 @@ session_start();
       </ul>
     </div>
 
-    <button class="btn btn-warning ms-auto"
-      data-bs-toggle="modal"
-      data-bs-target="#addProductModal">
-      Add Product
-    </button>
+    <button class="btn btn-warning ms-auto" data-bs-toggle="modal" data-bs-target="#addProductModal">Add Product</button>
 
   </div>
 
-  <!-- Content -->
   <div class="content-box">
     <h3>Data</h3>
   </div>
 
-  <!-- ─── Add Product Modal ──────────────────────────────────────────── -->
   <div class="modal fade" id="addProductModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
       <div class="modal-content">
@@ -198,51 +188,24 @@ session_start();
         </div>
 
         <div class="modal-body p-4">
-
           <form id="productUploadForm" enctype="multipart/form-data" novalidate>
-
-            <!-- Hidden fields -->
             <input type="hidden" name="seller_id" value="<?= htmlspecialchars($_SESSION['seller_id'] ?? '') ?>">
 
-            <!-- Auto-generated SKU (read-only, populated by JS on modal open) -->
             <div class="mb-3">
-              <label class="form-label">
-                SKU
-                <span class="badge bg-secondary ms-1" style="font-size:0.7rem;">Auto-generated</span>
-              </label>
-              <input type="text"
-                     class="form-control"
-                     id="product_sku"
-                     name="sku"
-                     readonly
-                     tabindex="-1">
+              <label class="form-label">SKU <span class="badge bg-secondary ms-1" style="font-size:0.7rem;">Auto-generated</span></label>
+              <input type="text" class="form-control" id="product_sku" name="sku" readonly tabindex="-1">
             </div>
 
-            <!-- Name -->
             <div class="mb-3">
               <label class="form-label">Product Name <span class="text-danger">*</span></label>
-              <input type="text"
-                     class="form-control"
-                     name="name"
-                     id="product_name"
-                     minlength="2"
-                     maxlength="255"
-                     placeholder="e.g. Premium Dog Harness"
-                     required>
+              <input type="text" class="form-control" name="name" id="product_name" minlength="2" maxlength="255" placeholder="e.g. Premium Dog Harness" required>
             </div>
 
-            <!-- Description -->
             <div class="mb-3">
               <label class="form-label">Description</label>
-              <textarea class="form-control"
-                        name="description"
-                        id="product_description"
-                        rows="3"
-                        maxlength="1000"
-                        placeholder="Briefly describe the product..."></textarea>
+              <textarea class="form-control" name="description" id="product_description" rows="3" maxlength="1000" placeholder="Briefly describe the product..."></textarea>
             </div>
 
-            <!-- Category & Type side by side -->
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label class="form-label">Category <span class="text-danger">*</span></label>
@@ -268,56 +231,26 @@ session_start();
               </div>
             </div>
 
-            <!-- Price & Weight side by side -->
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label class="form-label">Price (₱) <span class="text-danger">*</span></label>
-                <input type="number"
-                       step="0.01"
-                       min="0.01"
-                       class="form-control"
-                       name="price"
-                       id="product_price"
-                       placeholder="0.00"
-                       required>
+                <input type="number" step="0.01" min="0.01" class="form-control" name="price" id="product_price" placeholder="0.00" required>
               </div>
 
               <div class="col-md-6 mb-3">
-                <label class="form-label">
-                  Weight (kg)
-                  <small class="text-muted">(optional)</small>
-                </label>
-                <input type="number"
-                       step="0.01"
-                       min="0"
-                       class="form-control"
-                       name="weight"
-                       id="product_weight"
-                       placeholder="0.00">
+                <label class="form-label">Weight (kg) <small class="text-muted">(optional)</small></label>
+                <input type="number" step="0.01" min="0" class="form-control" name="weight" id="product_weight" placeholder="0.00">
               </div>
             </div>
 
-            <!-- Stock -->
             <div class="mb-3">
               <label class="form-label">Stock Quantity <span class="text-danger">*</span></label>
-              <input type="number"
-                     min="0"
-                     class="form-control"
-                     name="stock"
-                     id="product_stock"
-                     placeholder="0"
-                     required>
+              <input type="number" min="0" class="form-control" name="stock" id="product_stock" placeholder="0" required>
             </div>
 
-            <!-- Image -->
             <div class="mb-3">
               <label class="form-label">Product Image <span class="text-danger">*</span></label>
-              <input type="file"
-                     class="form-control"
-                     name="image"
-                     id="product_image"
-                     accept="image/jpeg, image/png, image/webp"
-                     required>
+              <input type="file" class="form-control" name="image" id="product_image" accept="image/jpeg, image/png, image/webp" required>
               <small class="text-muted">JPG, PNG or WEBP — max 2MB</small>
             </div>
 
@@ -330,12 +263,10 @@ session_start();
             </div>
 
           </form>
-
         </div>
       </div>
     </div>
   </div>
-  <!-- ─────────────────────────────────────────────────────────────────── -->
 
   <div id="toast" class="toast"></div>
 
@@ -348,32 +279,27 @@ session_start();
 <script src="../assets/js/seller/seller-script.js"></script>
 
 <script>
-  // ── Auto-generate SKU whenever the modal opens ──────────────────────
-  // Format: SKU-<CATEGORY_PREFIX><TIMESTAMP_BASE36>-<RANDOM_4>
-  // Example: SKU-DOG-LK3F2A-X7Q9
   const addProductModal = document.getElementById('addProductModal');
 
   addProductModal.addEventListener('show.bs.modal', () => {
-    const skuInput    = document.getElementById('product_sku');
-    const catSelect   = document.getElementById('product_category');
+    const skuInput  = document.getElementById('product_sku');
+    const catSelect = document.getElementById('product_category');
 
     const generateSKU = () => {
-      const catText  = catSelect.options[catSelect.selectedIndex]?.text || 'GEN';
-      const prefix   = catText.toUpperCase().slice(0, 3);          // e.g. DOG, CAT
-      const ts       = Date.now().toString(36).toUpperCase();       // base-36 timestamp
-      const rand     = Math.random().toString(36).slice(2, 6).toUpperCase(); // 4 random chars
+      const catText = catSelect.options[catSelect.selectedIndex]?.text || 'GEN';
+      const prefix  = catText.toUpperCase().slice(0, 3);
+      const ts      = Date.now().toString(36).toUpperCase();
+      const rand    = Math.random().toString(36).slice(2, 6).toUpperCase();
       return `SKU-${prefix}-${ts}-${rand}`;
     };
 
     skuInput.value = generateSKU();
 
-    // Re-generate if the user changes category before submitting
     catSelect.addEventListener('change', () => {
       skuInput.value = generateSKU();
     }, { once: false });
   });
 
-  // Reset form + SKU when modal is fully closed
   addProductModal.addEventListener('hidden.bs.modal', () => {
     document.getElementById('productUploadForm').reset();
     document.getElementById('product_sku').value = '';

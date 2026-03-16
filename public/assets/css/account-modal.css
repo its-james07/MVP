@@ -1,7 +1,7 @@
 .account-modal {
   display: none;
   position: fixed;
-  top: 10%;
+  top: 15%;
   right: 8%;  
   width: 240px;
   z-index: 999;

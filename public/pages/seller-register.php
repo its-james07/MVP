@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +8,6 @@
     <link rel="stylesheet" href="../assets/css/toast.css">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 </head>
-
 <body>
 <main class="container">
     <section id="pageInfo">
@@ -27,7 +25,6 @@
 
             <form id="regForm" method="POST">
 
-                <!-- ─── Step 1 ─────────────────────────────── -->
                 <div class="form-step active" id="step1">
                     <h2>Shop Information</h2>
 
@@ -55,7 +52,6 @@
                     </div>
                 </div>
 
-                <!-- ─── Step 2 ─────────────────────────────── -->
                 <div class="form-step" id="step2">
                     <h2>Account Details</h2>
 
