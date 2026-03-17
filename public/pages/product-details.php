@@ -39,7 +39,8 @@ try {
 <meta name="description" content="<?= htmlspecialchars($product['description']) ?>" />
 <title><?= htmlspecialchars($product['name']) ?> — pupkit</title>
 
-<link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.png" />
+<link rel="icon" href="../assets/favicon/favicon.png">
+
 
 <link rel="stylesheet" href="../assets/css/navbar.css">
 <link rel="stylesheet" href="../assets/css/styles.css">

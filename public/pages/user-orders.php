@@ -162,7 +162,7 @@ $customer_name = $_SESSION['fname'] ?? 'there';
       <div class="page-title">My Orders</div>
       <div class="text-muted" style="font-size:0.83rem">Hi <?= htmlspecialchars($customer_name) ?>, here are your orders</div>
     </div>
-    <a href="/index.php" class="btn btn-sm btn-outline-secondary">Continue Shopping</a>
+    <a href="/mvp/public/index.php" class="btn btn-sm btn-outline-secondary">Continue Shopping</a>
   </div>
 
   <!-- Orders will be injected here -->
@@ -216,7 +216,7 @@ $customer_name = $_SESSION['fname'] ?? 'there';
   }
 
   function canCancel(status) {
-    return status === 'pending' || status === 'confirmed';
+    return status && status.toLowerCase() === 'pending';
   }
 
   function formatDate(ts) {
@@ -244,7 +244,7 @@ $customer_name = $_SESSION['fname'] ?? 'there';
         <div class="item-row">
           <div>
             <div class="item-name">${item.product_name}</div>
-            <div class="item-meta">Qty: ${item.quantity} · NPR ${parseFloat(item.unit_price).toLocaleString()} each</div>
+            <div class="item-meta">Qty: ${item.quantity} · NPR ${parseFloat(item.unit_price).toLocaleString()} each ${item.current_stock != null ? `· Stock: ${item.current_stock}` : ''}</div>
           </div>
           <div class="item-price">NPR ${parseFloat(item.line_total).toLocaleString()}</div>
         </div>`).join('');
@@ -355,7 +355,7 @@ $customer_name = $_SESSION['fname'] ?? 'there';
   });
 
   // Fetch orders on load
-  fetch('../../backend/orders/get_orders.php')
+  fetch('../../backend/orders/get-orders.php')
     .then(r => r.json())
     .then(data => {
       document.getElementById('skeleton').remove();

@@ -55,7 +55,7 @@ if(accountModal){
 if (wishlistBtn) {
   wishlistBtn.addEventListener('click', ()=>{
     // wishlistModal.style.display = "block";
-    alert("Feature unavailable");
+    alert("Feature will be available soon.");
     cartModal.classList.remove('show');
   });
 }

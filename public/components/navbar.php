@@ -1,25 +1,24 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body> -->
-  <header class="navbar-container">
+<header class="navbar-container">
   <div class="header-main" style="background-color: #fafafa; height: 8rem;">
     <div class="logo-container">
       <a href="/mvp/public/index.php"><strong>Pupkit</strong></a>
     </div>
-    <div class="search-bar">
-      <input type="search" name="search" class="search-field" placeholder="Enter your product name..." />
-      <button class="search-btn">
+
+    <form class="search-bar" action="/mvp/public/pages/product-catalog.php" method="GET">
+      <input 
+        type="search" 
+        name="search" 
+        class="search-field" 
+        placeholder="Enter your product name..." 
+        required
+      />
+      <button type="submit" class="search-btn">
         <img src="/mvp/public/assets/images/index/search.svg" alt="search-btn" style="height: 20px; width: 30px;">
       </button>
-    </div>
+    </form>
 
     <div class="top-right-icons">
       <button class="action-btn">
-
         <img src="/mvp/public/assets/images/index/heart (1).svg" alt="wishlist" class="show-wishlist ion-icon">
         <span class="badge" id="wish-badge">0</span>
       </button>
@@ -30,7 +29,6 @@
       <button class="action-btn user-login">
         <img src="/mvp/public/assets/images/index/usericon.svg" alt="userIcon" class="ion-icon">
       </button>
-
     </div>
   </div>
 
@@ -51,14 +49,5 @@
       <button class="action-btn user-login">
         <img src="/mvp/public/assets/images/index/usericon.svg" alt="userIcon" class="ion-icon">
       </button>
-    </div>
-<div class="mobile-bottom-navigation">
-    <a href="index.html" class="nav-item active"><i class="bi bi-house"></i><span>Home</span></a>
-    <a href="#" class="nav-item show-wishlist"><i class="bi bi-heart"></i><span>Wishlist</span></a>
-    <a href="#" class="nav-item show-cart main-nav-item"><i class="bi bi-cart3"></i></a>
-    <a href="#" class="nav-item"><i class="bi bi-basket"></i><span>Search</span></a>
-    <a href="#" class="nav-item user-login"><i class="bi bi-person"></i><span>Profile</span></a>
-</div>
+  </div>
 </header>
-<!-- </body>
-</html> -->
