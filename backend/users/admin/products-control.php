@@ -2,10 +2,15 @@
 header('Content-Type: application/json');
 require_once '../../auth/config/db.php';
 
-// ── GET — Fetch pending products ─────────────────────────────────────────────
+// ── GET — Fetch products (default pending, optional all) ─────────────────────────────
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    $filter = trim($_GET['filter'] ?? 'pending');
+    $statusWhere = "p.status = 'pending'";
+    if ($filter === 'all') {
+        $statusWhere = "p.status != 'pending'";
+    }
 
-    $result = $conn->query("
+    $result = $conn->query(" 
         SELECT
             p.product_id,
             p.name,
@@ -23,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         LEFT JOIN users         u  ON p.seller_id   = u.user_id
         LEFT JOIN categories    c  ON p.category_id = c.category_id
         LEFT JOIN product_types pt ON p.type_id     = pt.type_id
-        WHERE p.status = 'pending'
+        WHERE $statusWhere
         ORDER BY p.created_at DESC
     ");
 
@@ -46,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $product_id = isset($body['product_id']) ? (int) $body['product_id'] : 0;
     $action     = $body['action'] ?? '';
 
-    if (!$product_id || !in_array($action, ['approve', 'reject', 'delete'])) {
+    if (!$product_id || !in_array($action, ['approve', 'reject', 'delete', 'suspend', 'activate'])) {
         echo json_encode(['success' => false, 'message' => 'Invalid request.']);
         exit;
     }
@@ -56,22 +61,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param("i", $product_id);
 
     } else {
-        // Store optional rejection reason when rejecting
-        $newStatus = $action === 'approve' ? 'approved' : 'rejected';
-        $reason    = trim($body['reason'] ?? '');
-
-        if ($action === 'reject' && $reason !== '') {
-            $stmt = $conn->prepare("
-                UPDATE products
-                SET status = ?, rejected_reason = ?
-                WHERE product_id = ?
-            ");
-            $stmt->bind_param("ssi", $newStatus, $reason, $product_id);
-        } else {
-            $stmt = $conn->prepare("
-                UPDATE products SET status = ? WHERE product_id = ?
-            ");
+        if ($action === 'approve') {
+            $newStatus = 'approved';
+            $stmt = $conn->prepare("UPDATE products SET status = ? WHERE product_id = ?");
             $stmt->bind_param("si", $newStatus, $product_id);
+        } elseif ($action === 'reject') {
+            $newStatus = 'rejected';
+            $reason = trim($body['reason'] ?? '');
+            if ($reason !== '') {
+                $stmt = $conn->prepare("UPDATE products SET status = ?, rejected_reason = ? WHERE product_id = ?");
+                $stmt->bind_param("ssi", $newStatus, $reason, $product_id);
+            } else {
+                $stmt = $conn->prepare("UPDATE products SET status = ? WHERE product_id = ?");
+                $stmt->bind_param("si", $newStatus, $product_id);
+            }
+        } elseif ($action === 'suspend') {
+            $newStatus = 'suspended';
+            $stmt = $conn->prepare("UPDATE products SET status = ? WHERE product_id = ?");
+            $stmt->bind_param("si", $newStatus, $product_id);
+        } elseif ($action === 'activate') {
+            $newStatus = 'approved';
+            $stmt = $conn->prepare("UPDATE products SET status = ? WHERE product_id = ?");
+            $stmt->bind_param("si", $newStatus, $product_id);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Invalid action.']);
+            exit;
         }
     }
 

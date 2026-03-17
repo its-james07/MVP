@@ -10,7 +10,7 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 try {
     if ($method === 'GET') {
-        $sql = "SELECT user_id, fname, email, role, status, created_at FROM users ORDER BY created_at DESC";
+        $sql = "SELECT u.user_id, u.fname, u.email, u.role, u.status, u.created_at, s.seller_id, s.status AS seller_status, sh.store_name, sh.city AS shop_city FROM users u LEFT JOIN sellers s ON s.user_id = u.user_id LEFT JOIN shop sh ON sh.seller_id = s.seller_id ORDER BY u.created_at DESC";
         $result = $conn->query($sql);
 
         if (!$result) throw new Exception("Query failed: " . $conn->error);

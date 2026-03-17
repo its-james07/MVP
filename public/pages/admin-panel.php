@@ -28,7 +28,7 @@
   <link rel="icon" href="../assets/favicon/favicon.png" />
 </head>
 
-<body style="overflow: hidden">
+<body style="overflow: auto">
   <header>
     <nav class="header-main">
       <div class="logo-container">
@@ -76,17 +76,24 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
           <div class="modal-body">
-            <form action="">
+            <form id="changePasswordForm" novalidate>
               <div class="mb-3">
                 <label for="cur-pwd">Current Password</label>
-                <input type="password" id="cur-pwd" name="cur-pwd" placeholder="Your old password">
+                <input type="password" id="cur-pwd" name="current_password" class="form-control" required placeholder="Your old password">
               </div>
 
               <div class="mb-3">
                 <label for="new-pwd">New Password</label>
-                <input type="password" id="new-pwd" name="new-pwd" placeholder="Your new password">
+                <input type="password" id="new-pwd" name="new_password" class="form-control" required placeholder="Your new password">
               </div>
-              <button type="cancel" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+              <div class="mb-3">
+                <label for="confirm-pwd">Confirm New Password</label>
+                <input type="password" id="confirm-pwd" name="confirm_password" class="form-control" required placeholder="Confirm new password">
+              </div>
+
+              <div id="changePasswordMessage" class="mt-2"></div>
+
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
               <button type="submit" class="btn btn-success float-end" id="changeBtn">Change</button>
             </form>
 
@@ -161,7 +168,7 @@
               <div class="row align-items-center">
                 <div class="col">
                   <div class="text-xs fw-bold text-warning text-uppercase mb-1">
-                    Pending Requests
+                    Account Requests
                   </div>
                   <div class="h5 mb-0 fw-bold text-dark"><h5 id="pendingRequests"><strong></strong></h5></div>
                 </div>
@@ -204,8 +211,7 @@
         </button>
         <ul id="sellerDropdownMenu" class="dropdown-menu" aria-labelledby="sellerDropdown">
           <li><button class="dropdown-item" id="ftch-seller-apps">Applications</button></li>
-          <li><button class="dropdown-item">Details</button></li>
-          <li><button class="dropdown-item">Manage</button></li>
+          <li><button class="dropdown-item" id="ftch-seller-list">All Sellers</button></li>
         </ul>
       </div>
 
@@ -217,43 +223,70 @@
         </button>
         <ul id="productDropdownMenu" class="dropdown-menu" aria-labelledby="productDropdown">
           <li><button class="dropdown-item" id="ftch-product-apps">Applications</button></li>
-          <li><button class="dropdown-item">View Product Details</button></li>
-          <li><button class="dropdown-item">Remove Product</button></li>
+          <li><button class="dropdown-item" id="ftch-product-list">All Products</button></li>
         </ul>
       </div>
 
       <!-- User Control -->
+      <button class="btn btn-info" id="ftch-orders">
+        Order Management
+      </button>
+
       <button class="btn btn-warning" id="ftch-users">
         User Control
       </button>
 
-      <form class="d-flex ms-auto" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search users / sellers / products"
+      <form class="d-flex ms-auto" role="search" onsubmit="event.preventDefault();">
+        <input class="form-control" type="search" placeholder="Search users / sellers / products"
           aria-label="Search" id="admin-search" />
-        <button class="btn btn-outline-secondary" type="submit">
-          Search
-        </button>
       </form>
     </div>
 
 
     <!-- Content -->
-    <div class="content-box" style="overflow: scroll">
+    <!-- <div class="content-box">
       <div class="userData">  
         <table id="userInfo-table"></table>
       </div>
       <div class="" id="s-container"></div>
-      <div class="prod-panel" id="seller-apps">
+      <div class="prod-panel" id="seller-apps"></div>
+    </div> -->
+    <div class="content-box">
+    <div class="userData">
+        <div class="table-responsive">
+            <table id="userInfo-table"></table>
+        </div>
+    </div>
+    <div id="s-container"></div>
+    <div class="prod-panel" id="seller-apps"></div>
+</div>
+
+    <!-- Shared detail modal -->
+    <div class="modal fade" id="adminDetailModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-white">
+            <h5 id="adminDetailModalTitle" class="modal-title">Details</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body" id="adminDetailModalBody"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
       </div>
     </div>
+
 <!-- <div class="toast" id="toast"></div> -->
 
   </main>
   <!-- Scripts -->
   <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="../assets/js/admin/admin-script.js"></script>
+  <script src="../assets/js/change-password.js"></script>
   <script src="../assets/js/view-user.js"></script>
   <script src="../assets/js/signout.js"></script>
+  <script src="../assets/js/admin/order-management.js"></script>
   <script src="../assets/js/admin/seller-applications.js"></script>
   <script src="../assets/js/admin/users-control.js"></script>
   <script src="../assets/js/admin/products-control.js"></script>

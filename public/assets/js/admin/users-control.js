@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', () => {
         userControlBtn.addEventListener('click', loadUsers);
     }
 
+    // Load user control by default when page reloads
+    loadUsers();
+
     // ─── Inject Confirmation Modal ────────────────────────
     document.body.insertAdjacentHTML('beforeend', `
         <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-hidden="true">
@@ -61,7 +64,87 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// ─── Fetch & Render ───────────────────────────────────────────
+// ─── Helper: show details modal for records ──────────────────────
+function getUserDetailHtml(user) {
+    return `
+      <div class="mb-2"><strong>Name:</strong> ${user.fname}</div>
+      <div class="mb-2"><strong>Email:</strong> ${user.email}</div>
+      <div class="mb-2"><strong>Role:</strong> ${user.role}</div>
+      <div class="mb-2"><strong>User Status:</strong> ${user.status}</div>
+      ${user.seller_id ? `<div class="mb-2"><strong>Seller ID:</strong> ${user.seller_id}</div>` : ''}
+      ${user.seller_status ? `<div class="mb-2"><strong>Seller Status:</strong> ${user.seller_status}</div>` : ''}
+      ${user.store_name ? `<div class="mb-2"><strong>Shop:</strong> ${user.store_name}</div>` : ''}
+      ${user.shop_city ? `<div class="mb-2"><strong>Shop City:</strong> ${user.shop_city}</div>` : ''}
+      <div class="mb-2"><strong>Joined:</strong> ${new Date(user.created_at).toLocaleDateString()}</div>
+    `;
+}
+
+function loadSellers() {
+    const container = document.getElementById('s-container');
+    container.innerHTML = `<p class="text-muted">Loading sellers...</p>`;
+
+    fetch('../../backend/users/admin/users-control.php', { cache: 'no-store' })
+        .then(res => res.json())
+        .then(result => {
+            if (!result.success) throw new Error(result.message || 'Failed to fetch sellers');
+            const sellers = result.data.filter(u => u.role === 'seller');
+            renderSellers(sellers);
+        })
+        .catch(err => {
+            console.error(err);
+            container.innerHTML = `<div class="alert alert-danger">Failed to load sellers: ${err.message}</div>`;
+        });
+}
+
+function renderSellers(sellers) {
+    const container = document.getElementById('s-container');
+    container.innerHTML = '';
+
+    if (!sellers || sellers.length === 0) {
+        container.innerHTML = `<div class="alert alert-info">No sellers found.</div>`;
+        return;
+    }
+
+    container.innerHTML = `
+      <div class="card shadow-sm" style="border: none; border-radius: 12px; overflow: hidden;">
+        <div class="card-header d-flex justify-content-between align-items-center" style="background-color: #2c6e49;">
+          <h5 class="mb-0 text-white"><i class="fas fa-store me-2"></i>All Sellers</h5>
+          <span class="badge bg-warning text-dark">${sellers.length} Sellers</span>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover table-bordered align-middle mb-0" id="seller-list-table">
+              <thead style="background-color: #1a1a2e; color: #fff;"><tr>
+                <th class="always-visible">#</th><th class="always-visible">Name</th><th>Email</th><th>Status</th><th>Shop</th><th>Joined</th><th class="actions-col text-center always-visible">View</th>
+              </tr></thead>
+              <tbody id="seller-list-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    `;
+
+    const tbody = document.getElementById('seller-list-tbody');
+    sellers.forEach((seller, index) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td class="always-visible">${index + 1}</td>
+            <td class="always-visible">${seller.fname}</td>
+            <td>${seller.email}</td>
+            <td>${seller.seller_status ?? seller.status}</td>
+            <td>${seller.store_name ?? '—'}</td>
+            <td>${new Date(seller.created_at).toLocaleDateString()}</td>
+            <td class="actions-col text-center always-visible"><button class="btn btn-sm btn-outline-primary seller-detail-btn" data-id="${seller.user_id}">View Details</button></td>
+        `;
+        tbody.appendChild(tr);
+
+        const btn = tr.querySelector('.seller-detail-btn');
+        btn?.addEventListener('click', () => {
+            showAdminDetailModal('Seller Details', getUserDetailHtml(seller));
+        });
+    });
+}
+
 async function loadUsers() {
     const container = document.getElementById('s-container');
     container.innerHTML = `<p class="text-muted">Loading users...</p>`;
@@ -104,13 +187,13 @@ function renderUsers(users) {
                     <table class="table table-hover table-bordered align-middle mb-0" id="users-table">
                         <thead style="background-color: #1a1a2e; color: #fff;">
                             <tr>
-                                <th>#</th>
-                                <th>Name</th>
+                                <th class="always-visible">#</th>
+                                <th class="always-visible">Name</th>
                                 <th>Email</th>
                                 <th>Role</th>
                                 <th>Status</th>
                                 <th>Joined</th>
-                                <th class="text-center">Actions</th>
+                                <th class="actions-col text-center always-visible">Actions</th>
                             </tr>
                         </thead>
                         <tbody id="users-tbody"></tbody>
@@ -131,13 +214,13 @@ function renderUsers(users) {
         const actionButtons = getActionButtons(user.user_id, user.fname, user.status);
 
         tr.innerHTML = `
-            <td>${index + 1}</td>
-            <td><strong>${user.fname}</strong></td>
+            <td class="always-visible">${index + 1}</td>
+            <td class="always-visible"><strong>${user.fname}</strong></td>
             <td>${user.email}</td>
             <td><span class="badge" style="background-color: #1a1a2e; color: #fff;">${user.role}</span></td>
             <td id="status-badge-${user.user_id}">${statusBadge}</td>
             <td>${new Date(user.created_at).toLocaleDateString()}</td>
-            <td class="text-center" id="actions-${user.user_id}">${actionButtons}</td>
+            <td class="actions-col text-center always-visible" id="actions-${user.user_id}">${actionButtons}</td>
         `;
 
         tbody.appendChild(tr);

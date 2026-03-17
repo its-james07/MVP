@@ -35,4 +35,51 @@ document.addEventListener("DOMContentLoaded", () => {
         .catch(err => {
             console.error("Failed to load analytics:", err);
         });
+
+    const searchInput = document.getElementById('admin-search');
+    if (searchInput) {
+        searchInput.addEventListener('input', function () {
+            const query = this.value.trim().toLowerCase();
+            if (!query) {
+                document.querySelectorAll('#s-container table tbody tr').forEach(r => r.style.display = '');
+                return;
+            }
+
+            document.querySelectorAll('#s-container table tbody tr').forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(query) ? '' : 'none';
+            });
+        });
+    }
+
+    document.getElementById('ftch-seller-list')?.addEventListener('click', () => {
+        if (typeof loadSellers === 'function') loadSellers();
+    });
+
+    document.getElementById('ftch-product-list')?.addEventListener('click', () => {
+        if (typeof loadAllProducts === 'function') loadAllProducts();
+    });
+
+    document.getElementById('ftch-seller-apps')?.addEventListener('click', () => {
+        if (typeof loadPendingSellers === 'function') loadPendingSellers();
+    });
+
+    document.getElementById('ftch-product-apps')?.addEventListener('click', () => {
+        if (typeof loadProducts === 'function') loadProducts();
+    });
+
+    document.getElementById('ftch-orders')?.addEventListener('click', () => {
+        if (typeof loadOrderManagement === 'function') loadOrderManagement();
+    });
 });
+
+function showAdminDetailModal(title, htmlContent) {
+    const modalTitle = document.getElementById('adminDetailModalTitle');
+    const modalBody  = document.getElementById('adminDetailModalBody');
+    if (modalTitle) modalTitle.textContent = title;
+    if (modalBody)  modalBody.innerHTML = htmlContent;
+    const modal = new bootstrap.Modal(document.getElementById('adminDetailModal'));
+    modal.show();
+}
+
+window.showAdminDetailModal = showAdminDetailModal;

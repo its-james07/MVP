@@ -20,7 +20,7 @@ session_start();
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 
-<body style="overflow: hidden">
+<body style="overflow: auto">
 
 <header>
   <nav class="header-main">
@@ -119,7 +119,6 @@ session_start();
       <ul class="dropdown-menu">
         <li><button class="dropdown-item">View Products</button></li>
         <li><button class="dropdown-item">Update Product</button></li>
-        <li><button class="dropdown-item">Remove Product</button></li>
       </ul>
     </div>
 
@@ -135,8 +134,6 @@ session_start();
     <button class="btn btn-warning ms-auto" data-bs-toggle="modal" data-bs-target="#addProductModal">Add Product</button>
 
   </div>
-
-  <div class="content-box" id="content-box"></div>
 
   <div class="modal fade" id="addProductModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
@@ -192,84 +189,3 @@ session_start();
               </div>
               <div class="col-md-6 mb-3">
                 <label class="form-label">Weight (kg) <small class="text-muted">(optional)</small></label>
-                <input type="number" step="0.01" min="0" class="form-control" name="weight" id="product_weight" placeholder="0.00">
-              </div>
-            </div>
-
-            <div class="mb-3">
-              <label class="form-label">Stock Quantity <span class="text-danger">*</span></label>
-              <input type="number" min="0" class="form-control" name="stock" id="product_stock" placeholder="0" required>
-            </div>
-
-            <div class="mb-3">
-              <label class="form-label">Product Image <span class="text-danger">*</span></label>
-              <input type="file" class="form-control" name="image" id="product_image" accept="image/jpeg, image/png, image/webp" required>
-              <small class="text-muted">JPG, PNG or WEBP — max 2MB</small>
-            </div>
-
-            <div class="modal-footer px-0 pb-0">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-              <button type="submit" class="btn btn-success">
-                <span id="submitBtnText">Save Product</span>
-                <span id="submitBtnSpinner" class="spinner-border spinner-border-sm ms-1 d-none" role="status"></span>
-              </button>
-            </div>
-
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="orderDetailModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title"><i class="fa-solid fa-receipt me-2 text-success"></i>Order Details</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body p-3" id="orderDetailBody"></div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div id="toast" class="toast"></div>
-
-</main>
-
-<script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="../assets/js/signout.js"></script>
-<script src="../assets/js/bootstrap-alert.js"></script>
-<script src="../assets/js/seller/add-product.js"></script>
-<script src="../assets/js/seller/seller-script.js"></script>
-<script src="../assets/js/seller/order-control.js"></script>
-<script src="../assets/js/seller/view-product.js"></script>
-
-<script>
-const addProductModal = document.getElementById('addProductModal');
-addProductModal.addEventListener('show.bs.modal', () => {
-  const skuInput  = document.getElementById('product_sku');
-  const catSelect = document.getElementById('product_category');
-  if (!skuInput) return;
-  const generateSKU = () => {
-    const catText = catSelect.options[catSelect.selectedIndex]?.text || 'GEN';
-    const prefix  = catText.toUpperCase().slice(0, 3);
-    const ts      = Date.now().toString(36).toUpperCase();
-    const rand    = Math.random().toString(36).slice(2, 6).toUpperCase();
-    return `SKU-${prefix}-${ts}-${rand}`;
-  };
-  skuInput.value = generateSKU();
-  catSelect.addEventListener('change', () => { skuInput.value = generateSKU(); });
-});
-addProductModal.addEventListener('hidden.bs.modal', () => {
-  document.getElementById('productUploadForm').reset();
-  const skuInput = document.getElementById('product_sku');
-  if (skuInput) skuInput.value = '';
-});
-</script>
-
-</body>
-</html>

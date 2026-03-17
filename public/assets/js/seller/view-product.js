@@ -98,8 +98,8 @@ function renderProducts(products, mode = 'view') {
 
         return `
             <tr id="product-row-${p.product_id}" data-product='${JSON.stringify(p).replace(/'/g, "&#39;")}'>
-                <td class="text-muted" style="font-size:0.8rem">${index + 1}</td>
-                <td>
+                <td class="always-visible text-muted" style="font-size:0.8rem">${index + 1}</td>
+                <td class="always-visible">
                     <div class="d-flex align-items-center gap-2">
                         ${p.image
                             ? `<img src="../../uploads/products/${escHtml(p.image)}"
@@ -126,7 +126,7 @@ function renderProducts(products, mode = 'view') {
                 </td>
                 <td><span class="status-badge ${statusCfg.badge}">${statusCfg.label}</span></td>
                 <td class="text-muted" style="font-size:0.78rem">${formatDate(p.created_at)}</td>
-                <td class="text-center" id="action-cell-${p.product_id}">${actionCell}</td>
+                <td class="actions-col text-center always-visible" id="action-cell-${p.product_id}">${actionCell}</td>
             </tr>`;
     }).join('');
 
@@ -140,14 +140,14 @@ function renderProducts(products, mode = 'view') {
             <table class="table orders-table vp-table">
                 <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Product</th>
+                        <th class="always-visible">#</th>
+                        <th class="always-visible">Product</th>
                         <th>Category</th>
                         <th>Price</th>
                         <th>Stock</th>
                         <th>Status</th>
                         <th>Added</th>
-                        <th class="text-center">Actions</th>
+                        <th class="actions-col text-center always-visible">Actions</th>
                     </tr>
                 </thead>
                 <tbody>${rows}</tbody>
@@ -166,7 +166,7 @@ function buildActionCell(product, mode) {
     // View mode — details button only
     if (mode === 'view') {
         return `
-            <button class="btn btn-sm vp-btn-detail" onclick="showProductDetail(${id})">
+            <button class="btn btn-sm vp-btn-detail details-only" onclick="showProductDetail(${id})">
                 <i class="fa-solid fa-eye me-1"></i>Details
             </button>`;
     }

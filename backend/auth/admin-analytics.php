@@ -10,23 +10,21 @@ require_once('../auth/config/db.php');
 // }
 
 $responseData = [];
-$result = $conn->query("SELECT COUNT(*) AS total FROM users");
+$result = $conn->query("SELECT COUNT(*) AS total FROM users WHERE status='active'");
 $row = $result->fetch_assoc();
 $responseData['total_users'] = (int) $row['total'];
 
 //Total Sellers
-$result = $conn->query( "SELECT COUNT(*) AS total FROM users WHERE role='seller'");
+$result = $conn->query("SELECT COUNT(*) AS total FROM users WHERE role='seller' AND status='active'");
 $row = $result->fetch_assoc();
 $responseData['total_sellers'] = (int) $row['total'];
 
-//Total Products
-// $result = $conn->query(
-//     "SELECT COUNT(*) AS total FROM products"
-// );
-// $row = $result->fetch_assoc();
-// $responseData['total_products'] = (int) $row['total'];
+// Total Products
+$result = $conn->query("SELECT COUNT(*) AS total FROM products");
+if (!$result) { echo json_encode(["error" => $conn->error]); exit(); }
+$responseData['total_products'] = (int) $result->fetch_assoc()['total'];
 
-//Pending User Requests
+// Pending User Requests
 $result = $conn->query("SELECT COUNT(*) AS total FROM sellers WHERE status = 'pending'");
 if (!$result) { echo json_encode(["error" => $conn->error]); exit(); }
 $responseData['pending_requests'] = (int) $result->fetch_assoc()['total'];

@@ -51,15 +51,15 @@ function renderApplications(applications) {
                     <table class="table table-hover table-bordered align-middle mb-0" id="sellers-table">
                         <thead class="table-dark">
                             <tr>
-                                <th>#</th>
-                                <th>Owner Name</th>
+                                <th class="always-visible">#</th>
+                                <th class="always-visible">Owner Name</th>
                                 <th>Email</th>
                                 <th>Shop Name</th>
                                 <th>Address</th>
                                 <th>City</th>
                                 <th>Status</th>
                                 <th>Applied Date</th>
-                                <th class="text-center">Actions</th>
+                                <th class="actions-col text-center always-visible">Actions</th>
                             </tr>
                         </thead>
                         <tbody id="sellers-tbody"></tbody>
@@ -76,8 +76,8 @@ function renderApplications(applications) {
         tr.id = `seller-row-${seller.seller_id}`;
 
         tr.innerHTML = `
-            <td>${index + 1}</td>
-            <td><strong>${seller.user_name}</strong></td>
+            <td class="always-visible">${index + 1}</td>
+            <td class="always-visible"><strong>${seller.user_name}</strong></td>
             <td>${seller.user_email}</td>
             <td>${seller.shop_name}</td>
             <td>${seller.address ?? '—'}</td>
@@ -86,7 +86,7 @@ function renderApplications(applications) {
                 <span class="badge bg-warning text-dark">${seller.status}</span>
             </td>
             <td>${new Date(seller.created_at).toLocaleDateString()}</td>
-            <td class="text-center">
+            <td class="actions-col text-center always-visible">
                 <button class="btn btn-success btn-sm me-1" onclick="updateStatus(${seller.seller_id}, 'approved', this)">
                     <i class="fas fa-check me-1"></i>Approve
                 </button>
