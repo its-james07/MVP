@@ -1,4 +1,3 @@
-// ─── Trigger ──────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
     const userControlBtn = document.getElementById('ftch-users');
     if (userControlBtn) {
@@ -63,7 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
-
 // ─── Helper: show details modal for records ──────────────────────
 function getUserDetailHtml(user) {
     return `
@@ -210,8 +208,8 @@ function renderUsers(users) {
         tr.id = `user-row-${user.user_id}`;
         tr.style.backgroundColor = index % 2 === 0 ? '#fff' : '#f0f7f3';
 
-        const statusBadge  = getStatusBadge(user.status);
-        const actionButtons = getActionButtons(user.user_id, user.fname, user.status);
+        const statusBadge   = getUserStatusBadge(user.status);
+        const actionButtons = getUserActionButtons(user.user_id, user.fname, user.status);
 
         tr.innerHTML = `
             <td class="always-visible">${index + 1}</td>
@@ -227,8 +225,8 @@ function renderUsers(users) {
     });
 }
 
-// ─── Badge Helper ─────────────────────────────────────────────
-function getStatusBadge(status) {
+// ─── RENAMED: getUserStatusBadge (was getStatusBadge — conflicted with products-control.js) ──
+function getUserStatusBadge(status) {
     if (status === 'active') {
         return `<span class="badge" style="background-color: #4c956c; color: #fff;">Active</span>`;
     } else if (status === 'suspended') {
@@ -237,34 +235,26 @@ function getStatusBadge(status) {
     return `<span class="badge" style="background-color: #aaa; color: #fff;">${status}</span>`;
 }
 
-// ─── Action Buttons Helper ────────────────────────────────────
-function getActionButtons(userId, userName, status) {
+// ─── RENAMED: getUserActionButtons (was getActionButtons — conflicted with products-control.js) ──
+function getUserActionButtons(userId, userName, status) {
     const suspendBtn = status !== 'suspended'
-        ? `<button class="btn btn-sm me-1"
-                style="background-color: #ffc107; color: #333; border: none;"
-                onmouseover="this.style.backgroundColor='#e0a800'"
-                onmouseout="this.style.backgroundColor='#ffc107'"
+        ? `<button class="btn btn-sm btn-outline-warning me-1"
                 onclick="handleUserAction(${userId}, '${userName}', 'suspend')">
                 <i class="fas fa-ban me-1"></i>Suspend
            </button>`
         : '';
 
     const activateBtn = status === 'suspended'
-        ? `<button class="btn btn-sm me-1"
-                style="background-color: #4c956c; color: #fff; border: none;"
-                onmouseover="this.style.backgroundColor='#2c6e49'"
-                onmouseout="this.style.backgroundColor='#4c956c'"
+        ? `<button class="btn btn-sm btn-outline-success me-1"
                 onclick="handleUserAction(${userId}, '${userName}', 'activate')">
                 <i class="fas fa-check me-1"></i>Activate
            </button>`
         : '';
 
-    const deleteBtn = `<button class="btn btn-sm"
-            style="background-color: #fff; color: #c0392b; border: 1.5px solid #c0392b;"
-            onmouseover="this.style.backgroundColor='#c0392b'; this.style.color='#fff'"
-            onmouseout="this.style.backgroundColor='#fff'; this.style.color='#c0392b'"
-            onclick="confirmDeleteUser(${userId}, '${userName}')">
-            <i class="fas fa-trash me-1"></i>Delete
+    const deleteBtn = `<button class="btn btn-sm btn-danger"
+            onclick="confirmDeleteUser(${userId}, '${userName}')"
+            title="Delete user">
+            <i class="fas fa-trash"></i>
        </button>`;
 
     return suspendBtn + activateBtn + deleteBtn;
@@ -272,27 +262,24 @@ function getActionButtons(userId, userName, status) {
 
 // ─── Show Delete Confirmation Modal ──────────────────────────
 function confirmDeleteUser(userId, userName) {
-    // Reset modal state
-    document.getElementById('delete-user-name').textContent  = userName;
-    document.getElementById('admin-password-input').value    = '';
-    document.getElementById('admin-password-input').type     = 'password';
+    document.getElementById('delete-user-name').textContent   = userName;
+    document.getElementById('admin-password-input').value     = '';
+    document.getElementById('admin-password-input').type      = 'password';
     document.getElementById('toggle-password-icon').className = 'fas fa-eye';
-    document.getElementById('confirm-delete-btn').disabled   = true;
-    document.getElementById('password-error').style.display  = 'none';
+    document.getElementById('confirm-delete-btn').disabled    = true;
+    document.getElementById('password-error').style.display   = 'none';
 
-    // Set up confirm button click
     const confirmBtn = document.getElementById('confirm-delete-btn');
     confirmBtn.onclick = () => executeDelete(userId, userName);
 
-    const modal = new bootstrap.Modal(document.getElementById('deleteConfirmModal'));
-    modal.show();
+    new bootstrap.Modal(document.getElementById('deleteConfirmModal')).show();
 }
 
 // ─── Execute Delete with Password Verification ────────────────
 async function executeDelete(userId, userName) {
-    const password    = document.getElementById('admin-password-input').value.trim();
-    const errorDiv    = document.getElementById('password-error');
-    const confirmBtn  = document.getElementById('confirm-delete-btn');
+    const password   = document.getElementById('admin-password-input').value.trim();
+    const errorDiv   = document.getElementById('password-error');
+    const confirmBtn = document.getElementById('confirm-delete-btn');
 
     if (!password) return;
 
@@ -302,24 +289,18 @@ async function executeDelete(userId, userName) {
 
     try {
         const response = await fetch('../../backend/users/admin/users-control.php', {
-            method: 'POST',
+            method:  'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ user_id: userId, action: 'delete', password })
+            body:    JSON.stringify({ user_id: userId, action: 'delete', password })
         });
 
         if (!response.ok) throw new Error(`Network error: ${response.status}`);
 
         const result = await response.json();
-        console.log('Server response:', result);
 
         if (result.success) {
-            // Close modal
             bootstrap.Modal.getInstance(document.getElementById('deleteConfirmModal')).hide();
-
-            // Remove row
             document.getElementById(`user-row-${userId}`)?.remove();
-
-            // Update count
             const remaining = document.querySelectorAll('#users-tbody tr').length;
             const badge = document.getElementById('user-count-badge');
             if (badge) badge.textContent = `${remaining} Users`;
@@ -358,20 +339,19 @@ async function handleUserAction(userId, userName, action) {
 
     try {
         const response = await fetch('../../backend/users/admin/users-control.php', {
-            method: 'POST',
+            method:  'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ user_id: userId, action })
+            body:    JSON.stringify({ user_id: userId, action })
         });
 
         if (!response.ok) throw new Error(`Network error: ${response.status}`);
 
         const result = await response.json();
-        console.log('Server response:', result);
 
         if (result.success) {
             const newStatus = action === 'suspend' ? 'suspended' : 'active';
-            document.getElementById(`status-badge-${userId}`).innerHTML = getStatusBadge(newStatus);
-            document.getElementById(`actions-${userId}`).innerHTML      = getActionButtons(userId, userName, newStatus);
+            document.getElementById(`status-badge-${userId}`).innerHTML = getUserStatusBadge(newStatus);
+            document.getElementById(`actions-${userId}`).innerHTML      = getUserActionButtons(userId, userName, newStatus);
 
         } else {
             alert(result.message || `Failed to ${action} user.`);

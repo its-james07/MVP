@@ -2,15 +2,13 @@
 header('Content-Type: application/json');
 require_once '../../auth/config/db.php';
 
-// ── GET — Fetch products (default pending, optional all) ─────────────────────────────
+// ── GET — fetch products ──────────────────────────────────────────────────────
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $filter = trim($_GET['filter'] ?? 'pending');
-    $statusWhere = "p.status = 'pending'";
-    if ($filter === 'all') {
-        $statusWhere = "p.status != 'pending'";
-    }
 
-    $result = $conn->query(" 
+    $filter      = trim($_GET['filter'] ?? 'pending');
+    $statusWhere = $filter === 'all' ? "p.status != 'pending'" : "p.status = 'pending'";
+
+    $result = $conn->query("
         SELECT
             p.product_id,
             p.name,
@@ -37,21 +35,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         exit;
     }
 
-    echo json_encode([
-        'success' => true,
-        'data'    => $result->fetch_all(MYSQLI_ASSOC)
-    ]);
+    echo json_encode(['success' => true, 'data' => $result->fetch_all(MYSQLI_ASSOC)]);
     exit;
 }
 
-// ── POST — Approve / Reject / Delete ─────────────────────────────────────────
+// ── POST — approve / reject / delete ─────────────────────────────────────────
+// Removed: suspend / activate actions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $body       = json_decode(file_get_contents('php://input'), true);
     $product_id = isset($body['product_id']) ? (int) $body['product_id'] : 0;
     $action     = $body['action'] ?? '';
 
-    if (!$product_id || !in_array($action, ['approve', 'reject', 'delete', 'suspend', 'activate'])) {
+    // Only allow the three remaining actions
+    if (!$product_id || !in_array($action, ['approve', 'reject', 'delete'])) {
         echo json_encode(['success' => false, 'message' => 'Invalid request.']);
         exit;
     }
@@ -60,32 +57,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $conn->prepare("DELETE FROM products WHERE product_id = ?");
         $stmt->bind_param("i", $product_id);
 
-    } else {
-        if ($action === 'approve') {
-            $newStatus = 'approved';
-            $stmt = $conn->prepare("UPDATE products SET status = ? WHERE product_id = ?");
-            $stmt->bind_param("si", $newStatus, $product_id);
-        } elseif ($action === 'reject') {
-            $newStatus = 'rejected';
-            $reason = trim($body['reason'] ?? '');
-            if ($reason !== '') {
-                $stmt = $conn->prepare("UPDATE products SET status = ?, rejected_reason = ? WHERE product_id = ?");
-                $stmt->bind_param("ssi", $newStatus, $reason, $product_id);
-            } else {
-                $stmt = $conn->prepare("UPDATE products SET status = ? WHERE product_id = ?");
-                $stmt->bind_param("si", $newStatus, $product_id);
-            }
-        } elseif ($action === 'suspend') {
-            $newStatus = 'suspended';
-            $stmt = $conn->prepare("UPDATE products SET status = ? WHERE product_id = ?");
-            $stmt->bind_param("si", $newStatus, $product_id);
-        } elseif ($action === 'activate') {
-            $newStatus = 'approved';
-            $stmt = $conn->prepare("UPDATE products SET status = ? WHERE product_id = ?");
-            $stmt->bind_param("si", $newStatus, $product_id);
+    } elseif ($action === 'approve') {
+        $newStatus = 'approved';
+        $stmt = $conn->prepare("UPDATE products SET status = ? WHERE product_id = ?");
+        $stmt->bind_param("si", $newStatus, $product_id);
+
+    } elseif ($action === 'reject') {
+        $newStatus = 'rejected';
+        $reason    = trim($body['reason'] ?? '');
+
+        if ($reason !== '') {
+            $stmt = $conn->prepare("UPDATE products SET status = ?, rejected_reason = ? WHERE product_id = ?");
+            $stmt->bind_param("ssi", $newStatus, $reason, $product_id);
         } else {
-            echo json_encode(['success' => false, 'message' => 'Invalid action.']);
-            exit;
+            $stmt = $conn->prepare("UPDATE products SET status = ? WHERE product_id = ?");
+            $stmt->bind_param("si", $newStatus, $product_id);
         }
     }
 
@@ -100,3 +86,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 echo json_encode(['success' => false, 'message' => 'Method not allowed.']);
+?>

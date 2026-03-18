@@ -44,6 +44,129 @@ function toggleField(fieldId, iconWrapper) {
     }
 }
 
+// ── Real-time shop name validation ──────────────────────────────────────────
+const shopNameInput  = document.getElementById("shop_name");
+const ownerNameInput = document.getElementById("owner_name");
+
+if (shopNameInput) {
+    shopNameInput.addEventListener('input', () => {
+        const storeNameError = document.getElementById("storeNameError");
+        if (!storeNameError) return;
+
+        const before  = shopNameInput.value;
+        const cleaned = before.replace(/[^a-zA-Z\s]/g, '');
+
+        if (cleaned !== before) {
+            shopNameInput.value        = cleaned;
+            storeNameError.textContent = "Numbers and symbols are not allowed.";
+            show(storeNameError);
+            return;
+        }
+
+        hide(storeNameError);
+    });
+
+    shopNameInput.addEventListener('blur', () => {
+        const storeNameError = document.getElementById("storeNameError");
+        if (!storeNameError) return;
+
+        const v = shopNameInput.value.trim();
+
+        if (v.length === 0) {
+            hide(storeNameError);
+        } else if (v.length < 2) {
+            storeNameError.textContent = "Store name is too short.";
+            show(storeNameError);
+        } else {
+            hide(storeNameError);
+        }
+    });
+
+    shopNameInput.addEventListener('focus', () => hide(document.getElementById("storeNameError")));
+}
+
+// ── Real-time owner name validation ──────────────────────────────────────────
+if (ownerNameInput) {
+    ownerNameInput.addEventListener('input', () => {
+        const ownerNameError = document.getElementById("ownerNameError");
+        if (!ownerNameError) return;
+
+        const before  = ownerNameInput.value;
+        const cleaned = before.replace(/[^a-zA-Z\s'\-]/g, '');
+
+        if (cleaned !== before) {
+            ownerNameInput.value         = cleaned;
+            ownerNameError.textContent   = "Numbers and symbols are not allowed.";
+            show(ownerNameError);
+            return;
+        }
+
+        hide(ownerNameError);
+    });
+
+    ownerNameInput.addEventListener('blur', () => {
+        const ownerNameError = document.getElementById("ownerNameError");
+        if (!ownerNameError) return;
+
+        const v = ownerNameInput.value.trim();
+
+        if (v.length === 0) {
+            hide(ownerNameError);
+        } else if (!/^[a-zA-Z]/.test(v)) {
+            ownerNameError.textContent = "Name must start with a letter.";
+            show(ownerNameError);
+        } else if (v.length < 2) {
+            ownerNameError.textContent = "Name is too short.";
+            show(ownerNameError);
+        } else {
+            hide(ownerNameError);
+        }
+    });
+
+    ownerNameInput.addEventListener('focus', () => hide(document.getElementById("ownerNameError")));
+}
+
+// ── Real-time phone validation ──────────────────────────────────────────
+const phoneInput = document.getElementById("phone");
+if (phoneInput) {
+
+    phoneInput.addEventListener('input', () => {
+        const phoneError = document.getElementById("phoneError");
+        if (!phoneError) return;
+
+        const before  = phoneInput.value;
+        const cleaned = before.replace(/[^0-9]/g, '');
+
+        if (cleaned !== before) {
+            phoneInput.value       = cleaned;
+            phoneError.textContent = "Only numbers are allowed.";
+            show(phoneError);
+            return;
+        }
+
+        hide(phoneError);
+    });
+
+    phoneInput.addEventListener('blur', () => {
+        const phoneError = document.getElementById("phoneError");
+        if (!phoneError) return;
+
+        const v = phoneInput.value.trim();
+
+        if (v.length === 0) {
+            hide(phoneError);
+        } else if (v.length !== 10) {
+            phoneError.textContent = "Phone number must be 10 digits.";
+            show(phoneError);
+        } else {
+            hide(phoneError);
+        }
+    });
+
+    phoneInput.addEventListener('focus', () => hide(document.getElementById("phoneError")));
+}
+// ──────────────────────────────────────────────────────────────────────
+
 form.addEventListener('submit', (e) => {
     e.preventDefault();
     if (!secondStepValidation()) {
@@ -188,7 +311,6 @@ function showToast(message, type = 'success', duration = 3000) {
 
 function clearForm() {
     document.getElementById('regForm').reset();
-    // Reset eye icons back to eye-outline after form clear
     document.querySelectorAll('.toggle-icon ion-icon').forEach(icon => {
         icon.name = 'eye-outline';
     });

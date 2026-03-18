@@ -29,6 +29,7 @@
             <div class="field">
               <label for="fname">Full Name</label>
               <input type="text" id="fname" name="fname" placeholder="Enter your name" required/>
+                <b><span id="nameError" class="errorInfo"></span></b>
             </div>
 
             <div class="field">
