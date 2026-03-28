@@ -1,11 +1,14 @@
 <?php
   session_start();
+  header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+  header("Pragma: no-cache");
+
   // if(!isset($_SESSION['user_id'])){
-  //   header('Location: ../index.php');
+  //   header('Location: /mvp/public/index.php');
   //   exit();
   // }
   // if($_SESSION['role'] != 'admin'){
-  //   header('Location: unauthorized.html');
+  //   header('Location: unauthorized.php');
   //   exit();
   // }
 ?>
@@ -20,6 +23,7 @@
   <link rel="stylesheet" href="../assets/css/navbar.css" />
   <link rel="stylesheet" href="../assets/css/mediaqueries.css" />
   <link rel="stylesheet" href="../assets/css/panel.css" />
+  <link rel="stylesheet" href="../assets/css/toast.css" />
   <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css" />
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
@@ -32,7 +36,7 @@
   <header>
     <nav class="header-main">
       <div class="logo-container">
-        <a href="index.html"><strong>Admin Panel</strong></a>
+        <a href="index.html"><strong>Admin Dashboard</strong></a>
       </div>
 
       <div class="dropdown">
@@ -229,7 +233,7 @@
 
       <!-- User Control -->
       <button class="btn btn-info" id="ftch-orders">
-        Order Management
+        Orders
       </button>
 
       <button class="btn btn-warning" id="ftch-users">
@@ -277,7 +281,7 @@
       </div>
     </div>
 
-<!-- <div class="toast" id="toast"></div> -->
+<div class="toast" id="toast"></div>
 
   </main>
   <!-- Scripts -->

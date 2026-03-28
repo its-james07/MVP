@@ -6,23 +6,22 @@ require '../../auth/config/sanitizedata.php';
 $transactionStarted = false;
 
 try {
-    // if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    //     throw new Exception("Invalid Request");
-    // }
-
     $result = validateSeller($_POST, $conn);
 
-    if (isset($result[0])) {
-        echo json_encode(["status" => "error", "message" => $result]);
+    if (!$result['success']) {
+        echo json_encode([
+            "status"  => "error",
+            "message" => $result['errors'][0]
+        ]);
         exit;
     }
 
-    $shopName       = $result['shopName'];
-    $ownerName      = $result['ownerName'];
-    $shopAddress    = $result['shopAddress'];
-    $city           = $result['city'];
-    $sellerEmail    = $result['sellerEmail'];
-    $contact        = $result['contact'];
+    $shopName        = $result['shopName'];
+    $ownerName       = $result['ownerName'];
+    $shopAddress     = $result['shopAddress'];
+    $city            = $result['city'];
+    $sellerEmail     = $result['sellerEmail'];
+    $contact         = $result['contact'];
     $hashed_password = $result['password'];
 
     $role   = "seller";
@@ -62,9 +61,7 @@ try {
     ]);
 
 } catch (Throwable $e) {
-    if ($transactionStarted) {
-        $conn->rollback();
-    }
+    if ($transactionStarted) $conn->rollback();
     error_log($e->getMessage());
     echo json_encode([
         "status"  => "error",
@@ -76,75 +73,99 @@ try {
 function validateSeller($data, $conn) {
     $errors = [];
 
-    $shopName    = sanitizeData($data['shop_name']   ?? '');
-    $ownerName   = sanitizeData($data['owner_name']  ?? '');
+    $shopName    = sanitizeData($data['shop_name']    ?? '');
+    $ownerName   = sanitizeData($data['owner_name']   ?? '');
     $shopAddress = sanitizeData($data['shop_address'] ?? '');
-    $city        = sanitizeData($data['city']        ?? '');
-    $sellerEmail = sanitizeData($data['email']       ?? '');
-    $contact     = sanitizeData($data['phone']       ?? '');
-    $rawPassword = $data['password']                 ?? '';
+    $city        = sanitizeData($data['city']         ?? '');
+    $sellerEmail = sanitizeData($data['email']        ?? '');
+    $contact     = sanitizeData($data['phone']        ?? '');
+    $rawPassword = $data['password']                  ?? '';
 
     $textRegex = "/^[a-zA-Z ]+$/";
+    $nameRegex = "/^[a-zA-Z][a-zA-Z\s'\-]{1,49}$/";
 
+    // ── Shop name ──
     if (empty($shopName)) {
-        $errors[] = "Provide shop name";
+        $errors[] = "Shop name is required.";
     } elseif (!preg_match($textRegex, $shopName)) {
-        $errors[] = "Use letters and spaces for shop name";
+        $errors[] = "Only letters and spaces allowed in shop name.";
+    } elseif (strlen($shopName) < 2) {
+        $errors[] = "Shop name is too short.";
     }
 
+    // ── Owner name ──
     if (empty($ownerName)) {
-        $errors[] = "Provide owner name";
-    } elseif (!preg_match($textRegex, $ownerName)) {
-        $errors[] = "Use letters and spaces for owner name";
+        $errors[] = "Owner name is required.";
+    } elseif (!preg_match($nameRegex, $ownerName)) {
+        $errors[] = "Enter a valid owner full name.";
     }
 
+    // ── Address ──
     if (empty($shopAddress)) {
-        $errors[] = "Shop address is required";
+        $errors[] = "Business address is required.";
+    } elseif (strlen($shopAddress) < 5) {
+        $errors[] = "Please enter a complete address.";
     }
 
+    // ── City ──
+    $allowedCities = ['kathmandu', 'bhaktapur', 'lalitpur'];
     if (empty($city)) {
-        $errors[] = "City is required";
+        $errors[] = "City is required.";
+    } elseif (!in_array(strtolower($city), $allowedCities)) {
+        $errors[] = "Please select a valid city.";
     }
 
+    // ── Phone ──
     if (empty($contact)) {
-        $errors[] = "Contact number is required";
+        $errors[] = "Phone number is required.";
     } elseif (!preg_match('/^(97|98)\d{8}$/', $contact)) {
-        $errors[] = "Use a valid Nepali phone number (starts with 97 or 98)";
+        $errors[] = "Use a valid Nepali phone number (starts with 97 or 98, 10 digits).";
     }
 
+    // ── Email ──
     if (empty($sellerEmail)) {
-        $errors[] = "Email is required";
+        $errors[] = "Email is required.";
     } elseif (!filter_var($sellerEmail, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = "Use a valid email format";
+        $errors[] = "Please enter a valid email address.";
     }
 
-    if (strlen($rawPassword) < 8) {
-        $errors[] = "Password must be at least 8 characters";
+    // ── Password ──
+    if (empty($rawPassword)) {
+        $errors[] = "Password is required.";
+    } elseif (strlen($rawPassword) < 8) {
+        $errors[] = "Password must be at least 8 characters.";
+    } elseif (strlen($rawPassword) > 72) {
+        $errors[] = "Password must not exceed 72 characters.";
+    } elseif (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,72}$/', $rawPassword)) {
+        $errors[] = "Password must include uppercase, lowercase, number, and a symbol (@$!%*?&).";
     }
 
+    // ── Duplicate email check ──
     if (empty($errors)) {
         $check = $conn->prepare("SELECT user_id FROM users WHERE email = ? LIMIT 1");
         if (!$check) throw new Exception("Prepare failed: " . $conn->error);
         $check->bind_param("s", $sellerEmail);
-        if (!$check->execute()) throw new Exception("Execution failed: " . $check->error);
+        if (!$check->execute()) throw new Exception("Execute failed: " . $check->error);
         $check->store_result();
         if ($check->num_rows > 0) {
-            $errors[] = "Email already registered";
+            $errors[] = "This email is already registered.";
         }
         $check->close();
     }
 
     if (!empty($errors)) {
-        return $errors;
+        return ['success' => false, 'errors' => $errors];
     }
 
     return [
+        'success'     => true,
         'shopName'    => $shopName,
         'ownerName'   => $ownerName,
         'shopAddress' => $shopAddress,
         'city'        => $city,
         'sellerEmail' => $sellerEmail,
         'contact'     => $contact,
-        'password'    => password_hash($rawPassword, PASSWORD_DEFAULT)
+        'password'    => password_hash($rawPassword, PASSWORD_DEFAULT),
     ];
 }
+?>

@@ -259,8 +259,13 @@ input, select, textarea {
 .formError {
     display: none;
     color: #c0392b;
-    font-size: 15px;
-    margin-top: 4px;
+    font-size: 14px;
+    /* margin-top: 4px; */
+    float: right;
+}
+
+li{
+    list-style-type: none;
 }
 
 @media (max-width: 900px) {
@@ -283,3 +288,4 @@ input, select, textarea {
         order: 1;
     }
 }
+

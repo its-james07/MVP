@@ -1,5 +1,17 @@
 <?php
 session_start();
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Pragma: no-cache");
+
+if(isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
+  if($_SESSION['role'] === 'seller') {
+    header("Location: /mvp/public/pages/seller-panel.php");
+    exit();
+  } elseif($_SESSION['role'] === 'admin') {
+    header("Location: /mvp/public/pages/admin-panel.php");
+    exit();
+  }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

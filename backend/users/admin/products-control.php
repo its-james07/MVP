@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $product_id = isset($body['product_id']) ? (int) $body['product_id'] : 0;
     $action     = $body['action'] ?? '';
 
-    // Only allow the three remaining actions
+    
     if (!$product_id || !in_array($action, ['approve', 'reject', 'delete'])) {
         echo json_encode(['success' => false, 'message' => 'Invalid request.']);
         exit;

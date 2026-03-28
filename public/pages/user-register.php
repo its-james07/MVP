@@ -28,21 +28,21 @@
 
             <div class="field">
               <label for="fname">Full Name</label>
+              <span id="nameError" class="errorInfo"></span>
               <input type="text" id="fname" name="fname" placeholder="Enter your name" required/>
-                <b><span id="nameError" class="errorInfo"></span></b>
             </div>
 
             <div class="field">
               <label for="reg-email">Email
-                <b><span id="emailError" class="errorInfo">Invalid Email</span></b>
+                <span id="emailError" class="errorInfo">Invalid Email</span>
               </label>
               <input type="email" id="reg-email" name="reg-email" placeholder="Your email address" required/>
             </div>
 
             <div class="field">
               <label for="new-pass">Password
-                <b><span id="invalid-pass" class="errorInfo">Use strong password</span></b>
-                <b><span id="pass-length" class="errorInfo">At least 8 letters</span></b>
+                <span id="invalid-pass" class="errorInfo">Use strong password</span>
+                <span id="pass-length" class="errorInfo">At least 8 letters</span>
               </label>
               <div class="input-wrapper">
                 <input type="password" name="new-pass" id="new-pass" placeholder="New password" required/>
@@ -50,11 +50,24 @@
                   <ion-icon name="eye-outline"></ion-icon>
                 </span>
               </div>
+
+              <!-- ── Password strength indicator ── -->
+              <div class="pass-strength-wrapper">
+                <div class="pass-strength-track">
+                  <div id="pass-strength-bar"></div>
+                </div>
+                <div class="pass-strength-meta">
+                  <span id="pass-strength-text"></span>
+                </div>
+                <ul id="pass-suggestions"></ul>
+              </div>
+              <!-- ─────────────────────────────── -->
+
             </div>
 
             <div class="field">
               <label for="confirm-password">Confirm Password
-                <span id="not-confirm" class="errorInfo"><b>Passwords do not match</b></span>
+                <span id="not-confirm" class="errorInfo"></span>
               </label>
               <div class="input-wrapper">
                 <input type="password" id="confirm-password" placeholder="Re-enter your password" required/>

@@ -9,7 +9,11 @@ if (!isset($_SESSION['seller_id'])) {
 }
 
 $seller_id = (int) $_SESSION['seller_id'];
-$action = trim($_REQUEST['action'] ?? '');
+
+// ── Read JSON body once, then resolve action from query string OR JSON body ──
+$raw_input  = file_get_contents('php://input');
+$json_input = json_decode($raw_input, true) ?? [];
+$action     = trim($_REQUEST['action'] ?? $json_input['action'] ?? '');
 
 switch ($action) {
 
@@ -68,7 +72,7 @@ switch ($action) {
 
         if ((int)$check_row['cnt'] === 0) { echo json_encode(['success' => false, 'message' => 'Order not found or access denied.']); exit; }
 
-        $stmt_order = mysqli_prepare($conn, "SELECT order_id, order_number, placed_at, order_status, payment_status, payment_method, shipping_name, shipping_phone, shipping_address, shipping_city, shipping_state, shipping_country, notes FROM orders WHERE order_id = ?");
+        $stmt_order = mysqli_prepare($conn, "SELECT order_id, order_number, placed_at, order_status, payment_status, payment_method, shipping_name, shipping_phone, shipping_address, shipping_city, shipping_state, shipping_country FROM orders WHERE order_id = ?");
         mysqli_stmt_bind_param($stmt_order, 'i', $order_id);
         mysqli_stmt_execute($stmt_order);
         $order = mysqli_fetch_assoc(mysqli_stmt_get_result($stmt_order));
@@ -87,10 +91,10 @@ switch ($action) {
         break;
 
     case 'update_status':
-        $raw = json_decode(file_get_contents('php://input'), true);
-        $order_item_id = (int) ($raw['order_item_id'] ?? 0);
-        $new_status = trim($raw['new_status'] ?? '');
-        $allowed = ['pending','processing','shipped','delivered','cancelled'];
+        // Reuse already-decoded $json_input — no need to re-read php://input
+        $order_item_id = (int) ($json_input['order_item_id'] ?? 0);
+        $new_status    = trim($json_input['new_status'] ?? '');
+        $allowed       = ['pending','processing','shipped','delivered','cancelled'];
 
         if ($order_item_id <= 0 || !in_array(strtolower($new_status), $allowed)) {
             echo json_encode(['success' => false, 'message' => 'Invalid input.']); exit;
@@ -108,7 +112,7 @@ switch ($action) {
         $counts = mysqli_fetch_assoc(mysqli_stmt_get_result($stmt_check));
         mysqli_stmt_close($stmt_check);
 
-        $total = (int)$counts['total'];
+        $total     = (int)$counts['total'];
         $delivered = (int)$counts['delivered'];
         $cancelled = (int)$counts['cancelled'];
 
@@ -116,7 +120,7 @@ switch ($action) {
         if ($delivered === $total) $new_order_status = 'Delivered';
         elseif ($cancelled === $total) $new_order_status = 'Cancelled';
         elseif ($delivered + $cancelled === $total && $delivered > 0) $new_order_status = 'Partially Delivered';
-        elseif (strtolower($new_status) === 'shipped') $new_order_status = 'Shipped';
+        elseif (strtolower($new_status) === 'shipped')    $new_order_status = 'Shipped';
         elseif (strtolower($new_status) === 'processing') $new_order_status = 'Processing';
 
         if ($new_order_status) {

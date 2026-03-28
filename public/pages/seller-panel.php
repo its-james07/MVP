@@ -1,5 +1,11 @@
 <?php
 session_start();
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Pragma: no-cache");
+if(!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'seller') {
+  header("Location: /mvp/public/index.php");
+  exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,9 +20,7 @@ session_start();
     <link rel="stylesheet" href="../assets/css/panel.css">
     <link rel="stylesheet" href="../assets/css/seller-panel.css">
     <link rel="stylesheet" href="../assets/css/view-products.css">
-
     <link rel="stylesheet" href="../assets/css/seller/view-products.css">
-
     <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
@@ -30,7 +34,7 @@ session_start();
 <header>
     <nav class="header-main">
         <div class="logo-container">
-            <a href="index.html"><strong>Seller Panel</strong></a>
+            <a href="index.html"><strong>Seller Dashboard</strong></a>
         </div>
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
@@ -141,6 +145,7 @@ session_start();
     <?php include '../components/product-detail-modal.php'; ?>
     <?php include '../components/product-edit-modal.php'; ?>
 
+    <!-- ── Add Product Modal ── -->
     <div class="modal fade" id="addProductModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
             <div class="modal-content">
@@ -153,20 +158,36 @@ session_start();
                     <form id="productUploadForm" enctype="multipart/form-data" novalidate>
                         <input type="hidden" name="seller_id" value="<?= htmlspecialchars($_SESSION['seller_id'] ?? '') ?>">
 
+                        <!-- Product name -->
                         <div class="mb-3">
-                            <label class="form-label">Product Name <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="name" id="product_name" minlength="2" maxlength="255" placeholder="e.g. Premium Dog Harness" required>
+                            <label class="form-label">
+                                Product Name <span class="text-danger">*</span>
+                                <span class="form-error" id="name-err"></span>
+                            </label>
+                            <input type="text" class="form-control" name="name" id="product_name"
+                                   minlength="2" maxlength="255"
+                                   placeholder="e.g. Premium Dog Harness" required>
                         </div>
 
+                        <!-- Description -->
                         <div class="mb-3">
-                            <label class="form-label">Description</label>
-                            <textarea class="form-control" name="description" id="product_description" rows="3" maxlength="1000" placeholder="Briefly describe the product..."></textarea>
+                            <label class="form-label">
+                                Description
+                                <span class="form-error" id="desc-err"></span>
+                            </label>
+                            <textarea class="form-control" name="description" id="product_description"
+                                      rows="3" maxlength="1000"
+                                      placeholder="Briefly describe the product..."></textarea>
                         </div>
 
+                        <!-- Category & Type -->
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Category <span class="text-danger">*</span></label>
-                                <select class="form-select" name="category_id" id="product_category" required>
+                                <label class="form-label">
+                                    Category <span class="text-danger">*</span>
+                                    <span class="form-error" id="category-err"></span>
+                                </label>
+                                <select class="form-select" name="category" id="product_category" required>
                                     <option value="">Select Category</option>
                                     <option value="1">Dog</option>
                                     <option value="2">Cat</option>
@@ -175,7 +196,10 @@ session_start();
                                 </select>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Product Type <span class="text-danger">*</span></label>
+                                <label class="form-label">
+                                    Product Type <span class="text-danger">*</span>
+                                    <span class="form-error" id="type-err"></span>
+                                </label>
                                 <select class="form-select" name="type_id" id="product_type" required>
                                     <option value="">Select Type</option>
                                     <option value="1">Food</option>
@@ -187,25 +211,46 @@ session_start();
                             </div>
                         </div>
 
+                        <!-- Price & Weight -->
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Price (Rs) <span class="text-danger">*</span></label>
-                                <input type="number" step="0.01" min="0.01" class="form-control" name="price" id="product_price" placeholder="0.00" required>
+                                <label class="form-label">
+                                    Price (Rs) <span class="text-danger">*</span>
+                                    <span class="form-error" id="price-err"></span>
+                                </label>
+                                <input type="number" step="0.01" min="0.01" class="form-control"
+                                       name="price" id="product_price"
+                                       placeholder="0.00" required>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Weight (kg) <small class="text-muted">(optional)</small></label>
-                                <input type="number" step="0.01" min="0" class="form-control" name="weight" id="product_weight" placeholder="0.00">
+                                <label class="form-label">
+                                    Weight (kg) <small class="text-muted">(optional)</small>
+                                </label>
+                                <input type="number" step="0.01" min="0" class="form-control"
+                                       name="weight" id="product_weight"
+                                       placeholder="0.00">
                             </div>
                         </div>
 
+                        <!-- Stock -->
                         <div class="mb-3">
-                            <label class="form-label">Stock Quantity <span class="text-danger">*</span></label>
-                            <input type="number" min="0" class="form-control" name="stock" id="product_stock" placeholder="0" required>
+                            <label class="form-label">
+                                Stock Quantity <span class="text-danger">*</span>
+                                <span class="form-error" id="stock-err"></span>
+                            </label>
+                            <input type="number" min="0" class="form-control"
+                                   name="stock" id="product_stock"
+                                   placeholder="0" required>
                         </div>
 
+                        <!-- Image -->
                         <div class="mb-3">
-                            <label class="form-label">Product Image <span class="text-danger">*</span></label>
-                            <input type="file" class="form-control" name="image" id="product_image" accept="image/jpeg, image/png, image/webp" required>
+                            <label class="form-label">
+                                Product Image <span class="text-danger">*</span>
+                                <span class="form-error" id="img-err"></span>
+                            </label>
+                            <input type="file" class="form-control" name="image" id="product_image"
+                                   accept="image/jpeg, image/png, image/webp" required>
                             <small class="text-muted">JPG, PNG or WEBP — max 2MB</small>
                         </div>
 
@@ -222,6 +267,7 @@ session_start();
         </div>
     </div>
 
+    <!-- ── Order Detail Modal ── -->
     <div class="modal fade" id="orderDetailModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
             <div class="modal-content">
@@ -269,8 +315,14 @@ session_start();
         catSelect.addEventListener('change', () => { skuInput.value = generateSKU(); });
     });
 
+    // Reset form and all errors when modal closes
     addProductModal.addEventListener('hidden.bs.modal', () => {
         document.getElementById('productUploadForm').reset();
+        ['name-err', 'desc-err', 'category-err', 'type-err',
+         'price-err', 'stock-err', 'img-err'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) { el.textContent = ''; el.style.display = 'none'; }
+        });
         const skuInput = document.getElementById('product_sku');
         if (skuInput) skuInput.value = '';
     });

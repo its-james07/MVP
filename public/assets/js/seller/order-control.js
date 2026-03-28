@@ -41,8 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
 // 2. LOAD ORDERS LIST
 // ─────────────────────────────────────────────────────────────────────────────
 function loadOrders(status = 'all') {
-    // const box = document.querySelector('.content-box');
-    // box.innerHTML = renderSkeleton();
     document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
         bootstrap.Dropdown.getOrCreateInstance(menu.previousElementSibling).hide();
     });
@@ -50,7 +48,9 @@ function loadOrders(status = 'all') {
     const box = document.getElementById('content-box');
     box.innerHTML = renderSkeleton();
 
-    fetch(`${ORDER_API}?action=fetch_orders&status=${encodeURIComponent(status)}`)
+    fetch(`${ORDER_API}?action=fetch_orders&status=${encodeURIComponent(status)}`, {
+        credentials: 'same-origin'
+    })
         .then(r => {
             if (!r.ok) throw new Error(`HTTP ${r.status} ${r.statusText}`);
             return r.text();
@@ -161,7 +161,9 @@ function loadOrderDetail(orderId) {
     const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
     modal.show();
 
-    fetch(`${ORDER_API}?action=fetch_detail&order_id=${encodeURIComponent(orderId)}`)
+    fetch(`${ORDER_API}?action=fetch_detail&order_id=${encodeURIComponent(orderId)}`, {
+        credentials: 'same-origin'
+    })
         .then(r => {
             if (!r.ok) throw new Error(`HTTP ${r.status} ${r.statusText}`);
             return r.text();
@@ -228,9 +230,9 @@ function renderDetailBody(order, items) {
     }).join('');
 
     // Totals
-    const sellerTotal    = items.reduce((s, i) => s + parseFloat(i.line_total),           0);
-    const sellerPayout   = items.reduce((s, i) => s + parseFloat(i.seller_payout_amount), 0);
-    const sellerCommission = items.reduce((s, i) => s + parseFloat(i.commission_amount),  0);
+    const sellerTotal      = items.reduce((s, i) => s + parseFloat(i.line_total),           0);
+    const sellerPayout     = items.reduce((s, i) => s + parseFloat(i.seller_payout_amount), 0);
+    const sellerCommission = items.reduce((s, i) => s + parseFloat(i.commission_amount),    0);
 
     return `
         <!-- Order meta -->
@@ -327,13 +329,18 @@ function handleStatusUpdate(btn) {
     }
 
     // Optimistic UI — disable while in flight
-    btn.disabled    = true;
-    btn.innerHTML   = '<span class="spinner-border spinner-border-sm"></span>';
+    btn.disabled  = true;
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
 
     fetch(ORDER_API, {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ action: 'update_status', order_item_id: parseInt(itemId), new_status: newStatus })
+        method:      'POST',
+        credentials: 'same-origin',
+        headers:     { 'Content-Type': 'application/json' },
+        body:        JSON.stringify({
+            action:        'update_status',
+            order_item_id: parseInt(itemId),
+            new_status:    newStatus
+        })
     })
     .then(r => {
         if (!r.ok) throw new Error(`HTTP ${r.status} ${r.statusText}`);
@@ -348,19 +355,13 @@ function handleStatusUpdate(btn) {
 
         showToast(data.message, 'success');
 
-        // Update the badge + remove the update controls
+        // Replace the entire cell with just the new badge (no more controls)
         const cfg = STATUS_CONFIG[newStatus];
         const td  = btn.closest('td');
         td.innerHTML = `<span class="status-badge ${cfg.badge}">${cfg.label}</span>`;
 
-        // If no more transitions available, hide controls entirely
-        if (cfg.next.length === 0) {
-            wrap?.remove();
-        }
-
         // Refresh dashboard counts
         fetchDashboardCounts();
-
     })
     .catch(err => {
         console.error('[handleStatusUpdate]', err);
@@ -375,14 +376,16 @@ function handleStatusUpdate(btn) {
 // 6. FETCH DASHBOARD COUNTS
 // ─────────────────────────────────────────────────────────────────────────────
 function fetchDashboardCounts() {
-    fetch(`${ORDER_API}?action=fetch_counts`)
+    fetch(`${ORDER_API}?action=fetch_counts`, {
+        credentials: 'same-origin'
+    })
         .then(r => r.text())
         .then(text => {
             let data;
             try { data = JSON.parse(text); } catch (e) { return; }
             if (!data.success) return;
 
-            const c = data.counts;
+            const c  = data.counts;
             const el = id => document.getElementById(id);
 
             if (el('dash-total-orders'))   el('dash-total-orders').textContent   = c.total_orders   ?? '—';

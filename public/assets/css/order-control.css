@@ -1,0 +1,343 @@
+/* ─── order-control.css ───────────────────────────────────────────────────────
+   Styles for: orders table, detail modal, status badges, skeletons, empty/error states
+   ─────────────────────────────────────────────────────────────────────────── */
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   1. STATUS BADGES
+   ───────────────────────────────────────────────────────────────────────────── */
+.status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: capitalize;
+    white-space: nowrap;
+}
+
+.badge-pending    { background-color: #fff3cd; color: #856404; }
+.badge-processing { background-color: #cfe2ff; color: #084298; }
+.badge-shipped    { background-color: #d1ecf1; color: #0c5460; }
+.badge-delivered  { background-color: #d1e7dd; color: #0a3622; }
+.badge-cancelled  { background-color: #f8d7da; color: #842029; }
+.badge-mixed      { background-color: #e2e3e5; color: #41464b; }
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   2. ORDERS TABLE
+   ───────────────────────────────────────────────────────────────────────────── */
+.orders-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding: 0 4px;
+}
+
+.orders-title {
+    margin: 0;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.orders-count-badge {
+    background-color: #e9ecef;
+    color: #495057;
+    border-radius: 20px;
+    padding: 2px 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.orders-table-wrap {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #dee2e6;
+}
+
+.orders-table thead th {
+    background-color: #f8f9fa;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #6c757d;
+    border-bottom: 2px solid #dee2e6;
+    padding: 10px 14px;
+}
+
+.orders-table tbody tr {
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.orders-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.orders-table tbody td {
+    padding: 12px 14px;
+    vertical-align: middle;
+}
+
+.order-number {
+    display: block;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #212529;
+}
+
+.order-date {
+    display: block;
+    font-size: 0.75rem;
+    color: #6c757d;
+    margin-top: 2px;
+}
+
+.customer-name {
+    display: block;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+
+.customer-city {
+    display: block;
+    font-size: 0.75rem;
+    color: #6c757d;
+    margin-top: 2px;
+}
+
+.item-count-pill {
+    background-color: #e9ecef;
+    color: #495057;
+    border-radius: 20px;
+    padding: 2px 10px;
+    font-size: 0.8rem;
+}
+
+.order-total {
+    font-size: 0.9rem;
+    color: #198754;
+}
+
+.chevron-icon {
+    font-size: 0.75rem;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   3. ORDER DETAIL MODAL
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Meta bar */
+.detail-meta-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+}
+
+.detail-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.detail-meta-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #6c757d;
+    font-weight: 600;
+}
+
+.detail-meta-value {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #212529;
+}
+
+/* Sections */
+.detail-section {
+    margin-bottom: 20px;
+}
+
+.detail-section-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #495057;
+    margin-bottom: 10px;
+}
+
+/* Shipping card */
+.detail-shipping-card {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 0.875rem;
+    line-height: 1.7;
+}
+
+.detail-shipping-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+}
+
+.detail-shipping-info {
+    color: #495057;
+}
+
+.detail-shipping-notes {
+    margin-top: 6px;
+    font-style: italic;
+    color: #6c757d;
+}
+
+/* Items table */
+.detail-items-table thead th {
+    background-color: #f8f9fa;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #6c757d;
+}
+
+.detail-product-name {
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+
+/* Status update controls */
+.status-update-wrap {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.status-select {
+    width: auto;
+    display: inline-block;
+}
+
+/* Earnings summary */
+.detail-earnings-summary {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-top: 8px;
+}
+
+.detail-earnings-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    padding: 4px 0;
+}
+
+.detail-earnings-deduct {
+    color: #dc3545;
+}
+
+.detail-earnings-total {
+    border-top: 2px solid #dee2e6;
+    margin-top: 6px;
+    padding-top: 10px;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.detail-payout {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.875rem;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   4. SKELETON LOADERS
+   ───────────────────────────────────────────────────────────────────────────── */
+.skel {
+    background: linear-gradient(90deg, #e9ecef 25%, #f8f9fa 50%, #e9ecef 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s infinite;
+    border-radius: 4px;
+}
+
+@keyframes shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.skel-line  { height: 14px; }
+.skel-pill  { height: 22px; width: 70px; border-radius: 20px; }
+.skel-block { border-radius: 8px; }
+
+/* Block size variants — replaces inline height styles */
+.skel-block-sm { height: 80px; }
+.skel-block-lg { height: 160px; }
+
+/* Width helpers */
+.skel.w-20 { width: 20%; }
+.skel.w-30 { width: 30%; }
+.skel.w-40 { width: 40%; }
+.skel.w-50 { width: 50%; }
+.skel.w-60 { width: 60%; }
+
+.skeleton-row td { padding: 14px; }
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   5. EMPTY STATE
+   ───────────────────────────────────────────────────────────────────────────── */
+.orders-empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: #6c757d;
+}
+
+.orders-empty-icon {
+    font-size: 3rem;
+    margin-bottom: 16px;
+    color: #adb5bd;
+}
+
+.orders-empty-title {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #495057;
+    margin-bottom: 6px;
+}
+
+.orders-empty-sub {
+    font-size: 0.875rem;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   6. ERROR STATE
+   ───────────────────────────────────────────────────────────────────────────── */
+.orders-error {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.orders-error-pre {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 0.78rem;
+    text-align: left;
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-width: 600px;
+    margin: 0 auto;
+    color: #dc3545;
+}

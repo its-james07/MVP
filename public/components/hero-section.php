@@ -1,4 +1,4 @@
-<section class="hero-section" class="spacing">
+<section class="hero-section spacing">
       <div class="hero-banner">
         <picture>
           <source srcset="assets/images/index/hero-mobile.png" media="(max-width: 767px)" />
@@ -11,7 +11,7 @@
           </div>
           <div class="hbanner-links">
             <a href="pages/productCatalog.php" class="buy-link">Buy now!</a>
-            <a href="pages/seller-register.php" class="login-btn">Become a Seller</a>
+            <a href="pages/seller-register.php" class="register-btn">Become a Seller</a>
           </div>
         </div>
       </div>

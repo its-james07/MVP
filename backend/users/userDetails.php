@@ -1,5 +1,6 @@
 <?php
 header('Content-Type: application/json');
+
 require_once $_SERVER['DOCUMENT_ROOT'] . '/mvp/backend/auth/config/db.php';
 require $_SERVER['DOCUMENT_ROOT'] . '/mvp/backend/auth/config/sanitizedata.php';
 
@@ -11,20 +12,25 @@ try {
     $result = validateUser($_POST, $conn);
 
     if (!$result['success']) {
-        echo json_encode(["status" => "error", "message" => $result['errors']]);
+        echo json_encode([
+            "status"  => "error",
+            "message" => $result['errors'][0]
+        ]);
         exit;
     }
 
-    $fname          = $result['fname'];
-    $email          = $result['email'];
+    $fname = $result['fname'];
+    $email = $result['email'];
     $hashedPassword = $result['password'];
 
     $stmt = $conn->prepare("INSERT INTO users(fname, email, password) VALUES (?, ?, ?)");
+
     if ($stmt === false) {
         throw new Exception("Prepare failed: " . $conn->error);
     }
 
     $stmt->bind_param("sss", $fname, $email, $hashedPassword);
+
     if (!$stmt->execute()) {
         throw new Exception("Execute failed: " . $stmt->error);
     }
@@ -32,22 +38,30 @@ try {
     $stmt->close();
     $conn->close();
 
-    echo json_encode(["status" => "success", "message" => "Signup Successful"]);
+    echo json_encode([
+        "status" => "success",
+        "message" => "Signup Successful"
+    ]);
 
 } catch (Exception $e) {
     error_log($e->getMessage());
-    echo json_encode(["status" => "error", "message" => "Something went wrong"]);
+
+    echo json_encode([
+        "status" => "error",
+        "message" => "Something went wrong"
+    ]);
     exit;
 }
 
 function validateUser($data, $conn) {
     $errors = [];
 
-    $fname    = sanitizeData($data['fname']      ?? '');
-    $email    = sanitizeData($data['reg-email']  ?? '');
-    $password = $data['new-pass']                ?? '';
+    $fname = sanitizeData($data['fname'] ?? '');
+    $email = sanitizeData($data['reg-email'] ?? '');
+    $password = $data['new-pass'] ?? '';
 
     $nameRegex = "/^[a-zA-ZÀ-ÿ]+([ '-][a-zA-ZÀ-ÿ]+)*$/u";
+
     if (empty($fname)) {
         $errors[] = "Name field is required";
     } elseif (!preg_match($nameRegex, $fname)) {
@@ -71,29 +85,41 @@ function validateUser($data, $conn) {
     } elseif (strlen($password) > 72) {
         $errors[] = "Password must not exceed 72 characters";
     } elseif (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,72}$/', $password)) {
-        $errors[] = "Password must include uppercase, lowercase, number, and special character";
+        $errors[] = "Password must include uppercase, lowercase, number, and special character (@$!%*?&)";
     }
 
     if (empty($errors)) {
         $check = $conn->prepare("SELECT user_id FROM users WHERE email = ? LIMIT 1");
-        if (!$check) throw new Exception("Prepare failed: " . $conn->error);
-        $check->bind_param("s", $email);
-        if (!$check->execute()) throw new Exception("Execute failed: " . $check->error);
-        $check->store_result();
-        if ($check->num_rows > 0) {
-            $errors[] = "Email is already registered";
+
+        if (!$check) {
+            throw new Exception("Prepare failed: " . $conn->error);
         }
+
+        $check->bind_param("s", $email);
+
+        if (!$check->execute()) {
+            throw new Exception("Execute failed: " . $check->error);
+        }
+
+        $check->store_result();
+
+        if ($check->num_rows > 0) {
+            $errors[] = "An account with this email already exists";
+        }
+
         $check->close();
     }
 
     if (!empty($errors)) {
-        return ['success' => false, 'errors' => $errors];
+        return [
+            'success' => false,
+            'errors' => $errors
+        ];
     }
-
     return [
-        'success'  => true,
-        'fname'    => $fname,
-        'email'    => $email,
+        'success' => true,
+        'fname' => $fname,
+        'email' => $email,
         'password' => password_hash($password, PASSWORD_DEFAULT)
     ];
 }

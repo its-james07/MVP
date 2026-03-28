@@ -124,7 +124,6 @@ main{
     width: 100%;
     border: 1px solid #ddd;
     border-radius: 10px;
-    /* background-color: #f5f5f5; */
     background-color: rgba(232, 237, 232, 0.45);
     box-shadow: 2px 7px 6px rgba(0, 0, 0, 0.1);
 }
@@ -187,9 +186,17 @@ input[type=password]:focus {
 
 .login-btn,
 .buy-link,
-.create-btn,
-.register-btn{
+.create-btn{
     background-color: var(--secondary-green);
+    color: #fff;
+    border: none;
+    border-radius: 5px; 
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.register-btn{
+    background-color: purple;
     color: #fff;
     border: none;
     border-radius: 5px; 
@@ -630,20 +637,47 @@ input[type=password]:focus {
     border-radius: 5px;
 }
 
-/* .footer-links{
-    display: flex;
-    flex-direction: row;
-    margin-top: 5px;
-    gap: 30px;
-}
-
-.footer-links li{
-    list-style-type: none;
-} */
-
 .show-pass{
     display:flex;
     gap: 5px;
     align-items: center;
     margin-top: 6px;
+}
+
+
+.login-bar .input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.login-bar .input-wrapper input[type="password"],
+.login-bar .input-wrapper input[type="text"] {
+    width: 100%;
+    padding-right: 45px;
+}
+
+.login-bar .toggle-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    transition: color 0.2s ease;
+}
+
+.login-bar .toggle-icon:hover {
+    color: var(--primary-green);
+}
+
+.form-error {
+    display: none;
+    color: #dc3545;
+    font-size: 14px;
+    /* font-weight: 500; */
+    margin-left: 10px;
+    float: right;
 }

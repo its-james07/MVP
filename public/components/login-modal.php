@@ -2,11 +2,22 @@
     <div class="login-bar">
       <button class="close-btn" style="font-size: 1.9rem">&times;</button>
       <form name="login-form" class="login-form" id="login-form" action="../../backend/login.php" method="POST">
-        <label for="log-email">Email</label>
+
+        <label for="login-email">Email</label>
         <input type="email" id="login-email" name="log-email" placeholder="abc@example.com" required />
-        <label for="log-pass">Password<span class="pass-error">Invalid Password</span></label>
-        <input type="password" id="login-pass" name="log-pass" placeholder="my password" required />
-        
+        <span id="login-email-error" class="errorInfo" style="display:none;"></span>
+
+        <label for="login-pass">
+          Password
+          <span class="pass-error">Invalid Password</span>
+        </label>
+        <div class="input-wrapper">
+          <input type="password" id="login-pass" name="log-pass" placeholder="My password" required />
+          <span class="toggle-icon" onclick="toggleLoginPassword()">
+            <ion-icon id="login-pass-icon" name="eye-outline"></ion-icon>
+          </span>
+        </div>
+
         <div class="btn">
           <button type="submit" class="login-btn"><strong>Login</strong></button>
         </div>
