@@ -8,6 +8,12 @@ invalidPass.style.display = "none";
 const emailInput = document.getElementById('login-email');
 const emailError = document.getElementById('login-email-error');
 
+if(emailInput){
+    emailInput.addEventListener('input',()=>{
+        validateEmail();
+    })
+}
+
 const emailRegex = /^[a-zA-Z0-9](?!.*\.\.)[a-zA-Z0-9._%+-]{0,63}@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 function validateEmail() {
@@ -21,7 +27,7 @@ function validateEmail() {
     }
 
     if (!emailRegex.test(value)) {
-        emailError.textContent   = 'Please enter a valid email address.';
+        emailError.textContent   = 'Enter a valid email address.';
         emailError.style.display = 'inline';
         emailInput.classList.add('input-error');
         emailInput.classList.remove('input-valid');
@@ -56,6 +62,7 @@ emailInput.addEventListener('focus', () => {
 });
 // ──────────────────────────────────────────────────────────────────────
 
+
 // ── Toggle password visibility ─────────────────────────────────────────
 function toggleLoginPassword() {
     const passInput = document.getElementById('login-pass');
@@ -77,10 +84,7 @@ function toggleLoginPassword() {
 loginForm.addEventListener('submit', function (e) {
     e.preventDefault();
 
-    if (!validateEmail()) {
-        emailInput.focus();
-        return;
-    }
+    
 
     const submitBtn = loginForm.querySelector('button[type="submit"]');
     submitBtn.disabled = true;

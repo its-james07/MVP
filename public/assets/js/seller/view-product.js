@@ -4,9 +4,10 @@
 //
 // Depends on (loaded in seller-panel.php before this file):
 //   - bootstrap.bundle.min.js
-//   - view-products.css          (all component + responsive styles)
-//   - modal-product-detail.php   (detail modal HTML, PHP-included)
-//   - modal-product-edit.php     (edit modal HTML, PHP-included)
+//   - view-products.css
+//   - modal-product-detail.php
+//   - modal-product-edit.php
+//   - add-product.js   (defines validateName, validateDescription, showErr, hideErr)
 // =============================================================================
 
 const PRODUCTS_API = '../../backend/products/view-products.php';
@@ -20,9 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('btn-view-products')?.addEventListener('click',  () => loadProducts());
     document.getElementById('btn-update-product')?.addEventListener('click', () => loadProducts('update'));
     document.getElementById('btn-remove-product')?.addEventListener('click', () => loadProducts('delete'));
-
-    // Edit modal image picker — element exists at page load (static HTML now)
-    document.getElementById('vp-edit-image')?.addEventListener('change', handleEditImagePreview);
+    loadProducts();
+    // Wire real-time validation to edit modal fields once DOM is ready
+    initEditFormValidation();
 });
 
 
@@ -87,8 +88,8 @@ function renderProducts(products, mode = 'view') {
         return;
     }
 
-    const cards = products.map(p       => buildCard(p, mode)).join('');
-    const rows  = products.map((p, i)  => buildRow(p, i, mode)).join('');
+    const cards = products.map(p      => buildCard(p, mode)).join('');
+    const rows  = products.map((p, i) => buildRow(p, i, mode)).join('');
 
     box.innerHTML = `
         <div class="orders-header">
@@ -97,10 +98,8 @@ function renderProducts(products, mode = 'view') {
             <span class="orders-count-badge">${products.length}</span>
         </div>
 
-        <!-- Mobile card grid (visible <768px via view-products.css) -->
         <div class="vp-card-grid">${cards}</div>
 
-        <!-- Desktop table (visible >=768px via view-products.css) -->
         <div class="table-responsive orders-table-wrap vp-table-wrap">
             <table class="table orders-table vp-table">
                 <thead>
@@ -254,8 +253,8 @@ function showProductDetail(productId) {
     document.getElementById('vp-modal-date').textContent        = formatDate(p.created_at);
     document.getElementById('vp-modal-description').textContent = p.description ?? 'No description provided.';
 
-    const imgEl   = document.getElementById('vp-modal-image');
-    const noImgEl = document.getElementById('vp-modal-no-image');
+    // const imgEl   = document.getElementById('vp-modal-image');
+    // const noImgEl = document.getElementById('vp-modal-no-image');
     // if (p.image) {
     //     imgEl.src             = `../../uploads/products/${escHtml(p.image)}`;
     //     imgEl.style.display   = 'block';
@@ -279,18 +278,21 @@ function showEditProductModal(productId) {
 
     const p = JSON.parse(el.dataset.product);
 
-    document.getElementById('vp-edit-id').value       = p.product_id;
-    document.getElementById('vp-edit-name').value     = p.name        ?? '';
-    document.getElementById('vp-edit-desc').value     = p.description ?? '';
-    document.getElementById('vp-edit-category').value = p.category_id ?? '';
-    document.getElementById('vp-edit-type').value     = p.type_id     ?? '';
-    document.getElementById('vp-edit-price').value    = p.price       ?? '';
-    document.getElementById('vp-edit-weight').value   = p.weight      ?? '';
-    document.getElementById('vp-edit-stock').value    = p.stock       ?? 0;
+    // Clear any errors left from a previous open
+    clearAllEditErrors();
+
+    document.getElementById('product_id_edit').value          = p.product_id;
+    document.getElementById('product_name_edit').value        = p.name        ?? '';
+    document.getElementById('product_description_edit').value = p.description ?? '';
+    document.getElementById('product_category_edit').value    = p.category_id ?? '';
+    document.getElementById('product_type_edit').value        = p.type_id     ?? '';
+    document.getElementById('product_price_edit').value       = p.price       ?? '';
+    document.getElementById('product_weight_edit').value      = p.weight      ?? '';
+    document.getElementById('product_stock_edit').value       = p.stock       ?? 0;
 
     // Current image thumbnail
-    const currentWrap = document.getElementById('vp-edit-current-img-wrap');
-    const currentImg  = document.getElementById('vp-edit-current-img');
+    // const currentWrap = document.getElementById('product_current_img_wrap_edit');
+    // const currentImg  = document.getElementById('product_current_img_edit');
     // if (p.image) {
     //     currentImg.src            = `../../uploads/products/${escHtml(p.image)}`;
     //     currentWrap.style.display = 'block';
@@ -298,46 +300,232 @@ function showEditProductModal(productId) {
     //     currentWrap.style.display = 'none';
     // }
 
-    // Reset file picker + preview
-    document.getElementById('vp-edit-image').value             = '';
-    document.getElementById('vp-edit-new-img-wrap').style.display = 'none';
-    document.getElementById('vp-edit-new-img').src             = '';
+    // Reset file input and preview
+    document.getElementById('product_image_edit').value                  = '';
+    document.getElementById('product_new_img_wrap_edit').style.display   = 'none';
+    document.getElementById('product_new_img_edit').src                  = '';
 
-    bootstrap.Modal.getOrCreateInstance(document.getElementById('vpEditModal')).show();
+    bootstrap.Modal.getOrCreateInstance(document.getElementById('editProductModal')).show();
 }
 
-// Live preview when a new image is selected in the edit form
-function handleEditImagePreview() {
-    const file = this.files[0];
-    const wrap = document.getElementById('vp-edit-new-img-wrap');
-    const prev = document.getElementById('vp-edit-new-img');
-    if (!file) { wrap.style.display = 'none'; prev.src = ''; return; }
-    const reader = new FileReader();
-    reader.onload = e => { prev.src = e.target.result; wrap.style.display = 'block'; };
-    reader.readAsDataURL(file);
-}
 
-// Submit edit form — uses FormData (multipart) so image file travels with text fields
-function submitProductUpdate() {
-    const submitBtn  = document.getElementById('vp-edit-submit-btn');
-    const btnText    = document.getElementById('vp-edit-btn-text');
-    const spinner    = document.getElementById('vp-edit-spinner');
-    const imageInput = document.getElementById('vp-edit-image');
+// ─────────────────────────────────────────────────────────────────────────────
+// 8a. EDIT MODAL — real-time validation
+//     Mirrors add-product.js rules exactly, scoped to _edit field IDs.
+//     Uses validateName() and validateDescription() from add-product.js.
+// ─────────────────────────────────────────────────────────────────────────────
+function initEditFormValidation() {
 
-    const name  = document.getElementById('vp-edit-name').value.trim();
-    const price = parseFloat(document.getElementById('vp-edit-price').value);
-    const stock = parseInt(document.getElementById('vp-edit-stock').value);
+    // ── Name ──────────────────────────────────────────────────────────────────
+    const nameInput = document.getElementById('product_name_edit');
+    if (nameInput) {
+        nameInput.addEventListener('input', () => {
+            const before  = nameInput.value;
+            const cleaned = before.replace(/[^a-zA-Z\s]/g, '');
+            if (cleaned !== before) {
+                nameInput.value = cleaned;
+                showEditErr('name-err-edit', 'Only letters are allowed.');
+                return;
+            }
+            const err = validateName(cleaned.trim());
+            err ? showEditErr('name-err-edit', err) : hideEditErr('name-err-edit');
+        });
 
-    if (!name || name.length < 2)   return showToast('Product name must be at least 2 characters.', 'error');
-    if (isNaN(price) || price <= 0) return showToast('Please enter a valid price.', 'error');
-    if (isNaN(stock) || stock < 0)  return showToast('Please enter a valid stock quantity.', 'error');
+        nameInput.addEventListener('focusout', () => {
+            const err = validateName(nameInput.value.trim());
+            err ? showEditErr('name-err-edit', err) : hideEditErr('name-err-edit');
+        });
 
-    if (imageInput.files[0]) {
-        const file    = imageInput.files[0];
-        const allowed = ['image/jpeg', 'image/png', 'image/webp'];
-        if (!allowed.includes(file.type))  return showToast('Image must be JPG, PNG, or WEBP.', 'error');
-        if (file.size > 2 * 1024 * 1024)  return showToast('Image must be smaller than 2MB.', 'error');
+        nameInput.addEventListener('focus', () => {
+            if (nameInput.value.trim().length > 0) hideEditErr('name-err-edit');
+        });
     }
+
+    // ── Description ───────────────────────────────────────────────────────────
+    const descInput = document.getElementById('product_description_edit');
+    if (descInput) {
+        descInput.addEventListener('input', () => {
+            const before  = descInput.value;
+            const cleaned = before.replace(/[^a-zA-Z0-9\s.,!?'"()\-]/g, '');
+            if (cleaned !== before) descInput.value = cleaned;
+
+            const err = validateDescription(cleaned.trim());
+            err ? showEditErr('desc-err-edit', err) : hideEditErr('desc-err-edit');
+        });
+
+        descInput.addEventListener('focusout', () => {
+            const err = validateDescription(descInput.value.trim());
+            err ? showEditErr('desc-err-edit', err) : hideEditErr('desc-err-edit');
+        });
+
+        descInput.addEventListener('focus', () => {
+            if (descInput.value.trim().length > 0) hideEditErr('desc-err-edit');
+        });
+    }
+
+    // ── Category ──────────────────────────────────────────────────────────────
+    const categorySelect = document.getElementById('product_category_edit');
+    if (categorySelect) {
+        const checkCategory = () =>
+            categorySelect.value
+                ? hideEditErr('category-err-edit')
+                : showEditErr('category-err-edit', 'Please select a category.');
+        categorySelect.addEventListener('change',   checkCategory);
+        categorySelect.addEventListener('focusout', checkCategory);
+    }
+
+    // ── Product type ──────────────────────────────────────────────────────────
+    const typeSelect = document.getElementById('product_type_edit');
+    if (typeSelect) {
+        const checkType = () =>
+            typeSelect.value
+                ? hideEditErr('type-err-edit')
+                : showEditErr('type-err-edit', 'Please select a product type.');
+        typeSelect.addEventListener('change',   checkType);
+        typeSelect.addEventListener('focusout', checkType);
+    }
+
+    // ── Price ─────────────────────────────────────────────────────────────────
+    const priceInput = document.getElementById('product_price_edit');
+    if (priceInput) {
+        const checkPrice = () => {
+            const v = parseFloat(priceInput.value);
+            if (priceInput.value.trim() === '') return showEditErr('price-err-edit', 'Price is required.');
+            if (isNaN(v) || v <= 0)             return showEditErr('price-err-edit', 'Enter a valid price greater than 0.');
+            hideEditErr('price-err-edit');
+        };
+        priceInput.addEventListener('input',    checkPrice);
+        priceInput.addEventListener('focusout', checkPrice);
+        priceInput.addEventListener('focus', () => {
+            const v = parseFloat(priceInput.value);
+            if (!isNaN(v) && v > 0) hideEditErr('price-err-edit');
+        });
+    }
+
+    // ── Stock ─────────────────────────────────────────────────────────────────
+    const stockInput = document.getElementById('product_stock_edit');
+    if (stockInput) {
+        const checkStock = () => {
+            const v = parseInt(stockInput.value);
+            if (stockInput.value.trim() === '') return showEditErr('stock-err-edit', 'Stock quantity is required.');
+            if (isNaN(v) || v < 0)              return showEditErr('stock-err-edit', 'Stock cannot be negative.');
+            hideEditErr('stock-err-edit');
+        };
+        stockInput.addEventListener('input',    checkStock);
+        stockInput.addEventListener('focusout', checkStock);
+        stockInput.addEventListener('focus', () => {
+            const v = parseInt(stockInput.value);
+            if (!isNaN(v) && v >= 0) hideEditErr('stock-err-edit');
+        });
+    }
+
+    // ── Image (optional on edit — only validated when a file is chosen) ───────
+    const imageInput = document.getElementById('product_image_edit');
+    if (imageInput) {
+        imageInput.addEventListener('change', () => {
+            const file         = imageInput.files[0];
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+            if (!file) { hideEditErr('img-err-edit'); return; }
+            if (!allowedTypes.includes(file.type)) return showEditErr('img-err-edit', 'Only JPG, PNG or WEBP allowed.');
+            if (file.size > 2 * 1024 * 1024)       return showEditErr('img-err-edit', 'Image must be under 2MB.');
+
+            // Show live preview
+            const wrap = document.getElementById('product_new_img_wrap_edit');
+            const prev = document.getElementById('product_new_img_edit');
+            hideEditErr('img-err-edit');
+            const reader = new FileReader();
+            reader.onload = e => { prev.src = e.target.result; wrap.style.display = 'block'; };
+            reader.readAsDataURL(file);
+        });
+    }
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 8b. EDIT FORM — on-submit validation (runs on Save Changes click)
+// ─────────────────────────────────────────────────────────────────────────────
+function validateEditProductForm() {
+    clearAllEditErrors();
+
+    const nameVal  = document.getElementById('product_name_edit').value.trim();
+    const descVal  = document.getElementById('product_description_edit').value.trim();
+    const category = document.getElementById('product_category_edit').value;
+    const type     = document.getElementById('product_type_edit').value;
+    const price    = parseFloat(document.getElementById('product_price_edit').value);
+    const stock    = parseInt(document.getElementById('product_stock_edit').value);
+    const weight   = document.getElementById('product_weight_edit').value;
+    const image    = document.getElementById('product_image_edit').files[0];
+    const allowed  = ['image/jpeg', 'image/png', 'image/webp'];
+
+    let valid = true;
+
+    const nameErr = validateName(nameVal);
+    if (nameErr) { showEditErr('name-err-edit', nameErr); valid = false; }
+
+    const descErr = validateDescription(descVal);
+    if (descErr) { showEditErr('desc-err-edit', descErr); valid = false; }
+
+    if (!category) { showEditErr('category-err-edit', 'Please select a category.');    valid = false; }
+    if (!type)     { showEditErr('type-err-edit',     'Please select a product type.'); valid = false; }
+
+    if (document.getElementById('product_price_edit').value.trim() === '') {
+        showEditErr('price-err-edit', 'Price is required.'); valid = false;
+    } else if (isNaN(price) || price <= 0) {
+        showEditErr('price-err-edit', 'Enter a valid price greater than 0.'); valid = false;
+    }
+
+    if (document.getElementById('product_stock_edit').value.trim() === '') {
+        showEditErr('stock-err-edit', 'Stock quantity is required.'); valid = false;
+    } else if (isNaN(stock) || stock < 0) {
+        showEditErr('stock-err-edit', 'Stock cannot be negative.'); valid = false;
+    }
+
+    if (weight !== '' && (isNaN(parseFloat(weight)) || parseFloat(weight) < 0)) {
+        showEditErr('weight-err-edit', 'Enter a valid weight or leave it empty.'); valid = false;
+    }
+
+    // Image is optional on edit — only validate if a file was chosen
+    if (image) {
+        if (!allowed.includes(image.type))    { showEditErr('img-err-edit', 'Only JPG, PNG or WEBP allowed.'); valid = false; }
+        else if (image.size > 2 * 1024 * 1024) { showEditErr('img-err-edit', 'Image must be under 2MB.');       valid = false; }
+    }
+
+    return valid;
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 8c. EDIT ERROR HELPERS
+// ─────────────────────────────────────────────────────────────────────────────
+function showEditErr(id, msg) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent   = msg;
+    el.style.display = 'inline';
+}
+
+function hideEditErr(id) {
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+}
+
+function clearAllEditErrors() {
+    ['name-err-edit', 'desc-err-edit', 'category-err-edit', 'type-err-edit',
+     'price-err-edit', 'stock-err-edit', 'weight-err-edit', 'img-err-edit'
+    ].forEach(hideEditErr);
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 8d. SUBMIT EDIT FORM
+// ─────────────────────────────────────────────────────────────────────────────
+function submitProductUpdate() {
+    if (!validateEditProductForm()) return;
+
+    const submitBtn  = document.getElementById('product_edit_submit_btn');
+    const btnText    = document.getElementById('product_edit_btn_text');
+    const spinner    = document.getElementById('product_edit_spinner');
+    const imageInput = document.getElementById('product_image_edit');
 
     submitBtn.disabled  = true;
     btnText.textContent = 'Saving…';
@@ -345,19 +533,18 @@ function submitProductUpdate() {
 
     const fd = new FormData();
     fd.append('action',      'update_product');
-    fd.append('product_id',  document.getElementById('vp-edit-id').value);
-    fd.append('name',        name);
-    fd.append('description', document.getElementById('vp-edit-desc').value.trim());
-    fd.append('category_id', document.getElementById('vp-edit-category').value);
-    fd.append('type_id',     document.getElementById('vp-edit-type').value);
-    fd.append('price',       price);
-    fd.append('stock',       stock);
+    fd.append('product_id',  document.getElementById('product_id_edit').value);
+    fd.append('name',        document.getElementById('product_name_edit').value.trim());
+    fd.append('description', document.getElementById('product_description_edit').value.trim());
+    fd.append('category_id', document.getElementById('product_category_edit').value);
+    fd.append('type_id',     document.getElementById('product_type_edit').value);
+    fd.append('price',       parseFloat(document.getElementById('product_price_edit').value));
+    fd.append('stock',       parseInt(document.getElementById('product_stock_edit').value));
 
-    const w = document.getElementById('vp-edit-weight').value;
+    const w = document.getElementById('product_weight_edit').value;
     if (w !== '') fd.append('weight', w);
     if (imageInput.files[0]) fd.append('image', imageInput.files[0]);
 
-    // No Content-Type header — browser sets multipart boundary automatically
     fetch(PRODUCTS_API, { method: 'POST', body: fd })
         .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.text(); })
         .then(text => {
@@ -366,7 +553,7 @@ function submitProductUpdate() {
             catch (e) { throw new Error(`Invalid JSON:\n${text.substring(0, 300)}`); }
             if (res.success) {
                 showToast('Product updated successfully.', 'success');
-                bootstrap.Modal.getInstance(document.getElementById('vpEditModal')).hide();
+                bootstrap.Modal.getInstance(document.getElementById('editProductModal')).hide();
                 loadProducts();
             } else {
                 showToast(res.message || 'Update failed.', 'error');
@@ -461,7 +648,7 @@ function handleUpdateStock(productId, productName) {
                 ${newStock <= 0                 ? '<br><small class="text-danger">Out of stock</small>' : ''}`;
         }
         if (row) {
-            const product = JSON.parse(row.dataset.product);
+            const product       = JSON.parse(row.dataset.product);
             product.stock       = newStock;
             row.dataset.product = JSON.stringify(product);
         }
@@ -521,7 +708,6 @@ function renderSkeleton() {
 // 12. UTILITIES
 // ─────────────────────────────────────────────────────────────────────────────
 
-/** Escape HTML special characters */
 function escHtml(str) {
     if (str == null) return '';
     return String(str)
@@ -532,17 +718,14 @@ function escHtml(str) {
         .replace(/'/g,  '&#039;');
 }
 
-/** Serialize product object safely for data-product attribute */
 function serialize(p) {
     return JSON.stringify(p).replace(/'/g, '&#39;');
 }
 
-/** Format a number as NPR currency */
 function formatPrice(value) {
     return 'NPR ' + parseFloat(value).toLocaleString('en-NP', { minimumFractionDigits: 2 });
 }
 
-/** Format ISO date string to "DD Mon YYYY" */
 function formatDate(dateStr) {
     if (!dateStr) return '—';
     return new Date(dateStr).toLocaleDateString('en-GB', {
@@ -550,14 +733,12 @@ function formatDate(dateStr) {
     });
 }
 
-/** Bootstrap text class based on stock level */
 function stockColorClass(stock) {
     if (stock <= 0) return 'text-danger fw-bold';
     if (stock <= 5) return 'text-warning fw-bold';
     return 'text-success fw-semibold';
 }
 
-/** Status label + badge class for a product status string */
 function getStatusConfig(status) {
     const map = {
         pending:  { label: 'Pending',  badge: 'badge-pending'   },
@@ -567,7 +748,6 @@ function getStatusConfig(status) {
     return map[status] ?? { label: status ?? 'Unknown', badge: 'badge-mixed' };
 }
 
-/** Product image thumbnail or ion-icon placeholder */
 function thumbHtml(p, context) {
     if (p.image) {
         const cls = context === 'card' ? 'vp-card-img' : 'product-thumb';
@@ -580,7 +760,6 @@ function thumbHtml(p, context) {
     return `<div class="${cls}"><ion-icon name="image-outline" style="font-size:${size};color:#ccc;"></ion-icon></div>`;
 }
 
-/** Toast — shares the one in order-control.js; defined here as fallback */
 if (typeof showToast === 'undefined') {
     window.showToast = function (message, type = 'success') {
         const toast = document.getElementById('toast');

@@ -119,7 +119,7 @@ if(!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'seller') {
     </div>
 
     <div class="action-bar d-flex align-items-center gap-2 flex-wrap mb-3">
-        <button class="btn btn-outline-primary">Analytics</button>
+        <!-- <button class="btn btn-outline-primary">Analytics</button> -->
         <button class="btn btn-outline-success" id="btn-view-products">View Products</button>
 
         <div class="dropdown">
@@ -193,6 +193,7 @@ if(!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'seller') {
                                     <option value="2">Cat</option>
                                     <option value="3">Fish</option>
                                     <option value="4">Bird</option>
+                                    <option value="5">All</option>
                                 </select>
                             </div>
                             <div class="col-md-6 mb-3">

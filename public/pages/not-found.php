@@ -10,7 +10,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
 }
 
 body {
@@ -18,123 +18,139 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(232, 237, 232, 0.45);
+    background: linear-gradient(135deg, #eef2f3, #dfe9f3);
     padding: 20px;
 }
 
-.not-found-container {
-    max-width: 650px;
+/* Glass card */
+.container {
     width: 100%;
+    max-width: 600px;
     text-align: center;
-    background: 
-        radial-gradient(ellipse at 20% 50%, rgba(7, 52, 32, 0.07) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 20%, rgba(7, 52, 32, 0.05) 0%, transparent 50%),
-        radial-gradient(ellipse at 60% 80%, rgba(7, 52, 32, 0.04) 0%, transparent 40%),
-        linear-gradient(135deg, rgba(7, 52, 32, 0.03) 0%, transparent 50%, rgba(7, 52, 32, 0.06) 100%);
-    padding: 60px 35px;
-    border-radius: 15px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 60px 40px;
+    border-radius: 20px;
+    background: rgba(179, 183, 181, 0.6);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+    transition: 0.3s ease;
 }
 
-.not-found-container:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 25px 45px rgba(0,0,0,0.12);
+.container:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.15);
 }
 
-.not-found-icon {
-    font-size: 80px;
-    margin-bottom: 25px;
-    animation: bounce 1.2s infinite;
+/* Icon */
+.icon {
+    font-size: 70px;
+    margin-bottom: 20px;
+    animation: float 2.5s ease-in-out infinite;
 }
 
-@keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+@keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
 }
 
-.not-found-title {
-    font-size: 34px;
+/* Title */
+h1 {
+    font-size: 36px;
     font-weight: 700;
-    margin-bottom: 12px;
-    color: #2c6e49;
+    color: #1f3d2b;
+    margin-bottom: 10px;
 }
 
-.not-found-text {
+/* Subtitle */
+p {
     color: #555;
     font-size: 16px;
-    line-height: 1.6;
     margin-bottom: 35px;
+    line-height: 1.6;
 }
 
-.actions {
+/* Buttons */
+.buttons {
     display: flex;
     justify-content: center;
-    gap: 16px;
+    gap: 15px;
     flex-wrap: wrap;
 }
 
-.actions a {
+.buttons a {
     text-decoration: none;
-    padding: 13px 22px;
-    border-radius: 8px;
+    padding: 12px 22px;
+    border-radius: 10px;
     font-size: 15px;
     font-weight: 500;
-    transition: all 0.3s ease;
+    transition: all 0.25s ease;
 }
 
-.btn-primary {
-    background: #111;
+/* Primary button */
+.primary {
+    background: #1f3d2b;
     color: white;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 20px rgba(31, 61, 43, 0.2);
 }
 
-.btn-outline {
-    border: 2px solid #111;
-    color: #111;
+.primary:hover {
+    background: #2e5c42;
+    transform: translateY(-2px);
 }
 
-.btn-primary:hover {
-    background: #333;
+/* Secondary button */
+.secondary {
+    border: 2px solid #1f3d2b;
+    color: #1f3d2b;
 }
 
-.btn-outline:hover {
-    background: #111;
+.secondary:hover {
+    background: #1f3d2b;
     color: white;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
 }
 
+/* Small hint text */
+.hint {
+    margin-top: 25px;
+    font-size: 13px;
+    color: #888;
+}
+
+/* Responsive */
 @media (max-width: 600px) {
-    .not-found-title {
+    h1 {
         font-size: 28px;
     }
-    .not-found-text {
+    p {
         font-size: 15px;
-    }
-    .actions a {
-        font-size: 14px;
-        padding: 11px 18px;
     }
 }
 </style>
 </head>
 
 <body>
-<div class="not-found-container">
 
-    <div class="not-found-icon">🐾</div>
+<div class="container">
+    
+    <div class="icon">!</div>
 
-    <h1 class="not-found-title">Product Not Found</h1>
+    <h1>Product Not Found</h1>
 
-    <p class="not-found-text">
-        Oops! The product you're looking for doesn't exist or may have been removed.
+    <p>
+        We couldn’t find the product you’re looking for. It may have been removed,
+        renamed, or is temporarily unavailable.
     </p>
 
-    <div class="actions">
-        <a href="../pages/product-catalog.php" class="btn-outline">Browse Products</a>
-        <a href="../index.php" class="btn-primary">Go Home</a>
+    <div class="buttons">
+        <a href="../pages/product-catalog.php" class="secondary">Browse Products</a>
+        <a href="../index.php" class="primary">Go Home</a>
+    </div>
+
+    <div class="hint">
+        Tip: Try searching for similar products or explore our catalog.
     </div>
 
 </div>
+
 </body>
 </html>

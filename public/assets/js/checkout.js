@@ -6,17 +6,129 @@ const DELIVERY_FEE = 70;
 let cartData       = {};
 let grandTotalCalc = 0;
 
+// ─── Validation Rules ─────────────────────────────────────────────────────────
+const VALIDATORS = {
+    fullName: {
+        validate(val) {
+            if (!val.trim()) return 'Full name is required.';
+            if (val.trim().length < 2) return 'Name must be at least 2 characters.';
+            if (!/^[a-zA-Z\s'.'-]+$/.test(val.trim())) return 'Name can only contain letters, spaces, or hyphens.';
+            return null;
+        }
+    },
+    phone: {
+        validate(val) {
+            if (!val.trim()) return 'Phone number is required.';
+            if (!/^(97|98)\d{8}$/.test(val.trim())) return 'Enter a valid Nepal number (starts with 97 or 98, 10 digits total).';
+            return null;
+        }
+    },
+    city: {
+        validate(val) {
+            if (!val) return 'Please select your area.';
+            return null;
+        }
+    },
+    address: {
+        validate(val) {
+            if (!val.trim()) return 'Address is required.';
+            if (val.trim().length < 10) return 'Please enter a more detailed address (at least 10 characters).';
+            return null;
+        }
+    }
+};
+
+// ─── Real-time Validation Helpers ─────────────────────────────────────────────
+
+/**
+ * Validates a single field and updates its visual state.
+ * @param {string} fieldId  - The element id
+ * @returns {boolean}       - true if valid
+ */
+function validateField(fieldId) {
+    const el      = document.getElementById(fieldId);
+    const rule    = VALIDATORS[fieldId];
+    if (!el || !rule) return true;
+
+    const error = rule.validate(el.value);
+    setFieldState(el, error);
+    return error === null;
+}
+
+/**
+ * Applies valid/invalid Bootstrap classes and shows/hides feedback text.
+ */
+function setFieldState(el, errorMessage) {
+    // Find or create feedback element
+    let feedback = el.nextElementSibling;
+    // For select inside a wrapper the feedback might be after it, walk siblings
+    if (!feedback || !feedback.classList.contains('invalid-feedback')) {
+        feedback = el.parentElement.querySelector('.invalid-feedback');
+    }
+
+    if (errorMessage) {
+        el.classList.remove('is-valid');
+        el.classList.add('is-invalid');
+        if (feedback) feedback.textContent = errorMessage;
+    } else {
+        el.classList.remove('is-invalid');
+        el.classList.add('is-valid');
+        if (feedback) feedback.textContent = '';
+    }
+}
+
+/**
+ * Clears validation state on a field (e.g., on first focus before user types).
+ */
+function clearFieldState(el) {
+    el.classList.remove('is-valid', 'is-invalid');
+}
+
+// ─── Attach Real-time Listeners ───────────────────────────────────────────────
+function attachRealtimeValidation() {
+    // Text/textarea fields — validate on every keystroke AND when leaving the field
+    ['fullName', 'phone', 'address'].forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener('input', () => validateField(id));   // every keystroke
+        el.addEventListener('blur',  () => validateField(id));   // on tab/click away
+    });
+
+    // Select — validate on change and blur
+    const city = document.getElementById('city');
+    if (city) {
+        city.addEventListener('change', () => validateField('city'));
+        city.addEventListener('blur',   () => validateField('city'));
+    }
+}
+
+/**
+ * Validates all fields at once (used on submit).
+ * @returns {boolean} true if all fields are valid
+ */
+function validateAllFields() {
+    const results = Object.keys(VALIDATORS).map(id => validateField(id));
+    return results.every(Boolean);
+}
+
+
+// ─── DOMContentLoaded ─────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
     fetchCart();
+    attachRealtimeValidation();
 
     // Form submit
     document.getElementById('checkout-form').addEventListener('submit', function (e) {
         e.preventDefault();
 
-        if (!this.checkValidity()) {
-            this.classList.add('was-validated');
+        const valid = validateAllFields();
+        if (!valid) {
+            // Scroll to the first invalid field
+            const firstInvalid = this.querySelector('.is-invalid');
+            if (firstInvalid) firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
             return;
         }
+
         if (Object.keys(cartData).length === 0) {
             alert('Your cart is empty.');
             return;
@@ -28,18 +140,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Continue Shopping button in modal
     document.getElementById('modal-continue-btn').addEventListener('click', () => {
         window.location.href = '../../public/pages/product-catalog.php';
-    });
-
-    // Bootstrap inline validation
-    const forms = document.querySelectorAll('.needs-validation');
-    Array.from(forms).forEach(form => {
-        form.addEventListener('submit', event => {
-            if (!form.checkValidity()) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
-            form.classList.add('was-validated');
-        }, false);
     });
 });
 
@@ -55,14 +155,13 @@ function fetchCart() {
         if (!res.ok) {
             throw new Error(`HTTP ${res.status} ${res.statusText} — cartActions.php`);
         }
-        return res.text(); // Read raw text first to catch PHP warnings/errors
+        return res.text();
     })
     .then(text => {
         let data;
         try {
             data = JSON.parse(text);
         } catch (e) {
-            // PHP likely printed a warning/error before the JSON output
             throw new Error(
                 `cartActions.php returned invalid JSON.\n\nRaw response:\n${text.substring(0, 500)}`
             );
@@ -82,7 +181,6 @@ function fetchCart() {
     });
 }
 
-// Helper: display an error message inside the cart list
 function showCartError(message) {
     const itemsDiv = document.getElementById('cart-items');
     if (itemsDiv) {
@@ -175,35 +273,35 @@ function placeOrder(form) {
         if (!r.ok) {
             throw new Error(`HTTP ${r.status} ${r.statusText} — place-order.php`);
         }
-        return r.text(); // Read raw text first to catch PHP warnings/errors
+        return r.text();
     })
     .then(text => {
         let res;
         try {
             res = JSON.parse(text);
         } catch (e) {
-            // PHP likely printed a warning/notice before the JSON output
             throw new Error(
                 `place-order.php returned invalid JSON.\n\nRaw response:\n${text.substring(0, 500)}`
             );
         }
 
         if (res.success) {
-            // Populate and show success modal
             document.getElementById('modal-order-number').textContent = res.order_number;
             document.getElementById('modal-grand-total').textContent  =
                 'NPR ' + parseFloat(res.grand_total).toLocaleString();
             document.getElementById('order-success-modal').style.display = 'flex';
 
-            // Reset form and cart panel
             cartData = {};
             renderCart({ cart: {} });
             form.reset();
-            form.classList.remove('was-validated');
+            // Clear all validation states after reset
+            Object.keys(VALIDATORS).forEach(id => {
+                const el = document.getElementById(id);
+                if (el) clearFieldState(el);
+            });
             btn.textContent = 'Order Placed';
 
         } else {
-            // Server returned success:false — show the exact message from PHP
             const msg = res.message || 'Something went wrong. Please try again.';
             console.warn('[placeOrder] Server error:', res);
             alert('Order failed: ' + msg);
@@ -220,7 +318,7 @@ function placeOrder(form) {
 }
 
 
-// ─── Utility: escape HTML to prevent XSS in dynamically inserted content ─────
+// ─── Utility: escape HTML to prevent XSS ─────────────────────────────────────
 function escapeHtml(str) {
     if (typeof str !== 'string') return str;
     return str

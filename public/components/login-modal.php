@@ -3,9 +3,8 @@
       <button class="close-btn" style="font-size: 1.9rem">&times;</button>
       <form name="login-form" class="login-form" id="login-form" action="../../backend/login.php" method="POST">
 
-        <label for="login-email">Email</label>
+        <label for="login-email">Email<span id="login-email-error" class="errorInfo" style="display:none; color:rgb(218, 70, 70); float:right; font-weight: 600;"></span></label>
         <input type="email" id="login-email" name="log-email" placeholder="abc@example.com" required />
-        <span id="login-email-error" class="errorInfo" style="display:none;"></span>
 
         <label for="login-pass">
           Password
