@@ -2,8 +2,8 @@ const featuredItems = [
     {id: 1,name: "Demo Dog Food", price: 2200, image: "assets/images/dogProducts/dog-chain.png"},
     {id: 2,name: "Demo Puppy Collar", price: 3200, image: "assets/images/dogProducts/collar.png"},
     {id: 3,name: "Drools Balls", price: 2200, image: "assets/images/dogProducts/play-balls.png"},
-    {id: 4,name: "Fur scrubber", price: 1200, image: "assets/images/dogProducts/cleaner.png"},
-    {id: 5,name: "Fur scrubber", price: 1200, image: "assets/images/dogProducts/cleaner.png"} 
+    {id: 4,name: "Fur scrubber", price: 1200, image: "assets/images/dogProducts/biscuit.png"},
+    {id: 5,name: "Fur scrubber", price: 1200, image: "assets/images/catProducts/cat-wear.png"} 
 ];
 
 const dfeaturedItems = [
@@ -11,14 +11,14 @@ const dfeaturedItems = [
     {id: 7, name: "Monge Puppy Dog", price: 3200, image: "assets/images/dogProducts/mattress.png"},
     {id: 8,name: "Drools Balls", price: 2200, image: "assets/images/dogProducts/play-balls.png"},
     {id: 9,name: "Fur scrubber", price: 1200, image: "assets/images/dogProducts/bowl.png"},
-    {id: 10,name: "Pedigree Biscrok", price: 2010, image: "assets/images/dogProducts/cleaner.png"}
+    {id: 10,name: "Pedigree Biscrok", price: 2010, image: "assets/images/dogProducts/dog-chain.png"}
 ];
 
 const cfeaturedItems = [
     {id: 11,name: "Monge Adult Dog Food", price: 2200, image: "assets/images/catProducts/cat-wear.png"},
     {id: 12,name: "Monge Puppy Dog", price: 3200, image: "assets/images/catProducts/fish-doll.png"},
     {id: 13, name: "Drools Balls", price: 2200, image: "assets/images/catProducts/frog-mask.png"},
-    {id: 14,name: "Fur scrubber", price: 1200, image: "assets/images/dogProducts/cleaner.png"},
+    {id: 14,name: "Fur scrubber", price: 1200, image: "assets/images/dogProducts/dog-chain.png"},
     {id: 15,name: "Pedigree Biscrok", price: 2010, image: "assets/images/dogProducts/play-balls.png"}
 ];
 

@@ -21,13 +21,13 @@
                 <div class="row g-4">
 
                     <!-- Image column -->
-                    <!-- <div class="col-md-5 text-center">
+                    <div class="col-md-5 text-center">
                         <img id="vp-modal-image"
                              src=""
                              alt="Product image"
                              style="max-width: 100%; max-height: 220px; border-radius: 10px; object-fit: cover; display: none;">
                         <div id="vp-modal-no-image" class="text-muted small mt-2" style="display: none;">No image</div>
-                    </div> -->
+                    </div>
 
                     <!-- Details column -->
                     <div class="col-md-7">

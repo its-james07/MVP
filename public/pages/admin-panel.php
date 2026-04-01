@@ -3,14 +3,14 @@
   header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
   header("Pragma: no-cache");
 
-  if(!isset($_SESSION['user_id'])){
-    header('Location: /mvp/public/index.php');
-    exit();
-  }
-  if($_SESSION['role'] != 'admin'){
-    header('Location: unauthorized.php');
-    exit();
-  }
+  // if(!isset($_SESSION['user_id'])){
+  //   header('Location: /mvp/public/index.php');
+  //   exit();
+  // }
+  // if($_SESSION['role'] != 'admin'){
+  //   header('Location: unauthorized.php');
+  //   exit();
+  // }
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -21,7 +21,7 @@ if (empty($lemail) || empty($lpass)) {
     exit;
 }
 
-$stmt = $conn->prepare("SELECT user_id, fname, email, password, role FROM users WHERE email = ?");
+$stmt = $conn->prepare("SELECT user_id, fname, email, password, role, status FROM users WHERE email = ?");
 
 if (!$stmt) {
     echo json_encode(["status" => "error", "message" => "DB prepare failed."]);
@@ -31,12 +31,12 @@ if (!$stmt) {
 
 $stmt->bind_param("s", $lemail);
 $stmt->execute();
-$stmt->bind_result($userId, $username, $userMail, $dbpassword, $role);
+$stmt->bind_result($userId, $username, $userMail, $dbpassword, $role, $userStatus);
 $found = $stmt->fetch();
 $stmt->close();
 
 if (!$found) {
-    echo json_encode(["status" => "error", "message" => "User not found."]);
+    echo json_encode(["status" => "error", "message" => "Use existing account."]);
     ob_end_flush();
     exit;
 }
@@ -51,6 +51,7 @@ $_SESSION['user_id']   = $userId;
 $_SESSION['username']  = $username;
 $_SESSION['usermail']  = $userMail;
 $_SESSION['role']      = $role;
+$_SESSION['user_status']      = $userStatus;
 $_SESSION['logged-in'] = true;
 
 if ($role === 'admin') {
@@ -61,7 +62,8 @@ if ($role === 'admin') {
 
     $sellerStmt = $conn->prepare("SELECT seller_id FROM sellers WHERE user_id = ?");
     if (!$sellerStmt) {
-        echo json_encode(["status" => "error", "message" => "DB prepare failed for seller."]);
+        // echo json_encode(["status" => "error", "message" => "DB prepare failed for seller."]);
+        echo json_encode(["status" => "error", "message" => "Something went wrong."]);
         ob_end_flush();
         exit;
     }
@@ -79,10 +81,11 @@ if ($role === 'admin') {
     }
 
     $_SESSION['seller_id'] = $sellerId;
+    $_SESSION['seller_status'] = $userStatus;
     echo json_encode(["status" => "redirect_seller"]);
 
 } else {
-
+    
     echo json_encode(["status" => "redirect_user"]);
 
 }

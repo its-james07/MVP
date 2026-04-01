@@ -14,7 +14,7 @@ $result = $conn->query("
     FROM products p
     LEFT JOIN categories c ON p.category_id = c.category_id
     LEFT JOIN product_types pt ON p.type_id = pt.type_id
-    WHERE p.status = 'approved'
+    WHERE p.status = 'approved' AND p.visibility = 'visible'
     ORDER BY p.created_at DESC
 ");
 

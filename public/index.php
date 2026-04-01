@@ -1,7 +1,7 @@
 <?php
 session_start();
-header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-header("Pragma: no-cache");
+// header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+// header("Pragma: no-cache");
 
 if(isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
   if($_SESSION['role'] === 'seller') {
@@ -55,25 +55,8 @@ if(isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
   <div class="modal-overlay"></div>
   <div class="toast" id="toast"></div>
 
+  <script src="assets/js/session-check.js"></script>
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const guestAccount = document.querySelector('.guest-account');
-      const userAccount  = document.querySelector('.user-account');
-
-      fetch("../backend/auth/checkSession.php")
-        .then(res => res.json())
-        .then(data => {
-          if (data.loggedIn) {
-            if (guestAccount) guestAccount.style.display = "none";
-            if (userAccount)  userAccount.style.display  = "block";
-          } else {
-            if (guestAccount) guestAccount.style.display = "block";
-            if (userAccount)  userAccount.style.display  = "none";
-          }
-        })
-        .catch(err => console.error("Failed to check session:", err));
-    });
-
     window.addEventListener('scroll', () => {
       document.querySelector('header').classList.toggle('scrolled', window.scrollY > 10);
     });

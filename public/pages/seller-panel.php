@@ -2,10 +2,15 @@
 session_start();
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Pragma: no-cache");
-if(!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'seller') {
-  header("Location: /mvp/public/index.php");
-  exit();
+
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'seller') {
+    header("Location: /mvp/public/index.php");
+    exit();
 }
+
+// Grab status here so it's available everywhere in this file
+$seller_status = $_SESSION['seller_status'] ?? '';
+$isSuspended   = ($seller_status === 'suspended');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,6 +26,7 @@ if(!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'seller') {
     <link rel="stylesheet" href="../assets/css/seller-panel.css">
     <link rel="stylesheet" href="../assets/css/view-products.css">
     <link rel="stylesheet" href="../assets/css/seller/view-products.css">
+    <link rel="stylesheet" href="../assets/css/seller/modal-product-image.css">
     <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
@@ -31,6 +37,7 @@ if(!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'seller') {
 </head>
 
 <body>
+
 <header>
     <nav class="header-main">
         <div class="logo-container">
@@ -119,7 +126,6 @@ if(!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'seller') {
     </div>
 
     <div class="action-bar d-flex align-items-center gap-2 flex-wrap mb-3">
-        <!-- <button class="btn btn-outline-primary">Analytics</button> -->
         <button class="btn btn-outline-success" id="btn-view-products">View Products</button>
 
         <div class="dropdown">
@@ -139,13 +145,15 @@ if(!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'seller') {
     </div>
 
     <div class="content-box" id="content-box"></div>
-
     <div id="toast" class="toast"></div>
 
     <?php include '../components/product-detail-modal.php'; ?>
     <?php include '../components/product-edit-modal.php'; ?>
 
-    <!-- ── Add Product Modal ── -->
+    <!-- Suspension modal — included HERE inside body, after all other HTML -->
+    <?php include '../components/suspension.php'; ?>
+
+    <!-- Add Product Modal -->
     <div class="modal fade" id="addProductModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
             <div class="modal-content">
@@ -153,38 +161,29 @@ if(!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'seller') {
                     <h5 class="modal-title">Add New Product</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-
                 <div class="modal-body p-4">
                     <form id="productUploadForm" enctype="multipart/form-data" novalidate>
                         <input type="hidden" name="seller_id" value="<?= htmlspecialchars($_SESSION['seller_id'] ?? '') ?>">
 
-                        <!-- Product name -->
                         <div class="mb-3">
-                            <label class="form-label">
-                                Product Name <span class="text-danger">*</span>
+                            <label class="form-label">Product Name <span class="text-danger">*</span>
                                 <span class="form-error" id="name-err"></span>
                             </label>
                             <input type="text" class="form-control" name="name" id="product_name"
-                                   minlength="2" maxlength="255"
-                                   placeholder="e.g. Premium Dog Harness" required>
+                                   minlength="2" maxlength="255" placeholder="e.g. Premium Dog Harness" required>
                         </div>
 
-                        <!-- Description -->
                         <div class="mb-3">
-                            <label class="form-label">
-                                Description
+                            <label class="form-label">Description
                                 <span class="form-error" id="desc-err"></span>
                             </label>
                             <textarea class="form-control" name="description" id="product_description"
-                                      rows="3" maxlength="1000"
-                                      placeholder="Briefly describe the product..."></textarea>
+                                      rows="3" maxlength="1000" placeholder="Briefly describe the product..."></textarea>
                         </div>
 
-                        <!-- Category & Type -->
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">
-                                    Category <span class="text-danger">*</span>
+                                <label class="form-label">Category <span class="text-danger">*</span>
                                     <span class="form-error" id="category-err"></span>
                                 </label>
                                 <select class="form-select" name="category" id="product_category" required>
@@ -197,8 +196,7 @@ if(!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'seller') {
                                 </select>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">
-                                    Product Type <span class="text-danger">*</span>
+                                <label class="form-label">Product Type <span class="text-danger">*</span>
                                     <span class="form-error" id="type-err"></span>
                                 </label>
                                 <select class="form-select" name="type_id" id="product_type" required>
@@ -212,42 +210,31 @@ if(!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'seller') {
                             </div>
                         </div>
 
-                        <!-- Price & Weight -->
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">
-                                    Price (Rs) <span class="text-danger">*</span>
+                                <label class="form-label">Price (Rs) <span class="text-danger">*</span>
                                     <span class="form-error" id="price-err"></span>
                                 </label>
                                 <input type="number" step="0.01" min="0.01" class="form-control"
-                                       name="price" id="product_price"
-                                       placeholder="0.00" required>
+                                       name="price" id="product_price" placeholder="0.00" required>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">
-                                    Weight (kg) <small class="text-muted">(optional)</small>
-                                </label>
+                                <label class="form-label">Weight (kg) <small class="text-muted">(optional)</small></label>
                                 <input type="number" step="0.01" min="0" class="form-control"
-                                       name="weight" id="product_weight"
-                                       placeholder="0.00">
+                                       name="weight" id="product_weight" placeholder="0.00">
                             </div>
                         </div>
 
-                        <!-- Stock -->
                         <div class="mb-3">
-                            <label class="form-label">
-                                Stock Quantity <span class="text-danger">*</span>
+                            <label class="form-label">Stock Quantity <span class="text-danger">*</span>
                                 <span class="form-error" id="stock-err"></span>
                             </label>
                             <input type="number" min="0" class="form-control"
-                                   name="stock" id="product_stock"
-                                   placeholder="0" required>
+                                   name="stock" id="product_stock" placeholder="0" required>
                         </div>
 
-                        <!-- Image -->
                         <div class="mb-3">
-                            <label class="form-label">
-                                Product Image <span class="text-danger">*</span>
+                            <label class="form-label">Product Image <span class="text-danger">*</span>
                                 <span class="form-error" id="img-err"></span>
                             </label>
                             <input type="file" class="form-control" name="image" id="product_image"
@@ -268,7 +255,7 @@ if(!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'seller') {
         </div>
     </div>
 
-    <!-- ── Order Detail Modal ── -->
+    <!-- Order Detail Modal -->
     <div class="modal fade" id="orderDetailModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
             <div class="modal-content">
@@ -288,6 +275,7 @@ if(!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'seller') {
     </div>
 </main>
 
+<!-- JS loads first, suspension script runs last -->
 <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="../assets/js/signout.js"></script>
 <script src="../assets/js/bootstrap-alert.js"></script>
@@ -297,36 +285,47 @@ if(!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'seller') {
 <script src="../assets/js/seller/view-product.js"></script>
 
 <script>
-    const addProductModal = document.getElementById('addProductModal');
+document.addEventListener('DOMContentLoaded', () => {
+const isSuspended = <?= $isSuspended ? 'true' : 'false' ?>;
+if (!isSuspended) return;
 
-    addProductModal.addEventListener('show.bs.modal', () => {
-        const skuInput  = document.getElementById('product_sku');
-        const catSelect = document.getElementById('product_category');
-        if (!skuInput) return;
+const modalEl = document.getElementById('suspendedModal');
+if (modalEl && !sessionStorage.getItem('suspendedModalSeen')) {
+  new bootstrap.Modal(modalEl, { backdrop: 'static', keyboard: false }).show();
+  sessionStorage.setItem('suspendedModalSeen', 'true');
+} else {
+    console.error('suspendedModal element not found in DOM');
+  }
 
-        const generateSKU = () => {
-            const catText = catSelect.options[catSelect.selectedIndex]?.text || 'GEN';
-            const prefix  = catText.toUpperCase().slice(0, 3);
-            const ts      = Date.now().toString(36).toUpperCase();
-            const rand    = Math.random().toString(36).slice(2, 6).toUpperCase();
-            return `SKU-${prefix}-${ts}-${rand}`;
-        };
+  const actionBar = document.querySelector('.action-bar');
+  if (actionBar) {
+    actionBar.style.opacity = '0.4';
+    actionBar.style.pointerEvents = 'none';
+  }
 
-        skuInput.value = generateSKU();
-        catSelect.addEventListener('change', () => { skuInput.value = generateSKU(); });
-    });
+  const container = document.getElementById('content-box');
+  if(container){
+    container.style.opacity = '0.4';
+    container.style.pointerEvents = 'none';
+  }
 
-    // Reset form and all errors when modal closes
-    addProductModal.addEventListener('hidden.bs.modal', () => {
-        document.getElementById('productUploadForm').reset();
-        ['name-err', 'desc-err', 'category-err', 'type-err',
-         'price-err', 'stock-err', 'img-err'].forEach(id => {
-            const el = document.getElementById(id);
-            if (el) { el.textContent = ''; el.style.display = 'none'; }
-        });
-        const skuInput = document.getElementById('product_sku');
-        if (skuInput) skuInput.value = '';
-    });
+  // 3. Grey out stat cards
+  document.querySelectorAll('.card').forEach(card => {
+    card.style.opacity = '0.4';
+    card.style.pointerEvents = 'none';
+  });
+
+  // 4. Persistent banner under navbar
+  const banner = document.createElement('div');
+  banner.className = 'alert alert-danger mb-0 rounded-0 text-center';
+  banner.innerHTML = `
+    <i class="fas fa-ban me-2"></i>
+    <strong>Your account is suspended.</strong> All features are disabled.
+    <a href="/mvp/public/pages/contact-us.php" class="alert-link ms-2">Contact us to reactivate.</a>
+  `;
+  document.querySelector('header').after(banner);
+
+});
 </script>
 
 </body>

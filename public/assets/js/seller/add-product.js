@@ -6,6 +6,36 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+const addProductModal = document.getElementById('addProductModal');
+
+    addProductModal.addEventListener('show.bs.modal', () => {
+        const skuInput  = document.getElementById('product_sku');
+        const catSelect = document.getElementById('product_category');
+        if (!skuInput) return;
+
+        const generateSKU = () => {
+            const catText = catSelect.options[catSelect.selectedIndex]?.text || 'GEN';
+            const prefix  = catText.toUpperCase().slice(0, 3);
+            const ts      = Date.now().toString(36).toUpperCase();
+            const rand    = Math.random().toString(36).slice(2, 6).toUpperCase();
+            return `SKU-${prefix}-${ts}-${rand}`;
+        };
+
+        skuInput.value = generateSKU();
+        catSelect.addEventListener('change', () => { skuInput.value = generateSKU(); });
+    });
+
+    addProductModal.addEventListener('hidden.bs.modal', () => {
+        document.getElementById('productUploadForm').reset();
+        ['name-err', 'desc-err', 'category-err', 'type-err',
+         'price-err', 'stock-err', 'img-err'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) { el.textContent = ''; el.style.display = 'none'; }
+        });
+        const skuInput = document.getElementById('product_sku');
+        if (skuInput) skuInput.value = '';
+    });
+
 function showErr(id, msg) {
     const el = document.getElementById(id);
     if (!el) return;
@@ -247,3 +277,4 @@ function showToast(message, type = 'success', duration = 3000) {
     toast.className   = `toast ${type} show`;
     setTimeout(() => toast.classList.remove('show'), duration);
 }
+

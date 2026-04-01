@@ -34,7 +34,7 @@
       </div> -->
       <div class="user-menu-item">
         <ion-icon name="receipt-outline"></ion-icon> 
-        <span class="menu-text"><a href="../public/pages/user-orders.php">Orders</a></span>
+        <span class="menu-text"><a href="/mvp/public/pages/user-orders.php">Orders</a></span>
       </div>
       <div class="user-menu-item">
         <ion-icon name="settings-outline" class="icon-settings"></ion-icon>

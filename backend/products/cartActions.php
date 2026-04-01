@@ -2,12 +2,34 @@
 session_start();
 require_once '../../backend/auth/config/db.php'; // adjust path if needed
 
-// Initialize cart if not exists
-if (!isset($_SESSION['cart'])) {
+if (isset($_SESSION['user_status']) && $_SESSION['user_status'] === 'suspended') {
+    echo json_encode([
+        'cart' => [],
+        'total' => 0,
+        'success' => false,
+        'message' => 'Feature unavailable due to Account Suspension'
+    ]);
+    exit;
+}
+
+// ── Helper: Require login ────────────────────────────────────────────────
+function requireLogin() {
+    if (!isset($_SESSION['user_id'])) {
+        echo json_encode([
+            'success' => false,
+            'task'    => 'login',
+            'message' => 'Please login first'
+        ]);
+        exit;
+    }
+}
+
+// ── Initialize cart if not exists ───────────────────────────────────────
+if (!array_key_exists('cart', $_SESSION) || !is_array($_SESSION['cart'])) {
     $_SESSION['cart'] = [];
 }
 
-// Get action from POST
+// ── Get action from POST safely ─────────────────────────────────────────
 $action = $_POST['action'] ?? '';
 
 switch ($action) {
@@ -16,14 +38,17 @@ switch ($action) {
         break;
 
     case 'add':
+        requireLogin();
         addToCart($conn);
         break;
 
     case 'update':
+        requireLogin();
         updateCart();
         break;
 
     case 'delete':
+        requireLogin();
         deleteFromCart();
         break;
 
@@ -32,20 +57,20 @@ switch ($action) {
         break;
 }
 
-// ── Fetch cart contents from DB ───────────────────────────────────────────────
+// ── Fetch cart contents from DB ────────────────────────────────────────
 function fetchCart($conn) {
-    $cart = $_SESSION['cart'];
+    $cart = $_SESSION['cart'] ?? [];
 
     if (empty($cart)) {
         echo json_encode(['cart' => [], 'total' => 0]);
         return;
     }
 
-    $cartData = [];
-    $total    = 0;
+    $cartData  = [];
+    $total     = 0;
+    $ids       = array_keys($cart);
 
-    // Build a safe IN clause from session cart IDs
-    $ids         = array_keys($cart);
+    // Build a safe IN clause
     $placeholders = implode(',', array_fill(0, count($ids), '?'));
     $types        = str_repeat('i', count($ids));
 
@@ -59,7 +84,7 @@ function fetchCart($conn) {
     while ($product = $result->fetch_assoc()) {
         $id = $product['product_id'];
         if (isset($cart[$id])) {
-            $qty          = $cart[$id]['quantity'];
+            $qty = $cart[$id]['quantity'] ?? 1; // fallback to 1
             $cartData[$id] = [
                 'id'       => $id,
                 'name'     => $product['name'],
@@ -75,17 +100,17 @@ function fetchCart($conn) {
     echo json_encode(['cart' => $cartData, 'total' => $total]);
 }
 
-// ── Add item to cart (validates against DB) ───────────────────────────────────
+// ── Add item to cart ───────────────────────────────────────────────────
 function addToCart($conn) {
-    $id       = isset($_POST['id'])       ? (int)$_POST['id']       : 0;
-    $quantity = isset($_POST['quantity']) ? (int)$_POST['quantity'] : 1;
+    $id       = isset($_POST['id']) ? (int)$_POST['id'] : 0;
+    $quantity = isset($_POST['quantity']) ? max(1, (int)$_POST['quantity']) : 1;
 
     if (!$id) {
         echo json_encode(['success' => false, 'message' => 'Invalid product ID']);
         return;
     }
 
-    // Verify product exists in DB and is approved
+    // Verify product exists
     $stmt = $conn->prepare(
         "SELECT product_id, name FROM products WHERE product_id = ? AND status = 'approved' LIMIT 1"
     );
@@ -100,7 +125,7 @@ function addToCart($conn) {
         return;
     }
 
-    // If already in cart, increment quantity
+    // Update quantity if already in cart
     if (isset($_SESSION['cart'][$id])) {
         $_SESSION['cart'][$id]['quantity'] += $quantity;
         echo json_encode([
@@ -122,9 +147,14 @@ function addToCart($conn) {
     ]);
 }
 
-// ── Update cart quantities ────────────────────────────────────────────────────
+// ── Update cart quantities ─────────────────────────────────────────────
 function updateCart() {
     $quantities = $_POST['quantities'] ?? [];
+
+    if (!is_array($quantities) || empty($quantities)) {
+        echo json_encode(['success' => true, 'message' => 'No items in cart to update']);
+        return;
+    }
 
     foreach ($quantities as $id => $quantity) {
         $id       = (int)$id;
@@ -142,7 +172,7 @@ function updateCart() {
     echo json_encode(['success' => true, 'message' => 'Cart updated']);
 }
 
-// ── Delete item from cart ─────────────────────────────────────────────────────
+// ── Delete item from cart ─────────────────────────────────────────────
 function deleteFromCart() {
     $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
 

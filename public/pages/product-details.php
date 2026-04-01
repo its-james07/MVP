@@ -169,6 +169,12 @@ Wish
 <script src="../assets/js/view-product.js"></script>
 <script src="../assets/js/cart-modal.js"></script>
 <script src="../assets/js/toast.js"></script>
+<script src="../assets/js/session-check.js"></script>
+<script>
+  window.addEventListener('scroll', () => {
+    document.querySelector('header').classList.toggle('scrolled', window.scrollY > 10);
+  });
+</script>
 
 <script>
 

@@ -10,7 +10,11 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 try {
     if ($method === 'GET') {
-        $sql = "SELECT u.user_id, u.fname, u.email, u.role, u.status, u.created_at, s.seller_id, s.status AS seller_status, sh.store_name, sh.city AS shop_city FROM users u LEFT JOIN sellers s ON s.user_id = u.user_id LEFT JOIN shop sh ON sh.seller_id = s.seller_id ORDER BY u.created_at DESC";
+        $sql = "SELECT u.user_id, u.fname, u.email, u.role, u.status, u.created_at, s.seller_id, s.status AS seller_status, sh.store_name, sh.city AS shop_city 
+                FROM users u 
+                LEFT JOIN sellers s ON s.user_id = u.user_id 
+                LEFT JOIN shop sh ON sh.seller_id = s.seller_id 
+                ORDER BY u.created_at DESC";
         $result = $conn->query($sql);
 
         if (!$result) throw new Exception("Query failed: " . $conn->error);
@@ -118,15 +122,15 @@ try {
                 $stmt->execute();
                 $stmt->close();
 
-                $productStatus = 'rejected';
-                $stmt = $conn->prepare("UPDATE products SET status = ? WHERE seller_id = (SELECT seller_id FROM sellers WHERE user_id = ?)");
+                $visibility = 'hidden';
+                $stmt = $conn->prepare("UPDATE products SET visibility = ? WHERE seller_id = (SELECT seller_id FROM sellers WHERE user_id = ?)");
                 if (!$stmt) throw new Exception($conn->error);
-                $stmt->bind_param("si", $productStatus, $user_id);
+                $stmt->bind_param("si", $visibility, $user_id);
                 $stmt->execute();
                 $stmt->close();
 
                 $conn->commit();
-                echo json_encode(["success" => true, "message" => "User suspended and products unpublished."]);
+                echo json_encode(["success" => true, "message" => "User suspended and products hidden."]);
 
             } catch (Exception $e) {
                 $conn->rollback();
@@ -149,8 +153,15 @@ try {
                 $stmt->execute();
                 $stmt->close();
 
+                $visibility = 'visible';
+                $stmt = $conn->prepare("UPDATE products SET visibility = ? WHERE seller_id = (SELECT seller_id FROM sellers WHERE user_id = ?)");
+                if (!$stmt) throw new Exception($conn->error);
+                $stmt->bind_param("si", $visibility, $user_id);
+                $stmt->execute();
+                $stmt->close();
+
                 $conn->commit();
-                echo json_encode(["success" => true, "message" => "User activated successfully."]);
+                echo json_encode(["success" => true, "message" => "User activated and products visible."]);
 
             } catch (Exception $e) {
                 $conn->rollback();

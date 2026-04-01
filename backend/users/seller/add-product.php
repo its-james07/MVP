@@ -77,7 +77,7 @@ if ($sellerId <= 0) respond(401, false, 'Unauthorised. Please log in.');
 
 
 $categoryId  = (int) ($_POST['category'] ?? 0);
-$typeId      = isset($_POST['type']) && $_POST['type'] !== '' ? (int) $_POST['type'] : null;
+$typeId = isset($_POST['type_id']) && $_POST['type_id'] !== '' ? (int) $_POST['type_id'] : null;
 $name        = trim($_POST['name'] ?? '');
 $description = trim($_POST['description'] ?? '');
 $price       = (float) ($_POST['price'] ?? 0.0);
@@ -144,7 +144,7 @@ try {
     $stmt->close();
 } catch (Throwable $e) {
     if (file_exists(UPLOAD_DIR . basename($imagePath))) unlink(UPLOAD_DIR . basename($imagePath));
-    respond(500, false, 'Failed to save the product. Please try again.');
+    respond(500, false, 'Failed to save the product. SQL Error: ' . ($conn->error ?? $e->getMessage()));
 }
 
 //Success message

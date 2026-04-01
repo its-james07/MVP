@@ -231,10 +231,10 @@ $customer_name = $_SESSION['fname'] ?? 'there';
     if (!orders || orders.length === 0) {
       wrap.innerHTML = `
         <div class="empty-state">
-          <div style="font-size:2.5rem;margin-bottom:12px">📦</div>
+          <div style="font-size:2.5rem;margin-bottom:12px"></div>
           <h5>No orders yet</h5>
           <p style="font-size:0.85rem">You haven't placed any orders. Start shopping!</p>
-          <a href="/index.php" class="btn btn-sm mt-2" style="background:#4c956c;color:#fff">Browse Products</a>
+          <a href="/mvp/public/index.php" class="btn btn-sm mt-2" style="background:#4c956c;color:#fff">Browse Products</a>
         </div>`;
       return;
     }

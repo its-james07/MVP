@@ -183,12 +183,12 @@ checkOutBtn.addEventListener('click', () => {
     window.fetchCart = fetchCart;
 });
 
-// function openLoginModal(){
-//     const userLogin = document.querySelectorAll(".user-login");
-//     const overlays = document.querySelectorAll(".modal-overlay");
-//     const loginModal = document.getElementById('login-modal');
-//     loginModal.style.display = 'block';
-//     overlays.forEach(overlay=>{
-//       overlay.classList.add('show');
-//     })
-// }
+function openLoginModal(){
+    const userLogin = document.querySelectorAll(".user-login");
+    const overlays = document.querySelectorAll(".modal-overlay");
+    const loginModal = document.getElementById('login-modal');
+    loginModal.style.display = 'block';
+    overlays.forEach(overlay=>{
+      overlay.classList.add('show');
+    })
+}

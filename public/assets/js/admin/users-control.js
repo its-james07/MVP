@@ -327,7 +327,7 @@ async function executeDelete(userId, userName) {
 // ─── Handle Suspend / Activate ────────────────────────────────
 async function handleUserAction(userId, userName, action) {
     const confirmMessages = {
-        suspend:  `Suspend ${userName}? They will lose access temporarily.`,
+        suspend:  `Suspend ${userName}? They will lose access temporarily .`,
         activate: `Activate ${userName}? They will regain full access.`
     };
 

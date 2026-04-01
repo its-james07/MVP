@@ -253,16 +253,16 @@ function showProductDetail(productId) {
     document.getElementById('vp-modal-date').textContent        = formatDate(p.created_at);
     document.getElementById('vp-modal-description').textContent = p.description ?? 'No description provided.';
 
-    // const imgEl   = document.getElementById('vp-modal-image');
-    // const noImgEl = document.getElementById('vp-modal-no-image');
-    // if (p.image) {
-    //     imgEl.src             = `../../uploads/products/${escHtml(p.image)}`;
-    //     imgEl.style.display   = 'block';
-    //     noImgEl.style.display = 'none';
-    // } else {
-    //     imgEl.style.display   = 'none';
-    //     noImgEl.style.display = 'block';
-    // }
+    const imgEl   = document.getElementById('vp-modal-image');
+    const noImgEl = document.getElementById('vp-modal-no-image');
+    if (p.image) {
+        imgEl.src             = `${escHtml(p.image)}`;
+        imgEl.style.display   = 'block';
+        noImgEl.style.display = 'none';
+    } else {
+        imgEl.style.display   = 'none';
+        noImgEl.style.display = 'block';
+    }
 
     bootstrap.Modal.getOrCreateInstance(document.getElementById('vpDetailModal')).show();
 }
