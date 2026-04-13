@@ -13,7 +13,7 @@ try {
         throw new Exception("Invalid seller ID.");
     }
 
-    $allowed = ['approved', 'rejected', 'suspended'];
+    $allowed = ['active', 'rejected', 'suspended'];
     if (!in_array($status, $allowed)) {
         throw new Exception("Invalid status value. Allowed: " . implode(', ', $allowed));
     }

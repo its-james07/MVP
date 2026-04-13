@@ -45,7 +45,7 @@ try {
     $subtotal = 0;
     $cart_details = [];
 
-    // ✅ Prepared once (optimization)
+
     $stmt_product = mysqli_prepare($conn, "
         SELECT product_id, name, price, weight, seller_id, stock 
         FROM products 

@@ -82,7 +82,7 @@ function renderApplications(applications) {
                 <button class="btn btn-primary btn-sm me-1" onclick="showSellerDetails(${seller.seller_id})">
                     <i class="fas fa-info-circle me-1"></i>Details
                 </button>
-                <button class="btn btn-success btn-sm me-1" onclick="updateStatus(${seller.seller_id}, 'approved', this)">
+                <button class="btn btn-success btn-sm me-1" onclick="updateStatus(${seller.seller_id}, 'active', this)">
                     <i class="fas fa-check me-1"></i>Approve
                 </button>
                 <button class="btn btn-danger btn-sm" onclick="handleReject(${seller.seller_id}, '${seller.user_name}', this)">
@@ -135,4 +135,101 @@ function showSellerDetails(sellerId) {
 
     const modal = new bootstrap.Modal(document.getElementById('sellerDetailsModal'));
     modal.show();
+}
+
+// ─── Update Status (Approve) ──────────────────────────────────
+
+async function updateStatus(sellerId, status, button) {
+    button.disabled = true;
+    const originalText = button.innerHTML;
+    button.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Processing...';
+
+    try {
+        const response = await fetch('../../backend/users/admin/update-seller-status.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ seller_id: sellerId, status: status })
+        });
+
+        const result = await response.json();
+
+        if (!response.ok || !result.success) {
+            throw new Error(result.message || 'Failed to update status');
+        }
+
+        // Remove the row from the table
+        const row = document.getElementById(`seller-row-${sellerId}`);
+        if (row) {
+            row.style.opacity = '0.5';
+            setTimeout(() => row.remove(), 300);
+        }
+
+        showToast(`Seller ${status === 'active' ? 'approved' : 'rejected'} successfully!`, 'success');
+        
+        // Refresh the applications list after a short delay
+        setTimeout(loadPendingSellers, 500);
+
+    } catch (err) {
+        console.error(err);
+        showToast(`Error: ${err.message}`, 'danger');
+        button.disabled = false;
+        button.innerHTML = originalText;
+    }
+}
+
+// ─── Handle Rejection ────────────────────────────────────────
+
+function handleReject(sellerId, sellerName, button) {
+    // Create and show rejection modal
+    const rejectModalHtml = `
+        <div class="modal fade" id="rejectSellerModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title">Confirm Rejection</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to reject the seller application from <strong>${sellerName}</strong>?</p>
+                        <p class="text-muted">This action cannot be undone. The seller will need to reapply.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-danger" id="confirmRejectBtn">Confirm Rejection</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    const existingModal = document.getElementById('rejectSellerModal');
+    if (existingModal) existingModal.remove();
+
+    document.body.insertAdjacentHTML('beforeend', rejectModalHtml);
+
+    const modal = new bootstrap.Modal(document.getElementById('rejectSellerModal'));
+    
+    document.getElementById('confirmRejectBtn').addEventListener('click', () => {
+        modal.hide();
+        updateStatus(sellerId, 'rejected', button);
+    });
+
+    modal.show();
+}
+
+// ─── Toast Notification ──────────────────────────────────────
+
+function showToast(message, type = 'info') {
+    const toastElement = document.getElementById('toast');
+    if (toastElement) {
+        toastElement.innerHTML = `
+            <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        `;
+        setTimeout(() => {
+            toastElement.innerHTML = '';
+        }, 5000);
+    }
 }

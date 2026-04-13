@@ -25,7 +25,6 @@
         Total: Rs<span id="cart-total"></span>
     </div>
     <div class="modal-footer">
-        <button type="button" id="btn-update" class="cart-btn btn-update">Update</button>
         <button type="button" id="btn-checkout" class="cart-btn btn-checkout">Checkout</button>
     </div>
 </form>

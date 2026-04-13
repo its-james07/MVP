@@ -283,11 +283,13 @@ $customer_name = $_SESSION['fname'] ?? 'there';
           </div>
           <div class="order-card-footer">
             <div class="order-total">
-              <span class="text-muted" style="font-size:0.83rem">
-                Subtotal NPR ${parseFloat(order.subtotal).toLocaleString()} 
-                + Delivery NPR ${parseFloat(order.shipping_total).toLocaleString()}
-              </span><br>
-              Grand Total: <strong>NPR ${parseFloat(order.grand_total).toLocaleString()}</strong>
+              <div style="font-size:0.83rem;color:#6b7280;margin-bottom:6px">
+                <div>Subtotal: NPR ${parseFloat(order.subtotal).toLocaleString()}</div>
+                <div style="margin-top:4px">Delivery Charge: <span style="color:#ef4444;font-weight:600">NPR ${parseFloat(order.shipping_total).toLocaleString()}</span></div>
+              </div>
+              <div style="border-top:1px solid #e5e7eb;padding-top:6px">
+                Grand Total: <strong style="font-size:0.95rem;color:#4c956c">NPR ${parseFloat(order.grand_total).toLocaleString()}</strong>
+              </div>
             </div>
             ${cancelBtn}
           </div>

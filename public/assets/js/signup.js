@@ -33,6 +33,10 @@ form.addEventListener('submit', function (e) {
                 if (data.status === 'success') {
                     showToast(data.message, 'success');
                     clearForm();
+                    // Redirect to home page with openLogin parameter after 1.5 seconds
+                    setTimeout(() => {
+                        window.location.href = '/mvp/public/index.php?openLogin=true';
+                    }, 1500);
                 } else {
                     const msg = Array.isArray(data.message)
                         ? data.message[0]

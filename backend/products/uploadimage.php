@@ -1,4 +1,12 @@
 <?php
+session_start();
+// if (isset($_SESSION['user_status']) && $_SESSION['user_status'] === 'suspended') {
+//     echo json_encode([
+//         'success' => false,
+//         'message' => 'Feature unavailable due to Account Suspension'
+//     ]);
+//     exit;
+// }
 
 function uploadImage(array $file, int $category_id): string
 {

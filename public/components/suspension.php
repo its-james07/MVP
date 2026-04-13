@@ -1,6 +1,24 @@
 <?php
 // No if-check here — JS handles the show/hide logic
 ?>
+<style>
+  #suspendedModal .modal-dialog {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+  
+  #suspendedModal.show .modal-dialog {
+    transform: none;
+  }
+  
+  #suspendedModal .modal-content {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+  }
+</style>
+
 <div class="modal fade" id="suspendedModal" tabindex="-1"
      data-bs-backdrop="static" data-bs-keyboard="false"
      aria-labelledby="suspendedModalLabel" aria-hidden="true">

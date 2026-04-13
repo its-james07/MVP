@@ -11,6 +11,41 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Function to auto-update cart when quantity changes (with debounce)
+    let updateTimeout;
+    function autoUpdateCart() {
+        // Clear previous timeout
+        clearTimeout(updateTimeout);
+
+        // Set a new timeout to update cart after 500ms of no changes
+        updateTimeout = setTimeout(() => {
+            const quantities = {};
+
+            document.querySelectorAll('.qty-input').forEach(input => {
+                quantities[input.dataset.id] = input.value;
+            });
+
+            const formData = new URLSearchParams();
+            formData.append('action', 'update');
+
+            for (const id in quantities) {
+                formData.append(`quantities[${id}]`, quantities[id]);
+            }
+
+            fetch(cartAPI, {
+                method: 'POST',
+                body: formData
+            })
+                .then(res => res.json())
+                .then(data => {
+                    fetchCart();
+                })
+                .catch(err => {
+                    console.error('Error updating cart:', err);
+                });
+        }, 500); // 500ms debounce
+    }
+
     function fetchCart() {
         fetch(cartAPI, {
             method: 'POST',
@@ -58,6 +93,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 cartTotal.textContent = data.total.toFixed(2);
                 updateCartCount(totalItems); // FIXED: Uncommented
+
+                // Add event listeners to quantity inputs for auto-update
+                document.querySelectorAll('.qty-input').forEach(input => {
+                    input.addEventListener('change', autoUpdateCart);
+                    input.addEventListener('input', autoUpdateCart);
+                });
             })
             .catch(err => {
                 console.error('Error fetching cart:', err);
@@ -67,36 +108,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial cart fetch
     fetchCart();
 
-    // Update cart quantities
+    // Update cart quantities - clicking the update button
     const updateBtn = document.getElementById('btn-update');
     if (updateBtn) {
         updateBtn.addEventListener('click', function () {
-            const quantities = {};
-
-            document.querySelectorAll('.qty-input').forEach(input => {
-                quantities[input.dataset.id] = input.value;
-            });
-
-            const formData = new URLSearchParams();
-            formData.append('action', 'update');
-
-            for (const id in quantities) {
-                formData.append(`quantities[${id}]`, quantities[id]);
-            }
-
-            fetch(cartAPI, {
-                method: 'POST',
-                body: formData
-            })
-                .then(res => res.json())
-                .then(data => {
-                    fetchCart();
-                    showToast(data.message, 'success');
-                })
-                .catch(err => {
-                    console.error('Error updating cart:', err);
-                    showToast('Failed to update cart', 'error');
-                });
+            autoUpdateCart();
         });
     }
 

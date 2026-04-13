@@ -91,6 +91,34 @@ switch ($action) {
         break;
 
     case 'update_status':
+        // Fetch current seller status from database
+        $statusStmt = mysqli_prepare($conn, 'SELECT status FROM sellers WHERE seller_id = ?');
+        if (!$statusStmt) {
+            echo json_encode(['success' => false, 'message' => 'Database error.']);
+            exit;
+        }
+        mysqli_stmt_bind_param($statusStmt, 'i', $seller_id);
+        mysqli_stmt_execute($statusStmt);
+        $statusResult = mysqli_stmt_get_result($statusStmt);
+        $sellerData = mysqli_fetch_assoc($statusResult);
+        mysqli_stmt_close($statusStmt);
+
+        if (!$sellerData) {
+            echo json_encode(['success' => false, 'message' => 'Seller account not found.']);
+            exit;
+        }
+
+        $currentStatus = $sellerData['status'] ?? 'pending';
+
+        // Check seller status
+        if ($currentStatus === 'suspended') {
+            echo json_encode(['success' => false, 'message' => 'Your seller account has been suspended. You cannot update order status at this time. Please contact admin for further assistance.']);
+            exit;
+        } elseif ($currentStatus !== 'active') {
+            echo json_encode(['success' => false, 'message' => 'Your seller account is not yet approved by admin. You cannot update order status at this time.']);
+            exit;
+        }
+
         // Reuse already-decoded $json_input — no need to re-read php://input
         $order_item_id = (int) ($json_input['order_item_id'] ?? 0);
         $new_status    = trim($json_input['new_status'] ?? '');
@@ -134,7 +162,7 @@ switch ($action) {
         break;
 
     case 'fetch_counts':
-        $stmt_counts = mysqli_prepare($conn, "SELECT COUNT(DISTINCT o.order_id) AS total_orders, SUM(oi.fulfillment_status='pending') AS pending, SUM(oi.fulfillment_status='delivered') AS delivered, COALESCE(SUM(oi.seller_payout_amount),0) AS total_earnings FROM order_items oi INNER JOIN orders o ON oi.order_id=o.order_id WHERE oi.seller_id=?");
+        $stmt_counts = mysqli_prepare($conn, "SELECT COUNT(DISTINCT o.order_id) AS total_orders, SUM(oi.fulfillment_status='pending') AS pending, SUM(oi.fulfillment_status='delivered') AS delivered, COALESCE(SUM(CASE WHEN oi.fulfillment_status='delivered' THEN oi.seller_payout_amount ELSE 0 END),0) AS total_earnings FROM order_items oi INNER JOIN orders o ON oi.order_id=o.order_id WHERE oi.seller_id=?");
         mysqli_stmt_bind_param($stmt_counts, 'i', $seller_id);
         mysqli_stmt_execute($stmt_counts);
         $counts = mysqli_fetch_assoc(mysqli_stmt_get_result($stmt_counts));

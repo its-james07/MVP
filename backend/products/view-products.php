@@ -1,5 +1,12 @@
 <?php
 session_start();
+// if (isset($_SESSION['user_status']) && $_SESSION['user_status'] === 'suspended') {
+//     echo json_encode([
+//         'success' => false,
+//         'message' => 'Feature unavailable due to Account Suspension'
+//     ]);
+//     exit;
+// }
 header('Content-Type: application/json');
 
 require_once '../auth/config/db.php';

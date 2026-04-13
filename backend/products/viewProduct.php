@@ -3,6 +3,13 @@ session_start();
 header('Content-Type: application/json');
 require_once '../../auth/config/db.php';
 
+// if (isset($_SESSION['user_status']) && $_SESSION['user_status'] === 'suspended') {
+//     echo json_encode([
+//         'success' => false,
+//         'message' => 'Feature unavailable due to Account Suspension'
+//     ]);
+//     exit;
+// }
 // ── Auth guard ────────────────────────────────────────────────────────────────
 if (!isset($_SESSION['seller_id'])) {
     echo json_encode(['success' => false, 'message' => 'Unauthorized. Please log in.']);
@@ -64,6 +71,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$product_id || !in_array($action, ['delete', 'update_stock'])) {
         echo json_encode(['success' => false, 'message' => 'Invalid request.']);
+        exit;
+    }
+
+    // Fetch current seller status from database
+    $statusStmt = $conn->prepare('SELECT status FROM sellers WHERE seller_id = ?');
+    if (!$statusStmt) {
+        echo json_encode(['success' => false, 'message' => 'Database error.']);
+        exit;
+    }
+    $statusStmt->bind_param('i', $seller_id);
+    $statusStmt->execute();
+    $statusResult = $statusStmt->get_result();
+    $sellerData = $statusResult->fetch_assoc();
+    $statusStmt->close();
+
+    if (!$sellerData) {
+        echo json_encode(['success' => false, 'message' => 'Seller account not found.']);
+        exit;
+    }
+
+    $currentStatus = $sellerData['status'] ?? 'pending';
+
+    // Check seller status
+    if ($currentStatus === 'suspended') {
+        echo json_encode(['success' => false, 'message' => 'Your seller account has been suspended. You cannot modify products at this time. Please contact admin for further assistance.']);
+        exit;
+    } elseif ($currentStatus !== 'active') {
+        echo json_encode(['success' => false, 'message' => 'Your seller account is not yet approved by admin. You cannot modify products at this time.']);
         exit;
     }
 

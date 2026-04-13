@@ -32,19 +32,19 @@
       <div class="category-items">
         <div class="citem one">
           <img src="assets/images/index/cDog.png" alt="Dog" draggable="false" />
-          <a href="pages/product-catalog.php">Dog</a>
+          <a href="/mvp/public/pages/product-catalog.php">Dog</a>
         </div>
         <div class="citem two">
           <img src="assets/images/index/cCat.png" alt="Cat" draggable="false" />
-          <a href="pages/product-catalog.php">Cat</a>
+          <a href="/mvp/public/pages/product-catalog.php">Cat</a>
         </div>
         <div class="citem three">
           <img src="assets/images/index/cFish.png" alt="Fish" draggable="false" />
-          <a href="pages/product-catalog.php">Fish</a>
+          <a href="/mvp/public/pages/product-catalog.php">Fish</a>
         </div>
         <div class="citem four">
           <img src="assets/images/index/cBird.png" alt="Bird" draggable="false" />
-          <a href="pages/product-catalog.php">Bird</a>
+          <a href="/mvp/public/pages/product-catalog.php">Bird</a>
         </div>
       </div>
     </section>

@@ -8,9 +8,9 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'seller') {
     exit();
 }
 
-// Grab status here so it's available everywhere in this file
 $seller_status = $_SESSION['seller_status'] ?? '';
 $isSuspended   = ($seller_status === 'suspended');
+$isApproved    = ($seller_status === 'active');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -139,21 +139,26 @@ $isSuspended   = ($seller_status === 'suspended');
             </ul>
         </div>
 
-        <button class="btn btn-warning ms-auto" data-bs-toggle="modal" data-bs-target="#addProductModal">
+        <button class="btn btn-warning ms-auto" data-bs-toggle="modal" data-bs-target="#addProductModal" <?php if (!$isApproved) echo 'disabled'; ?> title="<?php if (!$isApproved) echo 'Your account is not yet approved by admin'; ?>">
             Add Product
         </button>
     </div>
+
+    <?php if ($seller_status === 'pending'): ?>
+    <div class="alert alert-warning alert-dismissible fade show mb-3" role="alert">
+        <strong>Account Approval Pending</strong><br>
+        Your seller account is pending admin approval. Once approved, you will be able to add products, update orders, and access all seller features.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <?php endif; ?>
 
     <div class="content-box" id="content-box"></div>
     <div id="toast" class="toast"></div>
 
     <?php include '../components/product-detail-modal.php'; ?>
     <?php include '../components/product-edit-modal.php'; ?>
-
-    <!-- Suspension modal — included HERE inside body, after all other HTML -->
     <?php include '../components/suspension.php'; ?>
 
-    <!-- Add Product Modal -->
     <div class="modal fade" id="addProductModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
             <div class="modal-content">
@@ -246,7 +251,7 @@ $isSuspended   = ($seller_status === 'suspended');
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-success">
                                 <span id="submitBtnText">Save Product</span>
-                                <span id="submitBtnSpinner" class="spinner-border spinner-border-sm ms-1 d-none" role="status"></span>
+                                <span id="submitBtnSpinner" class="spinner-border spinner-border-sm ms-1 d-none"></span>
                             </button>
                         </div>
                     </form>
@@ -255,13 +260,12 @@ $isSuspended   = ($seller_status === 'suspended');
         </div>
     </div>
 
-    <!-- Order Detail Modal -->
     <div class="modal fade" id="orderDetailModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">
-                        <ion-icon name="receipt-outline" class="text-success me-2" style="font-size:1.1rem;vertical-align:middle;"></ion-icon>
+                        <ion-icon name="receipt-outline" class="text-success me-2"></ion-icon>
                         Order Details
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -275,7 +279,6 @@ $isSuspended   = ($seller_status === 'suspended');
     </div>
 </main>
 
-<!-- JS loads first, suspension script runs last -->
 <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="../assets/js/signout.js"></script>
 <script src="../assets/js/bootstrap-alert.js"></script>
@@ -283,6 +286,7 @@ $isSuspended   = ($seller_status === 'suspended');
 <script src="../assets/js/seller/seller-script.js"></script>
 <script src="../assets/js/seller/order-control.js"></script>
 <script src="../assets/js/seller/view-product.js"></script>
+<script src="../assets/js/seller/seller-status-monitor.js"></script>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -293,37 +297,33 @@ const modalEl = document.getElementById('suspendedModal');
 if (modalEl && !sessionStorage.getItem('suspendedModalSeen')) {
   new bootstrap.Modal(modalEl, { backdrop: 'static', keyboard: false }).show();
   sessionStorage.setItem('suspendedModalSeen', 'true');
-} else {
-    console.error('suspendedModal element not found in DOM');
-  }
+}
 
-  const actionBar = document.querySelector('.action-bar');
-  if (actionBar) {
-    actionBar.style.opacity = '0.4';
-    actionBar.style.pointerEvents = 'none';
-  }
+const actionBar = document.querySelector('.action-bar');
+if (actionBar) {
+  actionBar.style.opacity = '0.4';
+  actionBar.style.pointerEvents = 'none';
+}
 
-  const container = document.getElementById('content-box');
-  if(container){
-    container.style.opacity = '0.4';
-    container.style.pointerEvents = 'none';
-  }
+const container = document.getElementById('content-box');
+if(container){
+  container.style.opacity = '0.4';
+  container.style.pointerEvents = 'none';
+}
 
-  // 3. Grey out stat cards
-  document.querySelectorAll('.card').forEach(card => {
-    card.style.opacity = '0.4';
-    card.style.pointerEvents = 'none';
-  });
+document.querySelectorAll('.card').forEach(card => {
+  card.style.opacity = '0.4';
+  card.style.pointerEvents = 'none';
+});
 
-  // 4. Persistent banner under navbar
-  const banner = document.createElement('div');
-  banner.className = 'alert alert-danger mb-0 rounded-0 text-center';
-  banner.innerHTML = `
+const banner = document.createElement('div');
+banner.className = 'alert alert-danger mb-0 rounded-0 text-center';
+banner.innerHTML = `
     <i class="fas fa-ban me-2"></i>
     <strong>Your account is suspended.</strong> All features are disabled.
     <a href="/mvp/public/pages/contact-us.php" class="alert-link ms-2">Contact us to reactivate.</a>
   `;
-  document.querySelector('header').after(banner);
+document.querySelector('header').after(banner);
 
 });
 </script>

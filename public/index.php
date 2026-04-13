@@ -12,6 +12,8 @@ if(isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
     exit();
   }
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -69,6 +71,18 @@ if(isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
   <script src="assets/js/render-products.js"></script>
   <script src="assets/js/cart-modal.js"></script>
   <script src="assets/js/accordion-effect.js"></script>
+
+  <script>
+    // Auto-open login modal if user just registered
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('openLogin') === 'true') {
+        if (typeof openLoginModal === 'function') {
+          openLoginModal();
+        }
+      }
+    });
+  </script>
 
 </body>
 </html>

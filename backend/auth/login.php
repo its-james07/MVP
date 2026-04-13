@@ -60,7 +60,7 @@ if ($role === 'admin') {
 
 } elseif ($role === 'seller') {
 
-    $sellerStmt = $conn->prepare("SELECT seller_id FROM sellers WHERE user_id = ?");
+    $sellerStmt = $conn->prepare("SELECT seller_id, status AS seller_status FROM sellers WHERE user_id = ?");
     if (!$sellerStmt) {
         // echo json_encode(["status" => "error", "message" => "DB prepare failed for seller."]);
         echo json_encode(["status" => "error", "message" => "Something went wrong."]);
@@ -70,7 +70,7 @@ if ($role === 'admin') {
 
     $sellerStmt->bind_param("i", $userId);
     $sellerStmt->execute();
-    $sellerStmt->bind_result($sellerId);
+    $sellerStmt->bind_result($sellerId, $sellerStatus);
     $sellerStmt->fetch();
     $sellerStmt->close();
 
@@ -81,7 +81,7 @@ if ($role === 'admin') {
     }
 
     $_SESSION['seller_id'] = $sellerId;
-    $_SESSION['seller_status'] = $userStatus;
+    $_SESSION['seller_status'] = $sellerStatus ?? 'pending';
     echo json_encode(["status" => "redirect_seller"]);
 
 } else {

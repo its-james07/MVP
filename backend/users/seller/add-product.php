@@ -3,6 +3,13 @@
 declare(strict_types=1);
 
 session_start();
+if (isset($_SESSION['user_status']) && $_SESSION['user_status'] === 'suspended') {
+    echo json_encode([
+        'success' => false,
+        'message' => 'Feature unavailable due to Account Suspension'
+    ]);
+    exit;
+}
 header('Content-Type: application/json; charset=utf-8');
 
 require_once '../../auth/config/db.php';
@@ -74,6 +81,26 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') respond(405, false, 'Method not allow
 
 $sellerId = $_SESSION['seller_id'] ?? 0;
 if ($sellerId <= 0) respond(401, false, 'Unauthorised. Please log in.');
+
+// Fetch current seller status from database
+$statusStmt = $conn->prepare('SELECT status FROM sellers WHERE seller_id = ?');
+if (!$statusStmt) respond(500, false, 'Database error.');
+$statusStmt->bind_param('i', $sellerId);
+$statusStmt->execute();
+$statusResult = $statusStmt->get_result();
+$sellerData = $statusResult->fetch_assoc();
+$statusStmt->close();
+
+if (!$sellerData) respond(401, false, 'Seller account not found.');
+
+$currentStatus = $sellerData['status'] ?? 'pending';
+
+// Check seller status
+if ($currentStatus === 'suspended') {
+    respond(403, false, 'Your seller account has been suspended. You cannot add products at this time. Please contact admin for further assistance.');
+} elseif ($currentStatus !== 'active') {
+    respond(403, false, 'Your seller account is not yet approved by admin. You cannot add products at this time.');
+}
 
 
 $categoryId  = (int) ($_POST['category'] ?? 0);

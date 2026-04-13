@@ -85,7 +85,10 @@ function renderProducts(products, mode = 'view') {
                 <p class="fw-semibold text-muted">No products found</p>
                 <p class="text-muted small">You have not uploaded any products yet.</p>
             </div>`;
-        return;
+            // Update dashboard card to 0 if no products
+            const dashTotalProducts = document.getElementById('dash-total-products');
+            if (dashTotalProducts) dashTotalProducts.textContent = '0';
+            return;
     }
 
     const cards = products.map(p      => buildCard(p, mode)).join('');
@@ -117,6 +120,10 @@ function renderProducts(products, mode = 'view') {
                 <tbody>${rows}</tbody>
             </table>
         </div>`;
+
+        // Update dashboard card with total products
+        const dashTotalProducts = document.getElementById('dash-total-products');
+        if (dashTotalProducts) dashTotalProducts.textContent = products.length;
 }
 
 
